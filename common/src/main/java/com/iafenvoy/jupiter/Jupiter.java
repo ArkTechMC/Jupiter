@@ -1,7 +1,7 @@
 package com.iafenvoy.jupiter;
 
 import com.mojang.logging.LogUtils;
-import fi.dy.masa.malilib.config.ConfigManager;
+import com.iafenvoy.jupiter.malilib.config.ConfigManager;
 import org.slf4j.Logger;
 
 public final class Jupiter {

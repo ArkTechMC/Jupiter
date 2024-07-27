@@ -1,9 +1,9 @@
 package com.iafenvoy.jupiter.screen;
 
 import com.iafenvoy.jupiter.api.ConfigData;
-import fi.dy.masa.malilib.gui.GuiConfigsBase;
-import fi.dy.masa.malilib.gui.button.ButtonGeneric;
-import fi.dy.masa.malilib.util.StringUtils;
+import com.iafenvoy.jupiter.malilib.gui.GuiConfigsBase;
+import com.iafenvoy.jupiter.malilib.gui.button.ButtonGeneric;
+import com.iafenvoy.jupiter.malilib.util.StringUtils;
 import net.minecraft.client.gui.screen.Screen;
 
 import java.util.List;

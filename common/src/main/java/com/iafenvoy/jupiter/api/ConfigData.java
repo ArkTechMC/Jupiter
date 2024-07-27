@@ -3,10 +3,10 @@ package com.iafenvoy.jupiter.api;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.*;
 import com.iafenvoy.jupiter.Jupiter;
-import fi.dy.masa.malilib.config.ConfigManager;
-import fi.dy.masa.malilib.config.ConfigUtils;
-import fi.dy.masa.malilib.config.IConfigBase;
-import fi.dy.masa.malilib.config.IConfigHandler;
+import com.iafenvoy.jupiter.malilib.config.ConfigManager;
+import com.iafenvoy.jupiter.malilib.config.ConfigUtils;
+import com.iafenvoy.jupiter.malilib.config.IConfigBase;
+import com.iafenvoy.jupiter.malilib.config.IConfigHandler;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;

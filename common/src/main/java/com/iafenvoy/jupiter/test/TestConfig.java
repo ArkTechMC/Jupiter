@@ -3,10 +3,10 @@ package com.iafenvoy.jupiter.test;
 import com.google.common.collect.ImmutableList;
 import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.api.ConfigData;
-import fi.dy.masa.malilib.config.options.ConfigBoolean;
-import fi.dy.masa.malilib.config.options.ConfigColor;
-import fi.dy.masa.malilib.config.options.ConfigInteger;
-import fi.dy.masa.malilib.config.options.ConfigStringList;
+import com.iafenvoy.jupiter.malilib.config.options.ConfigBoolean;
+import com.iafenvoy.jupiter.malilib.config.options.ConfigColor;
+import com.iafenvoy.jupiter.malilib.config.options.ConfigInteger;
+import com.iafenvoy.jupiter.malilib.config.options.ConfigStringList;
 
 public class TestConfig extends ConfigData {
     public static final TestConfig INSTANCE = new TestConfig();

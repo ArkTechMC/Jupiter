@@ -1,0 +1,10 @@
+{
+  "jupiter.screen.back": "返回",
+  "jupiter.screen.server_config": "服务端配置",
+  "jupiter.screen.check_server": "正在检查权限。。。",
+  "jupiter.screen.open_server": "打开服务端配置",
+  "jupiter.screen.client_config": "客户端配置",
+  "jupiter.screen.open_client": "打开客户端配置",
+  "jupiter.screen.disable_client": "客户端配置已禁用或者Mod未提供",
+  "jupiter.test_config": "测试用配置文件"
+}

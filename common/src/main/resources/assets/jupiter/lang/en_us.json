@@ -1,0 +1,10 @@
+{
+  "jupiter.screen.back": "Back",
+  "jupiter.screen.server_config": "Server Config",
+  "jupiter.screen.check_server": "Checking permission...",
+  "jupiter.screen.open_server": "Open server config",
+  "jupiter.screen.client_config": "Client Config",
+  "jupiter.screen.open_client": "Open client config",
+  "jupiter.screen.disable_client": "Client config is disabled or not provided",
+  "jupiter.test_config": "Test Config"
+}

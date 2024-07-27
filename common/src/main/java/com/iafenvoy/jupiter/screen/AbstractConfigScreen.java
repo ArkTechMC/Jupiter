@@ -49,13 +49,21 @@ public class AbstractConfigScreen extends GuiConfigsBase {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (keyCode == 256) this.close();
+        if (keyCode == 256) {
+            this.close();
+            return true;
+        }
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
     @Override
     public void close() {
         this.closeGui(true);
+    }
+
+    @Override
+    public boolean shouldPause() {
+        return true;
     }
 
     @Override

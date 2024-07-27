@@ -1,7 +1,6 @@
 package com.iafenvoy.jupiter.malilib.util;
 
 import com.iafenvoy.jupiter.malilib.gui.*;
-import fi.dy.masa.malilib.gui.*;
 import com.iafenvoy.jupiter.malilib.gui.button.ButtonBase;
 import com.iafenvoy.jupiter.malilib.gui.button.ButtonGeneric;
 import com.iafenvoy.jupiter.malilib.gui.button.IButtonActionListener;

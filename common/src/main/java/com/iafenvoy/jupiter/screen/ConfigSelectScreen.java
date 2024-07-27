@@ -31,8 +31,7 @@ public class ConfigSelectScreen<S extends ConfigData, C extends ConfigData> exte
         //Back
         this.addDrawableChild(new ButtonWidget.Builder(Text.translatable("jupiter.screen.back"), button -> {
             assert this.client != null;
-            assert this.serverConfig != null;
-            this.client.setScreen(new AbstractConfigScreen(this, this.serverConfig));
+            this.client.setScreen(this.parent);
         }).dimensions(x - 100, y - 25 - 10, 200, 20)
                 .build());
         //Server
@@ -67,5 +66,10 @@ public class ConfigSelectScreen<S extends ConfigData, C extends ConfigData> exte
     public void close() {
         assert this.client != null;
         this.client.setScreen(this.parent);
+    }
+
+    @Override
+    public boolean shouldPause() {
+        return true;
     }
 }

@@ -5,7 +5,6 @@ import com.google.gson.JsonPrimitive;
 import com.iafenvoy.jupiter.malilib.MaLiLib;
 import com.iafenvoy.jupiter.malilib.config.*;
 import com.iafenvoy.jupiter.malilib.interfaces.IValueChangeCallback;
-import fi.dy.masa.malilib.config.*;
 
 public class ConfigTypeWrapper implements IConfigBoolean, IConfigDouble, IConfigInteger, IConfigOptionList, IConfigNotifiable<IConfigBase> {
     private final ConfigType wrappedType;

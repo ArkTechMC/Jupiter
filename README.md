@@ -33,3 +33,7 @@ i.`ConfigSelectScreen`: Create a config select screen. User can select which con
 ii.`ClientConfigScreen`: Create a client config edit screen.
 
 iii.`ServerConfigScreen`: Create a server config edit screen. **Not include permission check.**
+
+## Discord
+
+https://discord.gg/NDzz2upqAk

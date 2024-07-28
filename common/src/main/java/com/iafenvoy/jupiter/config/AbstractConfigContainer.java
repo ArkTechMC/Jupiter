@@ -63,14 +63,15 @@ public abstract class AbstractConfigContainer implements IConfigHandler {
                 ConfigUtils.readConfigBase(obj, category.id(), category.getConfigs());
     }
 
-    public FakeConfigContainer copy() {
-        return new FakeConfigContainer(this);
-    }
-
     public record ConfigCategory(String id, String translateKey, List<IConfigBase> configs) {
         public <T extends IConfigBase> ConfigCategory addConfig(T config) {
             this.configs.add(config);
             return this;
+        }
+
+        public <T extends IConfigBase> T add(T config) {
+            this.configs.add(config);
+            return config;
         }
 
         public List<IConfigBase> getConfigs() {
@@ -78,7 +79,7 @@ public abstract class AbstractConfigContainer implements IConfigHandler {
         }
 
         public ConfigCategory copy() {
-            return new ConfigCategory(this.id, this.translateKey, this.getConfigs());
+            return new ConfigCategory(this.id, this.translateKey, this.configs.stream().map(IConfigBase::copy).toList());
         }
     }
 }

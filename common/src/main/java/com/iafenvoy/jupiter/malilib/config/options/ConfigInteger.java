@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import com.iafenvoy.jupiter.malilib.MaLiLib;
 import com.iafenvoy.jupiter.malilib.config.ConfigType;
+import com.iafenvoy.jupiter.malilib.config.IConfigBase;
 import com.iafenvoy.jupiter.malilib.config.IConfigInteger;
 import net.minecraft.util.math.MathHelper;
 
@@ -131,5 +132,10 @@ public class ConfigInteger extends ConfigBase<ConfigInteger> implements IConfigI
     @Override
     public JsonElement getAsJsonElement() {
         return new JsonPrimitive(this.value);
+    }
+
+    @Override
+    public IConfigBase copy() {
+        return new ConfigInteger(this.getNameKey(), this.defaultValue, this.minValue, this.maxValue, this.useSlider, this.getPrettyNameKey());
     }
 }

@@ -364,4 +364,9 @@ public class ConfigTypeWrapper implements IConfigBoolean, IConfigDouble, IConfig
                 return new JsonPrimitive(this.getStringValue());
         }
     }
+
+    @Override
+    public IConfigBase copy() {
+        return new ConfigTypeWrapper(this.wrappedType, this.wrappedConfig);
+    }
 }

@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import com.iafenvoy.jupiter.malilib.MaLiLib;
 import com.iafenvoy.jupiter.malilib.config.ConfigType;
+import com.iafenvoy.jupiter.malilib.config.IConfigBase;
 import com.iafenvoy.jupiter.malilib.config.IConfigStringList;
 
 import java.util.ArrayList;
@@ -80,5 +81,10 @@ public class ConfigStringList extends ConfigBase<ConfigStringList> implements IC
         }
 
         return arr;
+    }
+
+    @Override
+    public IConfigBase copy() {
+        return new ConfigStringList(this.getNameKey(), this.defaultValue, this.getCommentKey());
     }
 }

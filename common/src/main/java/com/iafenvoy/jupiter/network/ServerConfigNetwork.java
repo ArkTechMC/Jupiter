@@ -10,6 +10,7 @@ public class ServerConfigNetwork {
     public static void init() {
         ServerNetworkHelper.registerReceiver(NetworkConstants.CONFIG_REQUEST_C2S, (server, player, buf) -> {
             Identifier id = buf.readIdentifier();
+            Jupiter.LOGGER.info("Player {} request to open config {}", player.getName().getString(), id);
             PacketByteBuf b = ByteBufUtil.create().writeIdentifier(id);
             if (ServerConfigManager.checkPermission(id, server, player)) {
                 b.writeBoolean(true);
@@ -17,10 +18,11 @@ public class ServerConfigNetwork {
                 assert data != null;
                 b.writeString(data.serialize());
             } else b.writeBoolean(false);
-            return () -> ServerNetworkHelper.sendToPlayer(player, NetworkConstants.CONFIG_SYNC_S2C, buf);
+            return () -> ServerNetworkHelper.sendToPlayer(player, NetworkConstants.CONFIG_SYNC_S2C, b);
         });
         ServerNetworkHelper.registerReceiver(NetworkConstants.CONFIG_SYNC_C2S, (server, player, buf) -> {
             Identifier id = buf.readIdentifier();
+            Jupiter.LOGGER.info("Player {} request to change config {}", player.getName().getString(), id);
             String data = buf.readString();
             return () -> {
                 if (ServerConfigManager.checkPermission(id, server, player)) {

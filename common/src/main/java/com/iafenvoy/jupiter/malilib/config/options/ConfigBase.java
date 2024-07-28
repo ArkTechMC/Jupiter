@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 public abstract class ConfigBase<T extends IConfigBase> implements IConfigBase, IConfigResettable, IConfigNotifiable<T> {
     private final ConfigType type;
     private final String nameKey;
-    private final String prettyName;
+    private final String prettyNameKey;
     private String commentKey;
     @Nullable
     private IValueChangeCallback<T> callback;
@@ -20,10 +20,10 @@ public abstract class ConfigBase<T extends IConfigBase> implements IConfigBase, 
         this(type, nameKey, commentKey, nameKey);
     }
 
-    public ConfigBase(ConfigType type, String nameKey, String commentKey, String prettyName) {
+    public ConfigBase(ConfigType type, String nameKey, String commentKey, String prettyNameKey) {
         this.type = type;
         this.nameKey = nameKey;
-        this.prettyName = prettyName;
+        this.prettyNameKey = prettyNameKey;
         this.commentKey = commentKey;
     }
 
@@ -37,9 +37,17 @@ public abstract class ConfigBase<T extends IConfigBase> implements IConfigBase, 
         return this.nameKey;
     }
 
+    public String getPrettyNameKey() {
+        return this.prettyNameKey;
+    }
+
     @Override
     public String getPrettyName() {
-        return StringUtils.translate(this.prettyName);
+        return StringUtils.translate(this.prettyNameKey);
+    }
+
+    public String getCommentKey() {
+        return this.commentKey;
     }
 
     @Override

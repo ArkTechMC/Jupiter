@@ -624,18 +624,6 @@ public class RenderUtils {
         buffer.vertex(minX, maxY, maxZ).color(color.r, color.g, color.b, color.a).next();
     }
 
-    public static void drawBox(IntBoundingBox bb, Vec3d cameraPos, Color4f color, BufferBuilder bufferQuads, BufferBuilder bufferLines) {
-        double minX = bb.minX - cameraPos.x;
-        double minY = bb.minY - cameraPos.y;
-        double minZ = bb.minZ - cameraPos.z;
-        double maxX = bb.maxX + 1 - cameraPos.x;
-        double maxY = bb.maxY + 1 - cameraPos.y;
-        double maxZ = bb.maxZ + 1 - cameraPos.z;
-
-        drawBoxAllSidesBatchedQuads(minX, minY, minZ, maxX, maxY, maxZ, color, bufferQuads);
-        drawBoxAllEdgesBatchedLines(minX, minY, minZ, maxX, maxY, maxZ, color, bufferLines);
-    }
-
     /**
      * Renders a text plate/billboard, similar to the player name plate.<br>
      * The plate will always face towards the viewer.
@@ -975,47 +963,6 @@ public class RenderUtils {
                 consumer.draw();
                 matrixStack.pop();
             }
-        }
-    }
-
-    public static void renderShulkerBoxPreview(ItemStack stack, int baseX, int baseY, boolean useBgColors, DrawContext drawContext) {
-        if (stack.hasNbt()) {
-            DefaultedList<ItemStack> items = InventoryUtils.getStoredItems(stack, -1);
-
-            if (items.size() == 0) {
-                return;
-            }
-
-            InventoryOverlay.InventoryRenderType type = InventoryOverlay.getInventoryType(stack);
-            InventoryOverlay.InventoryProperties props = InventoryOverlay.getInventoryPropsTemp(type, items.size());
-
-            int screenWidth = GuiUtils.getScaledWindowWidth();
-            int screenHeight = GuiUtils.getScaledWindowHeight();
-            int height = props.height + 18;
-            int x = MathHelper.clamp(baseX + 8, 0, screenWidth - props.width);
-            int y = MathHelper.clamp(baseY - height, 0, screenHeight - height);
-
-            if (stack.getItem() instanceof BlockItem && ((BlockItem) stack.getItem()).getBlock() instanceof ShulkerBoxBlock) {
-                setShulkerboxBackgroundTintColor((ShulkerBoxBlock) ((BlockItem) stack.getItem()).getBlock(), useBgColors);
-            } else {
-                color(1f, 1f, 1f, 1f);
-            }
-
-            disableDiffuseLighting();
-            MatrixStack matrixStack = RenderSystem.getModelViewStack();
-            matrixStack.push();
-            matrixStack.translate(0, 0, 500);
-            RenderSystem.applyModelViewMatrix();
-
-            InventoryOverlay.renderInventoryBackground(type, x, y, props.slotsPerRow, items.size(), mc());
-
-            enableDiffuseLightingGui3D();
-
-            Inventory inv = InventoryUtils.getAsInventory(items);
-            InventoryOverlay.renderInventoryStacks(type, inv, x + props.slotOffsetX, y + props.slotOffsetY, props.slotsPerRow, 0, -1, mc(), drawContext);
-
-            matrixStack.pop();
-            RenderSystem.applyModelViewMatrix();
         }
     }
 

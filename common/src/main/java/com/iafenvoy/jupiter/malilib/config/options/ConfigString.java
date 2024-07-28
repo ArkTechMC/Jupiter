@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import com.iafenvoy.jupiter.malilib.MaLiLib;
 import com.iafenvoy.jupiter.malilib.config.ConfigType;
+import com.iafenvoy.jupiter.malilib.config.IConfigBase;
 import com.iafenvoy.jupiter.malilib.config.IConfigValue;
 
 public class ConfigString extends ConfigBase<ConfigString> implements IConfigValue {
@@ -75,5 +76,10 @@ public class ConfigString extends ConfigBase<ConfigString> implements IConfigVal
     @Override
     public JsonElement getAsJsonElement() {
         return new JsonPrimitive(this.value);
+    }
+
+    @Override
+    public IConfigBase copy() {
+        return new ConfigString(this.getNameKey(), this.defaultValue, this.getCommentKey());
     }
 }

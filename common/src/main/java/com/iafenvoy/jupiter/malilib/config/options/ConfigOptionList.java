@@ -3,10 +3,7 @@ package com.iafenvoy.jupiter.malilib.config.options;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import com.iafenvoy.jupiter.malilib.MaLiLib;
-import com.iafenvoy.jupiter.malilib.config.ConfigType;
-import com.iafenvoy.jupiter.malilib.config.IConfigOptionList;
-import com.iafenvoy.jupiter.malilib.config.IConfigOptionListEntry;
-import com.iafenvoy.jupiter.malilib.config.IStringRepresentable;
+import com.iafenvoy.jupiter.malilib.config.*;
 
 public class ConfigOptionList extends ConfigBase<ConfigOptionList> implements IConfigOptionList, IStringRepresentable {
     private final IConfigOptionListEntry defaultValue;
@@ -94,5 +91,10 @@ public class ConfigOptionList extends ConfigBase<ConfigOptionList> implements IC
     @Override
     public JsonElement getAsJsonElement() {
         return new JsonPrimitive(this.getStringValue());
+    }
+
+    @Override
+    public IConfigBase copy() {
+        return new ConfigOptionList(this.getNameKey(), this.defaultValue, this.getCommentKey(), this.getPrettyNameKey());
     }
 }

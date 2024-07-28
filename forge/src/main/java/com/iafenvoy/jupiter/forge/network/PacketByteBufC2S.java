@@ -21,7 +21,7 @@ public class PacketByteBufC2S {
     }
 
     public static PacketByteBufC2S decode(PacketByteBuf buf) {
-        return new PacketByteBufC2S(buf.readIdentifier(), new PacketByteBuf(buf.readBytes(ByteBufUtil.create())));
+        return new PacketByteBufC2S(buf.readIdentifier(), buf);
     }
 
     public static void handle(PacketByteBufC2S message, Supplier<NetworkEvent.Context> ctx) {

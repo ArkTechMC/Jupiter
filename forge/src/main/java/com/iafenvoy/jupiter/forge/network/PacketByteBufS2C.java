@@ -1,6 +1,5 @@
 package com.iafenvoy.jupiter.forge.network;
 
-import com.iafenvoy.jupiter.network.ByteBufUtil;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import net.minecraftforge.network.NetworkEvent;
@@ -21,7 +20,7 @@ public class PacketByteBufS2C {
     }
 
     public static PacketByteBufS2C decode(PacketByteBuf buf) {
-        return new PacketByteBufS2C(buf.readIdentifier(), new PacketByteBuf(buf.readBytes(ByteBufUtil.create())));
+        return new PacketByteBufS2C(buf.readIdentifier(), buf);
     }
 
     public static void handle(PacketByteBufS2C message, Supplier<NetworkEvent.Context> ctx) {

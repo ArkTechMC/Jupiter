@@ -1,7 +1,7 @@
 package com.iafenvoy.jupiter.malilib.config.gui;
 
-import com.iafenvoy.jupiter.malilib.gui.button.IButtonActionListener;
 import com.iafenvoy.jupiter.malilib.gui.button.ButtonBase;
+import com.iafenvoy.jupiter.malilib.gui.button.IButtonActionListener;
 
 public class ButtonPressDirtyListenerSimple implements IButtonActionListener {
     private boolean dirty;

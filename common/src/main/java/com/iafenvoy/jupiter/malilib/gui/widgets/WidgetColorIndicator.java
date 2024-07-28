@@ -5,10 +5,10 @@ import com.iafenvoy.jupiter.malilib.config.IConfigInteger;
 import com.iafenvoy.jupiter.malilib.config.options.ConfigInteger;
 import com.iafenvoy.jupiter.malilib.gui.GuiBase;
 import com.iafenvoy.jupiter.malilib.gui.GuiColorEditorHSV;
+import com.iafenvoy.jupiter.malilib.render.RenderUtils;
 import com.iafenvoy.jupiter.malilib.util.Color4f;
 import com.iafenvoy.jupiter.malilib.util.GuiUtils;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
-import com.iafenvoy.jupiter.malilib.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
 
 import java.util.function.IntConsumer;

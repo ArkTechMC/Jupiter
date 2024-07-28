@@ -18,7 +18,7 @@ public interface IConfigBase {
      *
      * @return the name of this config
      */
-    String getName();
+    String getNameKey();
 
     /**
      * Returns the comment displayed when hovering over the config name in the config GUI.
@@ -36,7 +36,7 @@ public interface IConfigBase {
      * @return
      */
     default String getPrettyName() {
-        return this.getName();
+        return this.getNameKey();
     }
 
     /**
@@ -45,7 +45,7 @@ public interface IConfigBase {
      * @return
      */
     default String getConfigGuiDisplayName() {
-        return StringUtils.getTranslatedOrFallback("config.name." + this.getName().toLowerCase(), this.getName());
+        return StringUtils.getTranslatedOrFallback("config.name." + this.getNameKey().toLowerCase(), this.getNameKey());
     }
 
     /**

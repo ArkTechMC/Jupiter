@@ -1,12 +1,12 @@
 package com.iafenvoy.jupiter.malilib.gui.widgets;
 
+import com.iafenvoy.jupiter.malilib.config.IConfigResettable;
+import com.iafenvoy.jupiter.malilib.config.gui.ConfigOptionChangeListenerTextField;
 import com.iafenvoy.jupiter.malilib.gui.GuiTextFieldGeneric;
+import com.iafenvoy.jupiter.malilib.gui.button.ButtonGeneric;
 import com.iafenvoy.jupiter.malilib.gui.wrappers.TextFieldWrapper;
 import com.iafenvoy.jupiter.malilib.util.KeyCodes;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
-import com.iafenvoy.jupiter.malilib.config.IConfigResettable;
-import com.iafenvoy.jupiter.malilib.config.gui.ConfigOptionChangeListenerTextField;
-import com.iafenvoy.jupiter.malilib.gui.button.ButtonGeneric;
 import net.minecraft.client.gui.DrawContext;
 import org.jetbrains.annotations.Nullable;
 

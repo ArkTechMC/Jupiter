@@ -1,11 +1,11 @@
 package com.iafenvoy.jupiter.malilib.gui;
 
-import com.iafenvoy.jupiter.malilib.util.KeyCodes;
-import com.iafenvoy.jupiter.malilib.util.StringUtils;
 import com.iafenvoy.jupiter.malilib.gui.button.ButtonBase;
 import com.iafenvoy.jupiter.malilib.gui.button.ButtonGeneric;
 import com.iafenvoy.jupiter.malilib.gui.button.IButtonActionListener;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
+import com.iafenvoy.jupiter.malilib.util.KeyCodes;
+import com.iafenvoy.jupiter.malilib.util.StringUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;

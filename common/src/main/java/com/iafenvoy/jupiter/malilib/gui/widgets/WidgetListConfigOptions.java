@@ -32,7 +32,7 @@ public class WidgetListConfigOptions extends WidgetListConfigOptionsBase<GuiConf
 
     @Override
     protected Collection<GuiConfigsBase.ConfigOptionWrapper> getAllEntries() {
-        return ((IConfigGui) this.parent).getConfigs();
+        return this.parent.getConfigs();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class WidgetListConfigOptions extends WidgetListConfigOptionsBase<GuiConf
 
         if (config != null) {
             ArrayList<String> list = new ArrayList<>();
-            String name = config.getName();
+            String name = config.getNameKey();
             String translated = config.getConfigGuiDisplayName();
 
             list.add(name.toLowerCase());
@@ -89,7 +89,7 @@ public class WidgetListConfigOptions extends WidgetListConfigOptionsBase<GuiConf
     @Override
     protected WidgetConfigOption createListEntryWidget(int x, int y, int listIndex, boolean isOdd, GuiConfigsBase.ConfigOptionWrapper wrapper) {
         return new WidgetConfigOption(x, y, this.browserEntryWidth, this.browserEntryHeight,
-                this.maxLabelWidth, this.configWidth, wrapper, listIndex, (IConfigGui) this.parent, this);
+                this.maxLabelWidth, this.configWidth, wrapper, listIndex, this.parent, this);
     }
 
     public int getMaxNameLengthWrapped(List<GuiConfigsBase.ConfigOptionWrapper> wrappers) {
@@ -107,7 +107,7 @@ public class WidgetListConfigOptions extends WidgetListConfigOptionsBase<GuiConf
     protected static class ConfigComparator extends AlphaNumComparator implements Comparator<GuiConfigsBase.ConfigOptionWrapper> {
         @Override
         public int compare(GuiConfigsBase.ConfigOptionWrapper config1, GuiConfigsBase.ConfigOptionWrapper config2) {
-            return this.compare(config1.getConfig().getName(), config2.getConfig().getName());
+            return this.compare(config1.getConfig().getNameKey(), config2.getConfig().getNameKey());
         }
     }
 }

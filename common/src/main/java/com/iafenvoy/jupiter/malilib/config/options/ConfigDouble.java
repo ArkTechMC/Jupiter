@@ -14,16 +14,16 @@ public class ConfigDouble extends ConfigBase<ConfigDouble> implements IConfigDou
     private double value;
     private boolean useSlider;
 
-    public ConfigDouble(String name, double defaultValue, String comment) {
-        this(name, defaultValue, Double.MIN_VALUE, Double.MAX_VALUE, comment);
+    public ConfigDouble(String nameKey, double defaultValue, String comment) {
+        this(nameKey, defaultValue, Double.MIN_VALUE, Double.MAX_VALUE, comment);
     }
 
-    public ConfigDouble(String name, double defaultValue, double minValue, double maxValue, String comment) {
-        this(name, defaultValue, minValue, maxValue, false, comment);
+    public ConfigDouble(String nameKey, double defaultValue, double minValue, double maxValue, String comment) {
+        this(nameKey, defaultValue, minValue, maxValue, false, comment);
     }
 
-    public ConfigDouble(String name, double defaultValue, double minValue, double maxValue, boolean useSlider, String comment) {
-        super(ConfigType.DOUBLE, name, comment);
+    public ConfigDouble(String nameKey, double defaultValue, double minValue, double maxValue, boolean useSlider, String comment) {
+        super(ConfigType.DOUBLE, nameKey, comment);
 
         this.minValue = minValue;
         this.maxValue = maxValue;
@@ -111,7 +111,7 @@ public class ConfigDouble extends ConfigBase<ConfigDouble> implements IConfigDou
         try {
             this.setDoubleValue(Double.parseDouble(value));
         } catch (Exception e) {
-            MaLiLib.logger.warn("Failed to set config value for {} from the string '{}'", this.getName(), value, e);
+            MaLiLib.logger.warn("Failed to set config value for {} from the string '{}'", this.getNameKey(), value, e);
         }
     }
 
@@ -121,10 +121,10 @@ public class ConfigDouble extends ConfigBase<ConfigDouble> implements IConfigDou
             if (element.isJsonPrimitive()) {
                 this.value = this.getClampedValue(element.getAsDouble());
             } else {
-                MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getName(), element);
+                MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getNameKey(), element);
             }
         } catch (Exception e) {
-            MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getName(), element, e);
+            MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getNameKey(), element, e);
         }
     }
 

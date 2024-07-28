@@ -1,18 +1,29 @@
 package com.iafenvoy.jupiter.screen;
 
-import com.iafenvoy.jupiter.api.ConfigData;
+import com.iafenvoy.jupiter.Jupiter;
+import com.iafenvoy.jupiter.config.AbstractConfigContainer;
+import com.iafenvoy.jupiter.config.FakeConfigContainer;
+import com.iafenvoy.jupiter.config.FileConfigContainer;
+import com.iafenvoy.jupiter.network.ClientConfigNetwork;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
 
-public class ConfigSelectScreen<S extends ConfigData, C extends ConfigData> extends Screen {
+@Environment(EnvType.CLIENT)
+public class ConfigSelectScreen<S extends FileConfigContainer, C extends FileConfigContainer> extends Screen {
     private final Screen parent;
     private final S serverConfig;
     @Nullable
     private final C clientConfig;
+    @Nullable
+    private FakeConfigContainer fakeServerConfig;
     private ButtonWidget serverButton;
     private ButtonWidget clientButton;
 
@@ -38,7 +49,7 @@ public class ConfigSelectScreen<S extends ConfigData, C extends ConfigData> exte
         this.serverButton = this.addDrawableChild(new ButtonWidget.Builder(Text.translatable("jupiter.screen.server_config"), button -> {
             assert this.client != null;
             assert this.serverConfig != null;
-            this.client.setScreen(new AbstractConfigScreen(this, this.serverConfig));
+            this.client.setScreen(new ServerConfigScreen(this, this.getServerConfig()));
         }).tooltip(Tooltip.of(Text.translatable("jupiter.screen.check_server")))
                 .dimensions(x - 100, y - 10, 200, 20)
                 .build());
@@ -47,11 +58,30 @@ public class ConfigSelectScreen<S extends ConfigData, C extends ConfigData> exte
         this.clientButton = this.addDrawableChild(new ButtonWidget.Builder(Text.translatable("jupiter.screen.client_config"), button -> {
             assert this.client != null;
             assert this.clientConfig != null;
-            this.client.setScreen(new AbstractConfigScreen(this, this.clientConfig));
+            this.client.setScreen(new ClientConfigScreen(this, this.clientConfig));
         }).tooltip(Tooltip.of(Text.translatable(this.clientConfig != null ? "jupiter.screen.open_client" : "jupiter.screen.disable_client")))
                 .dimensions(x - 100, y + 25 - 10, 200, 20)
                 .build());
         this.clientButton.active = this.clientConfig != null;
+
+        if (this.connectedToDedicatedServer()) {
+            this.fakeServerConfig = this.serverConfig.copy();
+            this.serverButton.active = false;
+            ClientConfigNetwork.startConfigSync(this.serverConfig.getConfigId(), string -> {
+                if (string == null)
+                    this.serverButton.setTooltip(Tooltip.of(Text.translatable("jupiter.screen.disable_server")));
+                else {
+                    try {
+                        assert this.fakeServerConfig != null;
+                        this.fakeServerConfig.deserialize(string);
+                        this.serverButton.setTooltip(Tooltip.of(Text.translatable("jupiter.screen.open_server")));
+                    } catch (Exception e) {
+                        Jupiter.LOGGER.error("Failed to parse server config data from server: {}", this.serverConfig.getConfigId(), e);
+                        this.serverButton.setTooltip(Tooltip.of(Text.translatable("jupiter.screen.error_server")));
+                    }
+                }
+            });
+        } else this.serverButton.setTooltip(Tooltip.of(Text.translatable("jupiter.screen.open_server")));
     }
 
     @Override
@@ -71,5 +101,19 @@ public class ConfigSelectScreen<S extends ConfigData, C extends ConfigData> exte
     @Override
     public boolean shouldPause() {
         return true;
+    }
+
+    private AbstractConfigContainer getServerConfig() {
+        if (!this.connectedToDedicatedServer())
+            return this.serverConfig;
+        assert this.fakeServerConfig != null;
+        return this.fakeServerConfig;
+    }
+
+    public boolean connectedToDedicatedServer() {
+        assert this.client != null;
+        ClientPlayNetworkHandler handler = this.client.getNetworkHandler();
+        IntegratedServer server = this.client.getServer();
+        return handler != null && handler.getConnection().isOpen() && (server == null || server.isRemote());
     }
 }

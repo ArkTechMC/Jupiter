@@ -1,8 +1,8 @@
 package com.iafenvoy.jupiter.malilib.config.gui;
 
 import com.iafenvoy.jupiter.malilib.config.IConfigInteger;
-import com.iafenvoy.jupiter.malilib.gui.interfaces.ISliderCallback;
 import com.iafenvoy.jupiter.malilib.gui.button.ButtonBase;
+import com.iafenvoy.jupiter.malilib.gui.interfaces.ISliderCallback;
 import org.jetbrains.annotations.Nullable;
 
 public class SliderCallbackInteger implements ISliderCallback {

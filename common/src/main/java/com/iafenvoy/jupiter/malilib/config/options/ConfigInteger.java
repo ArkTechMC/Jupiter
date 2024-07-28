@@ -14,16 +14,16 @@ public class ConfigInteger extends ConfigBase<ConfigInteger> implements IConfigI
     protected int value;
     private boolean useSlider;
 
-    public ConfigInteger(String name, int defaultValue, String comment) {
-        this(name, defaultValue, Integer.MIN_VALUE, Integer.MAX_VALUE, comment);
+    public ConfigInteger(String nameKey, int defaultValue, String comment) {
+        this(nameKey, defaultValue, Integer.MIN_VALUE, Integer.MAX_VALUE, comment);
     }
 
-    public ConfigInteger(String name, int defaultValue, int minValue, int maxValue, String comment) {
-        this(name, defaultValue, minValue, maxValue, false, comment);
+    public ConfigInteger(String nameKey, int defaultValue, int minValue, int maxValue, String comment) {
+        this(nameKey, defaultValue, minValue, maxValue, false, comment);
     }
 
-    public ConfigInteger(String name, int defaultValue, int minValue, int maxValue, boolean useSlider, String comment) {
-        super(ConfigType.INTEGER, name, comment);
+    public ConfigInteger(String nameKey, int defaultValue, int minValue, int maxValue, boolean useSlider, String comment) {
+        super(ConfigType.INTEGER, nameKey, comment);
 
         this.minValue = minValue;
         this.maxValue = maxValue;
@@ -111,7 +111,7 @@ public class ConfigInteger extends ConfigBase<ConfigInteger> implements IConfigI
         try {
             this.setIntegerValue(Integer.parseInt(value));
         } catch (Exception e) {
-            MaLiLib.logger.warn("Failed to set config value for {} from the string '{}'", this.getName(), value, e);
+            MaLiLib.logger.warn("Failed to set config value for {} from the string '{}'", this.getNameKey(), value, e);
         }
     }
 
@@ -121,10 +121,10 @@ public class ConfigInteger extends ConfigBase<ConfigInteger> implements IConfigI
             if (element.isJsonPrimitive()) {
                 this.value = this.getClampedValue(element.getAsInt());
             } else {
-                MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getName(), element);
+                MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getNameKey(), element);
             }
         } catch (Exception e) {
-            MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getName(), element, e);
+            MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getNameKey(), element, e);
         }
     }
 

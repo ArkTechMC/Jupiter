@@ -10,8 +10,8 @@ import com.iafenvoy.jupiter.malilib.util.StringUtils;
 public class ConfigColor extends ConfigInteger {
     private Color4f color;
 
-    public ConfigColor(String name, String defaultValue, String comment) {
-        super(name, StringUtils.getColor(defaultValue, 0), comment);
+    public ConfigColor(String nameKey, String defaultValue, String comment) {
+        super(nameKey, StringUtils.getColor(defaultValue, 0), comment);
 
         this.color = Color4f.fromColor(this.getIntegerValue());
     }
@@ -64,10 +64,10 @@ public class ConfigColor extends ConfigInteger {
                 this.value = this.getClampedValue(StringUtils.getColor(element.getAsString(), 0));
                 this.color = Color4f.fromColor(this.value);
             } else {
-                MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getName(), element);
+                MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getNameKey(), element);
             }
         } catch (Exception e) {
-            MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getName(), element, e);
+            MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getNameKey(), element, e);
         }
     }
 

@@ -15,8 +15,8 @@ public class ConfigStringList extends ConfigBase<ConfigStringList> implements IC
     private final ImmutableList<String> defaultValue;
     private final List<String> strings = new ArrayList<>();
 
-    public ConfigStringList(String name, ImmutableList<String> defaultValue, String comment) {
-        super(ConfigType.STRING_LIST, name, comment);
+    public ConfigStringList(String nameKey, ImmutableList<String> defaultValue, String comment) {
+        super(ConfigType.STRING_LIST, nameKey, comment);
 
         this.defaultValue = defaultValue;
         this.strings.addAll(defaultValue);
@@ -64,10 +64,10 @@ public class ConfigStringList extends ConfigBase<ConfigStringList> implements IC
                     this.strings.add(arr.get(i).getAsString());
                 }
             } else {
-                MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getName(), element);
+                MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getNameKey(), element);
             }
         } catch (Exception e) {
-            MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getName(), element, e);
+            MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getNameKey(), element, e);
         }
     }
 

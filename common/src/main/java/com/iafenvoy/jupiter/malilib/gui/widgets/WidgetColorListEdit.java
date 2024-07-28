@@ -1,8 +1,8 @@
 package com.iafenvoy.jupiter.malilib.gui.widgets;
 
+import com.iafenvoy.jupiter.malilib.config.IConfigColorList;
 import com.iafenvoy.jupiter.malilib.gui.GuiColorListEdit;
 import com.iafenvoy.jupiter.malilib.util.Color4f;
-import com.iafenvoy.jupiter.malilib.config.IConfigColorList;
 
 import java.util.Collection;
 

@@ -1,15 +1,15 @@
 package com.iafenvoy.jupiter.malilib.gui.widgets;
 
 import com.iafenvoy.jupiter.malilib.config.IConfigStringList;
+import com.iafenvoy.jupiter.malilib.config.gui.ConfigOptionChangeListenerTextField;
 import com.iafenvoy.jupiter.malilib.gui.GuiTextFieldGeneric;
 import com.iafenvoy.jupiter.malilib.gui.MaLiLibIcons;
-import com.iafenvoy.jupiter.malilib.gui.interfaces.IGuiIcon;
-import com.iafenvoy.jupiter.malilib.util.StringUtils;
-import com.iafenvoy.jupiter.malilib.config.gui.ConfigOptionChangeListenerTextField;
 import com.iafenvoy.jupiter.malilib.gui.button.ButtonBase;
 import com.iafenvoy.jupiter.malilib.gui.button.ButtonGeneric;
 import com.iafenvoy.jupiter.malilib.gui.button.IButtonActionListener;
+import com.iafenvoy.jupiter.malilib.gui.interfaces.IGuiIcon;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
+import com.iafenvoy.jupiter.malilib.util.StringUtils;
 import net.minecraft.client.gui.DrawContext;
 
 import java.util.List;

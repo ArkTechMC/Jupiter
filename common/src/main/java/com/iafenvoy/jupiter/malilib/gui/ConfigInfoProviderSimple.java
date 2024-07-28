@@ -1,7 +1,7 @@
 package com.iafenvoy.jupiter.malilib.gui;
 
-import com.iafenvoy.jupiter.malilib.gui.interfaces.IConfigInfoProvider;
 import com.iafenvoy.jupiter.malilib.config.IConfigBase;
+import com.iafenvoy.jupiter.malilib.gui.interfaces.IConfigInfoProvider;
 
 public class ConfigInfoProviderSimple implements IConfigInfoProvider {
     protected final String prefix;

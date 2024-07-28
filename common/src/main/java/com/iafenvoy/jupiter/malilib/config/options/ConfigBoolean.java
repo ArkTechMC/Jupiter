@@ -10,12 +10,12 @@ public class ConfigBoolean extends ConfigBase<ConfigBoolean> implements IConfigB
     private final boolean defaultValue;
     private boolean value;
 
-    public ConfigBoolean(String name, boolean defaultValue, String comment) {
-        this(name, defaultValue, comment, name);
+    public ConfigBoolean(String nameKey, boolean defaultValue, String comment) {
+        this(nameKey, defaultValue, comment, nameKey);
     }
 
-    public ConfigBoolean(String name, boolean defaultValue, String comment, String prettyName) {
-        super(ConfigType.BOOLEAN, name, comment, prettyName);
+    public ConfigBoolean(String nameKey, boolean defaultValue, String comment, String prettyName) {
+        super(ConfigType.BOOLEAN, nameKey, comment, prettyName);
 
         this.defaultValue = defaultValue;
         this.value = defaultValue;
@@ -77,10 +77,10 @@ public class ConfigBoolean extends ConfigBase<ConfigBoolean> implements IConfigB
             if (element.isJsonPrimitive()) {
                 this.value = element.getAsBoolean();
             } else {
-                MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getName(), element);
+                MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getNameKey(), element);
             }
         } catch (Exception e) {
-            MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getName(), element, e);
+            MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getNameKey(), element, e);
         }
     }
 

@@ -1,7 +1,7 @@
 package com.iafenvoy.jupiter.malilib.gui.widgets;
 
-import com.iafenvoy.jupiter.malilib.util.StringUtils;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
+import com.iafenvoy.jupiter.malilib.util.StringUtils;
 import net.minecraft.client.gui.DrawContext;
 
 import java.util.ArrayList;

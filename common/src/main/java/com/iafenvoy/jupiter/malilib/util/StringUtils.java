@@ -5,7 +5,6 @@ import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.net.SocketAddress;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;

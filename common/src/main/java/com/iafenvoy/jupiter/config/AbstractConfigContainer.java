@@ -1,38 +1,38 @@
-package com.iafenvoy.jupiter.api;
+package com.iafenvoy.jupiter.config;
 
 import com.google.common.collect.ImmutableList;
-import com.google.gson.*;
-import com.iafenvoy.jupiter.Jupiter;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.iafenvoy.jupiter.malilib.config.ConfigManager;
 import com.iafenvoy.jupiter.malilib.config.ConfigUtils;
 import com.iafenvoy.jupiter.malilib.config.IConfigBase;
 import com.iafenvoy.jupiter.malilib.config.IConfigHandler;
-import org.apache.commons.io.FileUtils;
+import net.minecraft.util.Identifier;
 
-import java.io.File;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ConfigData implements IConfigHandler {
-    protected static final Gson GSON = new GsonBuilder().create();
-    private final List<ConfigCategory> configTabs = new ArrayList<>();
-    private final String modId;
-    private final String titleNameKey;
-    private final String path;
+public abstract class AbstractConfigContainer implements IConfigHandler {
+    protected final List<ConfigCategory> configTabs = new ArrayList<>();
+    protected final Identifier id;
+    protected final String titleNameKey;
 
-    public ConfigData(String modId, String titleNameKey, String path) {
-        this.modId = modId;
+    public AbstractConfigContainer(Identifier id, String titleNameKey) {
+        this.id = id;
         this.titleNameKey = titleNameKey;
-        this.path = path;
         this.init();
-        ConfigManager.getInstance().registerConfigHandler(modId, this);
+        ConfigManager.getInstance().registerConfigHandler(id.getNamespace(), this);
     }
 
     public abstract void init();
 
     public String getModId() {
-        return this.modId;
+        return this.id.getNamespace();
+    }
+
+    public Identifier getConfigId() {
+        return this.id;
     }
 
     public String getTitleNameKey() {
@@ -63,22 +63,8 @@ public abstract class ConfigData implements IConfigHandler {
                 ConfigUtils.readConfigBase(obj, category.id(), category.getConfigs());
     }
 
-    @Override
-    public void load() {
-        try {
-            this.deserialize(FileUtils.readFileToString(new File(this.path), StandardCharsets.UTF_8));
-        } catch (Exception e) {
-            Jupiter.LOGGER.error("Failed to load config: {}", this.path, e);
-        }
-    }
-
-    @Override
-    public void save() {
-        try {
-            FileUtils.write(new File(this.path), this.serialize(), StandardCharsets.UTF_8);
-        } catch (Exception e) {
-            Jupiter.LOGGER.error("Failed to load config: {}", this.path, e);
-        }
+    public FakeConfigContainer copy() {
+        return new FakeConfigContainer(this);
     }
 
     public record ConfigCategory(String id, String translateKey, List<IConfigBase> configs) {
@@ -89,6 +75,10 @@ public abstract class ConfigData implements IConfigHandler {
 
         public List<IConfigBase> getConfigs() {
             return ImmutableList.copyOf(this.configs);
+        }
+
+        public ConfigCategory copy() {
+            return new ConfigCategory(this.id, this.translateKey, this.getConfigs());
         }
     }
 }

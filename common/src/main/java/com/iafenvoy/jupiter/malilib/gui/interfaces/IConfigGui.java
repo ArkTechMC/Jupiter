@@ -1,7 +1,7 @@
 package com.iafenvoy.jupiter.malilib.gui.interfaces;
 
-import com.iafenvoy.jupiter.malilib.gui.GuiConfigsBase;
 import com.iafenvoy.jupiter.malilib.config.gui.ButtonPressDirtyListenerSimple;
+import com.iafenvoy.jupiter.malilib.gui.GuiConfigsBase;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;

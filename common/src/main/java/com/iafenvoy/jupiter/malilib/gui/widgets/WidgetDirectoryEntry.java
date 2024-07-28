@@ -3,8 +3,8 @@ package com.iafenvoy.jupiter.malilib.gui.widgets;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.IDirectoryNavigator;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.IFileBrowserIconProvider;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.IGuiIcon;
-import com.iafenvoy.jupiter.malilib.util.FileUtils;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
+import com.iafenvoy.jupiter.malilib.util.FileUtils;
 import net.minecraft.client.gui.DrawContext;
 
 import java.io.File;

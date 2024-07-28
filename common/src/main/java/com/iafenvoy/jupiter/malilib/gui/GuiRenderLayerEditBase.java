@@ -1,16 +1,16 @@
 package com.iafenvoy.jupiter.malilib.gui;
 
+import com.iafenvoy.jupiter.malilib.gui.button.ButtonBase;
+import com.iafenvoy.jupiter.malilib.gui.button.ButtonGeneric;
+import com.iafenvoy.jupiter.malilib.gui.button.IButtonActionListener;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.IGuiIcon;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.ISelectionListener;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.ITextFieldListener;
+import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetCheckBox;
 import com.iafenvoy.jupiter.malilib.util.EntityUtils;
 import com.iafenvoy.jupiter.malilib.util.LayerMode;
 import com.iafenvoy.jupiter.malilib.util.LayerRange;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
-import com.iafenvoy.jupiter.malilib.gui.button.ButtonBase;
-import com.iafenvoy.jupiter.malilib.gui.button.ButtonGeneric;
-import com.iafenvoy.jupiter.malilib.gui.button.IButtonActionListener;
-import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetCheckBox;
 import net.minecraft.util.math.Direction;
 
 public abstract class GuiRenderLayerEditBase extends GuiBase {

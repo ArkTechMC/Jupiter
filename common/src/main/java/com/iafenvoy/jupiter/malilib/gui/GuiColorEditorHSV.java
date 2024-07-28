@@ -1,12 +1,12 @@
 package com.iafenvoy.jupiter.malilib.gui;
 
-import com.iafenvoy.jupiter.malilib.util.KeyCodes;
-import com.iafenvoy.jupiter.malilib.util.StringUtils;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.iafenvoy.jupiter.malilib.config.IConfigInteger;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.IDialogHandler;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.ITextFieldListener;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
+import com.iafenvoy.jupiter.malilib.util.KeyCodes;
+import com.iafenvoy.jupiter.malilib.util.StringUtils;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.*;

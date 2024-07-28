@@ -1,14 +1,14 @@
 package com.iafenvoy.jupiter.malilib.gui;
 
 import com.google.common.collect.ImmutableList;
-import com.iafenvoy.jupiter.malilib.gui.interfaces.IStringListConsumer;
-import com.iafenvoy.jupiter.malilib.interfaces.IStringListProvider;
-import com.iafenvoy.jupiter.malilib.util.StringUtils;
 import com.iafenvoy.jupiter.malilib.gui.button.ButtonBase;
 import com.iafenvoy.jupiter.malilib.gui.button.ButtonGeneric;
 import com.iafenvoy.jupiter.malilib.gui.button.IButtonActionListener;
+import com.iafenvoy.jupiter.malilib.gui.interfaces.IStringListConsumer;
 import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetListStringSelection;
 import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetStringListEntry;
+import com.iafenvoy.jupiter.malilib.interfaces.IStringListProvider;
+import com.iafenvoy.jupiter.malilib.util.StringUtils;
 
 import java.util.Collection;
 

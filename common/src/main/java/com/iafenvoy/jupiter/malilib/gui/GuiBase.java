@@ -1,10 +1,9 @@
 package com.iafenvoy.jupiter.malilib.gui;
 
-import com.iafenvoy.jupiter.malilib.gui.interfaces.IMessageConsumer;
-import com.iafenvoy.jupiter.malilib.util.KeyCodes;
 import com.iafenvoy.jupiter.malilib.config.IConfigBase;
 import com.iafenvoy.jupiter.malilib.gui.button.ButtonBase;
 import com.iafenvoy.jupiter.malilib.gui.button.IButtonActionListener;
+import com.iafenvoy.jupiter.malilib.gui.interfaces.IMessageConsumer;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.ITextFieldListener;
 import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetBase;
 import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetLabel;
@@ -12,6 +11,7 @@ import com.iafenvoy.jupiter.malilib.gui.wrappers.TextFieldWrapper;
 import com.iafenvoy.jupiter.malilib.interfaces.IStringConsumer;
 import com.iafenvoy.jupiter.malilib.render.MessageRenderer;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
+import com.iafenvoy.jupiter.malilib.util.KeyCodes;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;

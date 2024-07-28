@@ -1,20 +1,24 @@
 package com.iafenvoy.jupiter.screen;
 
-import com.iafenvoy.jupiter.api.ConfigData;
+import com.iafenvoy.jupiter.config.AbstractConfigContainer;
 import com.iafenvoy.jupiter.malilib.gui.GuiConfigsBase;
 import com.iafenvoy.jupiter.malilib.gui.button.ButtonGeneric;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 
 import java.util.List;
 
-public class AbstractConfigScreen extends GuiConfigsBase {
+@Environment(EnvType.CLIENT)
+public abstract class AbstractConfigScreen extends GuiConfigsBase {
     private static int currentTab = 0;
-    private final ConfigData configData;
+    protected final AbstractConfigContainer configContainer;
 
-    public AbstractConfigScreen(Screen parent, ConfigData configData) {
-        super(10, 50, configData.getModId(), parent, configData.getTitleNameKey());
-        this.configData = configData;
+    public AbstractConfigScreen(Screen parent, AbstractConfigContainer configContainer) {
+        super(10, 50, configContainer.getModId(), parent, configContainer.getTitleNameKey());
+        this.configContainer = configContainer;
     }
 
     @Override
@@ -23,15 +27,15 @@ public class AbstractConfigScreen extends GuiConfigsBase {
         this.clearOptions();
         int x = 10, y = 26;
         // tab buttons are set
-        List<ConfigData.ConfigCategory> configTabs = this.configData.getConfigTabs();
+        List<AbstractConfigContainer.ConfigCategory> configTabs = this.configContainer.getConfigTabs();
         for (int i = 0; i < configTabs.size(); i++) {
-            ConfigData.ConfigCategory category = configTabs.get(i);
+            AbstractConfigContainer.ConfigCategory category = configTabs.get(i);
             TabButton tabButton = new TabButton(category, x, y, -1, 20, StringUtils.translate(category.translateKey()));
             tabButton.setEnabled(i != currentTab);
             this.addButton(tabButton, (buttonBase, listener) -> {
                 this.onSettingsChanged();
                 // reload the GUI when tab button is clicked
-                currentTab = this.configData.getConfigTabs().indexOf(((TabButton) buttonBase).category);
+                currentTab = this.configContainer.getConfigTabs().indexOf(((TabButton) buttonBase).category);
                 buttonBase.setEnabled(false);
                 this.reCreateListWidget();
                 //noinspection ConstantConditions
@@ -44,7 +48,7 @@ public class AbstractConfigScreen extends GuiConfigsBase {
 
     @Override
     public String getModId() {
-        return this.configData.getModId();
+        return this.configContainer.getModId();
     }
 
     @Override
@@ -68,13 +72,23 @@ public class AbstractConfigScreen extends GuiConfigsBase {
 
     @Override
     public List<ConfigOptionWrapper> getConfigs() {
-        return ConfigOptionWrapper.createFor(this.configData.getConfigTabs().get(currentTab).getConfigs());
+        return ConfigOptionWrapper.createFor(this.configContainer.getConfigTabs().get(currentTab).getConfigs());
     }
 
-    public static class TabButton extends ButtonGeneric {
-        private final ConfigData.ConfigCategory category;
+    @Override
+    public void render(DrawContext drawContext, int mouseX, int mouseY, float partialTicks) {
+        super.render(drawContext, mouseX, mouseY, partialTicks);
+        String currentText = this.getCurrentEditText();
+        int textWidth = this.textRenderer.getWidth(currentText);
+        drawContext.drawTextWithShadow(this.textRenderer, currentText, this.width - textWidth - 10, 10, -1);
+    }
 
-        public TabButton(ConfigData.ConfigCategory category, int x, int y, int width, int height, String text, String... hoverStrings) {
+    protected abstract String getCurrentEditText();
+
+    public static class TabButton extends ButtonGeneric {
+        private final AbstractConfigContainer.ConfigCategory category;
+
+        public TabButton(AbstractConfigContainer.ConfigCategory category, int x, int y, int width, int height, String text, String... hoverStrings) {
             super(x, y, width, height, text, hoverStrings);
             this.category = category;
         }

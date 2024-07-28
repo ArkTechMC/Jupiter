@@ -11,8 +11,8 @@ public class ConfigString extends ConfigBase<ConfigString> implements IConfigVal
     private String value;
     private String previousValue;
 
-    public ConfigString(String name, String defaultValue, String comment) {
-        super(ConfigType.STRING, name, comment);
+    public ConfigString(String nameKey, String defaultValue, String comment) {
+        super(ConfigType.STRING, nameKey, comment);
 
         this.defaultValue = defaultValue;
         this.value = defaultValue;
@@ -65,10 +65,10 @@ public class ConfigString extends ConfigBase<ConfigString> implements IConfigVal
                 this.value = element.getAsString();
                 this.previousValue = this.value;
             } else {
-                MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getName(), element);
+                MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getNameKey(), element);
             }
         } catch (Exception e) {
-            MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getName(), element, e);
+            MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getNameKey(), element, e);
         }
     }
 

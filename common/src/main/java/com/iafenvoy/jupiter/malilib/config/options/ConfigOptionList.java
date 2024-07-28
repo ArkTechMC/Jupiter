@@ -12,12 +12,12 @@ public class ConfigOptionList extends ConfigBase<ConfigOptionList> implements IC
     private final IConfigOptionListEntry defaultValue;
     private IConfigOptionListEntry value;
 
-    public ConfigOptionList(String name, IConfigOptionListEntry defaultValue, String comment) {
-        this(name, defaultValue, comment, name);
+    public ConfigOptionList(String nameKey, IConfigOptionListEntry defaultValue, String comment) {
+        this(nameKey, defaultValue, comment, nameKey);
     }
 
-    public ConfigOptionList(String name, IConfigOptionListEntry defaultValue, String comment, String prettyName) {
-        super(ConfigType.OPTION_LIST, name, comment, prettyName);
+    public ConfigOptionList(String nameKey, IConfigOptionListEntry defaultValue, String comment, String prettyName) {
+        super(ConfigType.OPTION_LIST, nameKey, comment, prettyName);
 
         this.defaultValue = defaultValue;
         this.value = defaultValue;
@@ -84,10 +84,10 @@ public class ConfigOptionList extends ConfigBase<ConfigOptionList> implements IC
             if (element.isJsonPrimitive()) {
                 this.setValueFromString(element.getAsString());
             } else {
-                MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getName(), element);
+                MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getNameKey(), element);
             }
         } catch (Exception e) {
-            MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getName(), element, e);
+            MaLiLib.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getNameKey(), element, e);
         }
     }
 

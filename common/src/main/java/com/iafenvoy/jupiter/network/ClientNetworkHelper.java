@@ -1,10 +1,13 @@
 package com.iafenvoy.jupiter.network;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 
+@Environment(EnvType.CLIENT)
 public class ClientNetworkHelper {
     @ExpectPlatform
     public static void sendToServer(Identifier id, PacketByteBuf buf) {
@@ -17,6 +20,6 @@ public class ClientNetworkHelper {
     }
 
     public interface Handler {
-        Runnable handle(MinecraftClient client,PacketByteBuf buf);
+        Runnable handle(MinecraftClient client, PacketByteBuf buf);
     }
 }

@@ -2,8 +2,8 @@ package com.iafenvoy.jupiter.malilib.config.gui;
 
 import com.iafenvoy.jupiter.malilib.config.IStringRepresentable;
 import com.iafenvoy.jupiter.malilib.gui.GuiTextFieldGeneric;
-import com.iafenvoy.jupiter.malilib.gui.interfaces.ITextFieldListener;
 import com.iafenvoy.jupiter.malilib.gui.button.ButtonBase;
+import com.iafenvoy.jupiter.malilib.gui.interfaces.ITextFieldListener;
 
 public class ConfigOptionChangeListenerTextField implements ITextFieldListener<GuiTextFieldGeneric> {
     protected final IStringRepresentable config;

@@ -4,8 +4,8 @@ import com.iafenvoy.jupiter.malilib.gui.GuiBase;
 import com.iafenvoy.jupiter.malilib.gui.GuiTextFieldGeneric;
 import com.iafenvoy.jupiter.malilib.gui.LeftRight;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.IGuiIcon;
-import com.iafenvoy.jupiter.malilib.util.KeyCodes;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
+import com.iafenvoy.jupiter.malilib.util.KeyCodes;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.gui.DrawContext;
 

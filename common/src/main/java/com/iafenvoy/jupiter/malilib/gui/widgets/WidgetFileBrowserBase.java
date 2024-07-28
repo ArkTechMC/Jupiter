@@ -4,10 +4,10 @@ import com.iafenvoy.jupiter.malilib.gui.interfaces.IDirectoryCache;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.IDirectoryNavigator;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.IFileBrowserIconProvider;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.ISelectionListener;
-import com.iafenvoy.jupiter.malilib.util.FileUtils;
-import com.iafenvoy.jupiter.malilib.util.KeyCodes;
 import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetFileBrowserBase.DirectoryEntry;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
+import com.iafenvoy.jupiter.malilib.util.FileUtils;
+import com.iafenvoy.jupiter.malilib.util.KeyCodes;
 import net.minecraft.client.gui.DrawContext;
 import org.jetbrains.annotations.Nullable;
 

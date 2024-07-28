@@ -1,9 +1,6 @@
 package com.iafenvoy.jupiter.malilib.gui;
 
 import com.google.common.collect.ImmutableList;
-import com.iafenvoy.jupiter.malilib.util.GuiUtils;
-import com.iafenvoy.jupiter.malilib.util.KeyCodes;
-import com.iafenvoy.jupiter.malilib.util.StringUtils;
 import com.iafenvoy.jupiter.malilib.config.ConfigManager;
 import com.iafenvoy.jupiter.malilib.config.IConfigBase;
 import com.iafenvoy.jupiter.malilib.config.gui.ButtonPressDirtyListenerSimple;
@@ -13,6 +10,9 @@ import com.iafenvoy.jupiter.malilib.gui.interfaces.IConfigInfoProvider;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.IDialogHandler;
 import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetConfigOption;
 import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetListConfigOptions;
+import com.iafenvoy.jupiter.malilib.util.GuiUtils;
+import com.iafenvoy.jupiter.malilib.util.KeyCodes;
+import com.iafenvoy.jupiter.malilib.util.StringUtils;
 import net.minecraft.client.gui.screen.Screen;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,8 +32,8 @@ public abstract class GuiConfigsBase extends GuiListBase<ConfigOptionWrapper, Wi
 
     public GuiConfigsBase(int listX, int listY, String modId, @Nullable Screen parent, String titleKey, Object... args) {
         super(listX, listY);
-
         this.modId = modId;
+        this.setParent(parent);
         this.title = StringUtils.translate(titleKey, args);
     }
 
@@ -57,11 +57,6 @@ public abstract class GuiConfigsBase extends GuiListBase<ConfigOptionWrapper, Wi
 
     public GuiConfigsBase setConfigWidth(int configWidth) {
         this.configWidth = configWidth;
-        return this;
-    }
-
-    public GuiConfigsBase setHoverInfoProvider(IConfigInfoProvider provider) {
-        this.hoverInfoProvider = provider;
         return this;
     }
 
@@ -109,10 +104,7 @@ public abstract class GuiConfigsBase extends GuiListBase<ConfigOptionWrapper, Wi
 
     @Override
     public boolean onMouseClicked(int mouseX, int mouseY, int mouseButton) {
-        if (super.onMouseClicked(mouseX, mouseY, mouseButton)) {
-            return true;
-        }
-        return false;
+        return super.onMouseClicked(mouseX, mouseY, mouseButton);
     }
 
     protected void updateKeybindButtons() {
@@ -123,9 +115,13 @@ public abstract class GuiConfigsBase extends GuiListBase<ConfigOptionWrapper, Wi
 
     @Override
     @Nullable
-    public IConfigInfoProvider getHoverInfoProvider()
-    {
+    public IConfigInfoProvider getHoverInfoProvider() {
         return this.hoverInfoProvider;
+    }
+
+    public GuiConfigsBase setHoverInfoProvider(IConfigInfoProvider provider) {
+        this.hoverInfoProvider = provider;
+        return this;
     }
 
     @Override
@@ -134,8 +130,7 @@ public abstract class GuiConfigsBase extends GuiListBase<ConfigOptionWrapper, Wi
     }
 
     @Override
-    public ButtonPressDirtyListenerSimple getButtonPressListener()
-    {
+    public ButtonPressDirtyListenerSimple getButtonPressListener() {
         return this.dirtyListener;
     }
 

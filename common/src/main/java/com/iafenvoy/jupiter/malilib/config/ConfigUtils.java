@@ -2,8 +2,8 @@ package com.iafenvoy.jupiter.malilib.config;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonObject;
-import com.iafenvoy.jupiter.malilib.util.JsonUtils;
 import com.iafenvoy.jupiter.malilib.config.options.ConfigTypeWrapper;
+import com.iafenvoy.jupiter.malilib.util.JsonUtils;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class ConfigUtils {
 
         if (obj != null) {
             for (IConfigBase option : options) {
-                String name = option.getName();
+                String name = option.getNameKey();
 
                 if (obj.has(name)) {
                     option.setValueFromJsonElement(obj.get(name));
@@ -26,7 +26,7 @@ public class ConfigUtils {
         JsonObject obj = JsonUtils.getNestedObject(root, category, true);
 
         for (IConfigBase option : options) {
-            obj.add(option.getName(), option.getAsJsonElement());
+            obj.add(option.getNameKey(), option.getAsJsonElement());
         }
     }
 

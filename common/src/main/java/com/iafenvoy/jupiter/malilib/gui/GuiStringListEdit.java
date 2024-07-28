@@ -1,8 +1,5 @@
 package com.iafenvoy.jupiter.malilib.gui;
 
-import com.iafenvoy.jupiter.malilib.util.GuiUtils;
-import com.iafenvoy.jupiter.malilib.util.KeyCodes;
-import com.iafenvoy.jupiter.malilib.util.StringUtils;
 import com.iafenvoy.jupiter.malilib.config.ConfigManager;
 import com.iafenvoy.jupiter.malilib.config.IConfigStringList;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.IConfigGui;
@@ -10,6 +7,9 @@ import com.iafenvoy.jupiter.malilib.gui.interfaces.IDialogHandler;
 import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetListStringListEdit;
 import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetStringListEditEntry;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
+import com.iafenvoy.jupiter.malilib.util.GuiUtils;
+import com.iafenvoy.jupiter.malilib.util.KeyCodes;
+import com.iafenvoy.jupiter.malilib.util.StringUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import org.jetbrains.annotations.Nullable;
@@ -32,7 +32,7 @@ public class GuiStringListEdit extends GuiListBase<String, WidgetStringListEditE
         this.config = config;
         this.configGui = configGui;
         this.dialogHandler = dialogHandler;
-        this.title = StringUtils.translate("malilib.gui.title.string_list_edit", config.getName());
+        this.title = StringUtils.translate("malilib.gui.title.string_list_edit", config.getNameKey());
 
         // When we have a dialog handler, then we are inside the Liteloader config menu.
         // In there we don't want to use the normal "GUI replacement and render parent first" trick.

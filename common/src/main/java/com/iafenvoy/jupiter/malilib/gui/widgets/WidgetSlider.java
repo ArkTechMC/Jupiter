@@ -7,10 +7,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
 public class WidgetSlider extends WidgetBase {
-    protected static final Identifier WIDGET_TEXTURE = new Identifier("textures/gui/widgets.png");
     public static final Identifier BUTTON_TEXTURE = new Identifier("widget/button");
     public static final Identifier BUTTON_DISABLE_TEXTURE = new Identifier("widget/button_disabled");
-
+    protected static final Identifier WIDGET_TEXTURE = new Identifier("textures/gui/widgets.png");
     protected final ISliderCallback callback;
     protected int sliderWidth;
     protected int lastMouseX;

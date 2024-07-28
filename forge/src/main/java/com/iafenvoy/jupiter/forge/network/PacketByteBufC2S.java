@@ -1,6 +1,5 @@
 package com.iafenvoy.jupiter.forge.network;
 
-import com.iafenvoy.jupiter.network.ByteBufUtil;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import net.minecraftforge.network.NetworkEvent;

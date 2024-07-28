@@ -33,8 +33,8 @@ public class ServerConfigManager {
     public interface PermissionChecker {
         PermissionChecker ALWAYS_TRUE = (server, player) -> true;
         PermissionChecker ALWAYS_FALSE = (server, player) -> false;
-        PermissionChecker IS_SERVER = (server, player) -> server.isDedicated();
-        PermissionChecker IS_LOCAL_GAME = (server, player) -> !IS_SERVER.check(server, player);
+        PermissionChecker IS_DEDICATE_SERVER = (server, player) -> server.isDedicated();
+        PermissionChecker IS_LOCAL_GAME = (server, player) -> !IS_DEDICATE_SERVER.check(server, player);
         PermissionChecker IS_OPERATOR = (server, player) -> IS_LOCAL_GAME.check(server, player) || player.hasPermissionLevel(server.getOpPermissionLevel());
 
         boolean check(MinecraftServer server, ServerPlayerEntity player);

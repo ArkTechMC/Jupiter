@@ -53,3 +53,19 @@ subprojects {
         it.options.release = 17
     }
 }
+
+tasks.register('copyJars', Copy) {
+    from('fabric/build/libs') {
+        include "${rootProject.archives_name}-fabric-${rootProject.mod_version}.jar"
+        rename { String fileName ->
+            "${rootProject.archives_name}-${rootProject.mod_version}-fabric.jar"
+        }
+    }
+    from('forge/build/libs') {
+        include "${rootProject.archives_name}-forge-${rootProject.mod_version}.jar"
+        rename { String fileName ->
+            "${rootProject.archives_name}-${rootProject.mod_version}-forge.jar"
+        }
+    }
+    into 'build/libs'
+}

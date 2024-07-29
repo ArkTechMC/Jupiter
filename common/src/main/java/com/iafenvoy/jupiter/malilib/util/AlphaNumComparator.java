@@ -1,7 +1,5 @@
 package com.iafenvoy.jupiter.malilib.util;
 
-import java.util.Comparator;
-
 /*
  * The Alphanum Algorithm is an improved sorting algorithm for strings
  * containing numbers.  Instead of sorting numbers in ASCII order like
@@ -41,7 +39,7 @@ import java.util.Comparator;
  * Collections.sort(your list, new AlphanumComparator());
  */
 public class AlphaNumComparator {
-    private final boolean isDigit(char ch) {
+    private boolean isDigit(char ch) {
         return ((ch >= 48) && (ch <= 57));
     }
 
@@ -121,6 +119,4 @@ public class AlphaNumComparator {
         return s1Length - s2Length;
     }
 
-    public static class AlphaNumStringComparator extends AlphaNumComparator implements Comparator<String> {
-    }
 }

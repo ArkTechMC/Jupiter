@@ -28,7 +28,7 @@ public class ButtonGeneric extends ButtonBase {
         this.textCentered = true;
     }
 
-    public ButtonGeneric(int x, int y, int width, int height, String text, IGuiIcon icon, String... hoverStrings) {
+    public ButtonGeneric(int x, int y, int width, int height, String text, @Nullable IGuiIcon icon, String... hoverStrings) {
         super(x, y, width, height, text);
 
         this.icon = icon;

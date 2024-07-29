@@ -2,7 +2,6 @@ package com.iafenvoy.jupiter.malilib.gui;
 
 import net.minecraft.client.font.TextRenderer;
 
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 public class GuiTextFieldDouble extends GuiTextFieldGeneric {
@@ -11,11 +10,6 @@ public class GuiTextFieldDouble extends GuiTextFieldGeneric {
     public GuiTextFieldDouble(int x, int y, int width, int height, TextRenderer fontRenderer) {
         super(x, y, width, height, fontRenderer);
 
-        this.setTextPredicate(new Predicate<String>() {
-            @Override
-            public boolean test(String input) {
-                return input.length() <= 0 || PATTER_NUMBER.matcher(input).matches();
-            }
-        });
+        this.setTextPredicate(input -> input.isEmpty() || PATTER_NUMBER.matcher(input).matches());
     }
 }

@@ -13,21 +13,17 @@ public class WidgetHoverInfo extends WidgetBase {
 
     public WidgetHoverInfo(int x, int y, int width, int height, String key, Object... args) {
         super(x, y, width, height);
-
         this.setInfoLines(key, args);
     }
 
     protected void setInfoLines(String key, Object... args) {
         String[] split = StringUtils.translate(key, args).split("\\n");
-
         Collections.addAll(this.lines, split);
     }
 
     /**
      * Adds the provided lines to the list.
      * The strings will be split into separate lines from any "\n" sequences.
-     *
-     * @param lines
      */
     public void addLines(String... lines) {
         for (String line : lines) {
@@ -40,10 +36,6 @@ public class WidgetHoverInfo extends WidgetBase {
 
     public List<String> getLines() {
         return this.lines;
-    }
-
-    @Override
-    public void render(int mouseX, int mouseY, boolean selected, DrawContext drawContext) {
     }
 
     @Override

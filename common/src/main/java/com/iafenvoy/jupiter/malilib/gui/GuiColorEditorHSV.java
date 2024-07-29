@@ -4,7 +4,6 @@ import com.iafenvoy.jupiter.malilib.config.IConfigInteger;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.IDialogHandler;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.ITextFieldListener;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
-import com.iafenvoy.jupiter.malilib.util.KeyCodes;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
@@ -12,6 +11,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.*;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
 
@@ -327,7 +327,7 @@ public class GuiColorEditorHSV extends GuiDialogBase {
 
     @Override
     public boolean onKeyTyped(int keyCode, int scanCode, int modifiers) {
-        if (keyCode == KeyCodes.KEY_ESCAPE && this.dialogHandler != null) {
+        if (keyCode == GLFW.GLFW_KEY_ESCAPE && this.dialogHandler != null) {
             this.dialogHandler.closeDialog();
             return true;
         } else {
@@ -448,9 +448,8 @@ public class GuiColorEditorHSV extends GuiDialogBase {
         } else if (element == Element.H_FULL_SV) {
             mouseY = MathHelper.clamp(mouseY, this.yHS, this.yHS + this.sizeHS);
             int relY = mouseY - this.yHS;
-            float hue = 1f - ((float) relY / (float) this.sizeHS);
 
-            this.relH = hue;
+            this.relH = 1f - ((float) relY / (float) this.sizeHS);
             this.setRGBFromHSV();
             this.updateTextField(Element.H);
         } else {
@@ -747,77 +746,70 @@ public class GuiColorEditorHSV extends GuiDialogBase {
         HEX
     }
 
-    protected static class TextFieldListener implements ITextFieldListener<GuiTextFieldGeneric> {
-        protected final GuiColorEditorHSV gui;
-        @Nullable
-        protected final Element type;
-
-        protected TextFieldListener(@Nullable Element type, GuiColorEditorHSV gui) {
-            this.gui = gui;
-            this.type = type;
-        }
+    protected record TextFieldListener(@Nullable Element type,
+                                       GuiColorEditorHSV gui) implements ITextFieldListener<GuiTextFieldGeneric> {
 
         @Override
-        public boolean onTextChange(GuiTextFieldGeneric textField) {
-            int colorOld = this.gui.color;
+            public boolean onTextChange(GuiTextFieldGeneric textField) {
+                int colorOld = this.gui.color;
 
-            // Entire color code
-            if (this.type == null) {
-                this.gui.currentTextInputElement = Element.HEX;
-                this.gui.setColor(StringUtils.getColor(textField.getText(), colorOld));
-            } else {
-                try {
-                    int val = Integer.parseInt(textField.getText());
-                    float[] hsv = this.gui.getCurrentColorHSV();
-                    int colorNew = colorOld;
+                // Entire color code
+                if (this.type == null) {
+                    this.gui.currentTextInputElement = Element.HEX;
+                    this.gui.setColor(StringUtils.getColor(textField.getText(), colorOld));
+                } else {
+                    try {
+                        int val = Integer.parseInt(textField.getText());
+                        float[] hsv = this.gui.getCurrentColorHSV();
+                        int colorNew = colorOld;
 
-                    switch (this.type) {
-                        case H:
-                            val = MathHelper.clamp(val, 0, 360);
-                            float h = (float) val / 360f;
-                            colorNew = Color.HSBtoRGB(h, hsv[1], hsv[2]);
-                            break;
-                        case S:
-                            val = MathHelper.clamp(val, 0, 100);
-                            float s = (float) val / 100f;
-                            colorNew = Color.HSBtoRGB(hsv[0], s, hsv[2]);
-                            break;
-                        case V:
-                            val = MathHelper.clamp(val, 0, 100);
-                            float v = (float) val / 100f;
-                            colorNew = Color.HSBtoRGB(hsv[0], hsv[1], v);
-                            break;
-                        case R:
-                            val = MathHelper.clamp(val, 0, 255);
-                            colorNew = (colorOld & 0x00FFFF) | (val << 16);
-                            break;
-                        case G:
-                            val = MathHelper.clamp(val, 0, 255);
-                            colorNew = (colorOld & 0xFF00FF) | (val << 8);
-                            break;
-                        case B:
-                            val = MathHelper.clamp(val, 0, 255);
-                            colorNew = (colorOld & 0xFFFF00) | val;
-                            break;
-                        case A:
-                            val = MathHelper.clamp(val, 0, 255);
-                            colorNew = (colorOld & 0x00FFFFFF) | (val << 24);
-                            break;
-                        default:
-                            return false;
+                        switch (this.type) {
+                            case H:
+                                val = MathHelper.clamp(val, 0, 360);
+                                float h = (float) val / 360f;
+                                colorNew = Color.HSBtoRGB(h, hsv[1], hsv[2]);
+                                break;
+                            case S:
+                                val = MathHelper.clamp(val, 0, 100);
+                                float s = (float) val / 100f;
+                                colorNew = Color.HSBtoRGB(hsv[0], s, hsv[2]);
+                                break;
+                            case V:
+                                val = MathHelper.clamp(val, 0, 100);
+                                float v = (float) val / 100f;
+                                colorNew = Color.HSBtoRGB(hsv[0], hsv[1], v);
+                                break;
+                            case R:
+                                val = MathHelper.clamp(val, 0, 255);
+                                colorNew = (colorOld & 0x00FFFF) | (val << 16);
+                                break;
+                            case G:
+                                val = MathHelper.clamp(val, 0, 255);
+                                colorNew = (colorOld & 0xFF00FF) | (val << 8);
+                                break;
+                            case B:
+                                val = MathHelper.clamp(val, 0, 255);
+                                colorNew = (colorOld & 0xFFFF00) | val;
+                                break;
+                            case A:
+                                val = MathHelper.clamp(val, 0, 255);
+                                colorNew = (colorOld & 0x00FFFFFF) | (val << 24);
+                                break;
+                            default:
+                                return false;
+                        }
+
+                        if (colorNew != colorOld) {
+                            this.gui.currentTextInputElement = this.type;
+                            this.gui.setColor(colorNew);
+                        }
+
+                        return true;
+                    } catch (Exception e) {
                     }
-
-                    if (colorNew != colorOld) {
-                        this.gui.currentTextInputElement = this.type;
-                        this.gui.setColor(colorNew);
-                    }
-
-                    return true;
-                } catch (Exception e) {
                 }
-            }
 
-            return false;
+                return false;
+            }
         }
-    }
 }

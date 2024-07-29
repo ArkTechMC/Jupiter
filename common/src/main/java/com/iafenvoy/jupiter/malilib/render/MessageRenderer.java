@@ -88,8 +88,8 @@ public class MessageRenderer {
     public int getMessagesHeight() {
         int height = 0;
 
-        for (int i = 0; i < this.messages.size(); ++i) {
-            height += this.messages.get(i).getMessageHeight();
+        for (Message message : this.messages) {
+            height += message.getMessageHeight();
         }
 
         return height;

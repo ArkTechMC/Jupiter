@@ -68,7 +68,7 @@ public class WidgetDropDownList<T> extends WidgetBase {
 
         TextFieldListener listener = new TextFieldListener(this);
         this.searchBar = new TextFieldWrapper<>(new GuiTextFieldGeneric(x + 1, y - 18, this.width - 2, 16, this.textRenderer), listener);
-        this.searchBar.getTextField().setFocused(true);
+        this.searchBar.textField().setFocused(true);
 
         this.updateFilteredEntries();
     }
@@ -77,16 +77,16 @@ public class WidgetDropDownList<T> extends WidgetBase {
     public void setPosition(int x, int y) {
         super.setPosition(x, y);
 
-        this.searchBar.getTextField().setX(x + 1);
-        this.searchBar.getTextField().setY(y - 18);
+        this.searchBar.textField().setX(x + 1);
+        this.searchBar.textField().setY(y - 18);
     }
 
     protected int getRequiredWidth(int width, List<T> entries, MinecraftClient mc) {
         if (width == -1) {
             width = 0;
 
-            for (int i = 0; i < entries.size(); ++i) {
-                width = Math.max(width, this.getStringWidth(this.getDisplayString(entries.get(i))) + 20);
+            for (T entry : entries) {
+                width = Math.max(width, this.getStringWidth(this.getDisplayString(entry)) + 20);
             }
         }
 
@@ -142,7 +142,7 @@ public class WidgetDropDownList<T> extends WidgetBase {
             this.isOpen = !this.isOpen;
 
             if (!this.isOpen) {
-                this.searchBar.getTextField().setText("");
+                this.searchBar.textField().setText("");
                 this.updateFilteredEntries();
             }
         }
@@ -185,12 +185,10 @@ public class WidgetDropDownList<T> extends WidgetBase {
 
     protected void updateFilteredEntries() {
         this.filteredEntries.clear();
-        String filterText = this.searchBar.getTextField().getText();
+        String filterText = this.searchBar.textField().getText();
 
         if (this.isOpen && !filterText.isEmpty()) {
-            for (int i = 0; i < this.entries.size(); ++i) {
-                T entry = this.entries.get(i);
-
+            for (T entry : this.entries) {
                 if (this.entryMatchesFilter(entry, filterText)) {
                     this.filteredEntries.add(entry);
                 }
@@ -205,7 +203,7 @@ public class WidgetDropDownList<T> extends WidgetBase {
     }
 
     protected boolean entryMatchesFilter(T entry, String filterText) {
-        return filterText.isEmpty() || this.getDisplayString(entry).toLowerCase().indexOf(filterText) != -1;
+        return filterText.isEmpty() || this.getDisplayString(entry).toLowerCase().contains(filterText);
     }
 
     protected String getDisplayString(T entry) {
@@ -247,7 +245,7 @@ public class WidgetDropDownList<T> extends WidgetBase {
         int scrollWidth = 10;
 
         if (this.isOpen) {
-            if (!this.searchBar.getTextField().getText().isEmpty()) {
+            if (!this.searchBar.textField().getText().isEmpty()) {
                 this.searchBar.draw(mouseX, mouseY, drawContext);
             }
 
@@ -294,17 +292,13 @@ public class WidgetDropDownList<T> extends WidgetBase {
         matrixStackIn.pop();
     }
 
-    protected static class TextFieldListener implements ITextFieldListener<GuiTextFieldGeneric> {
-        protected final WidgetDropDownList<?> widget;
-
-        protected TextFieldListener(WidgetDropDownList<?> widget) {
-            this.widget = widget;
-        }
+    protected record TextFieldListener(
+            WidgetDropDownList<?> widget) implements ITextFieldListener<GuiTextFieldGeneric> {
 
         @Override
-        public boolean onTextChange(GuiTextFieldGeneric textField) {
-            this.widget.updateFilteredEntries();
-            return true;
+            public boolean onTextChange(GuiTextFieldGeneric textField) {
+                this.widget.updateFilteredEntries();
+                return true;
+            }
         }
-    }
 }

@@ -11,7 +11,6 @@ import com.iafenvoy.jupiter.malilib.gui.wrappers.TextFieldWrapper;
 import com.iafenvoy.jupiter.malilib.interfaces.IStringConsumer;
 import com.iafenvoy.jupiter.malilib.render.MessageRenderer;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
-import com.iafenvoy.jupiter.malilib.util.KeyCodes;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
@@ -21,6 +20,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -290,14 +290,14 @@ public abstract class GuiBase extends Screen implements IMessageConsumer, IStrin
             TextFieldWrapper<?> entry = this.textFields.get(i);
 
             if (entry.isFocused()) {
-                if (keyCode == KeyCodes.KEY_TAB) {
+                if (keyCode == GLFW.GLFW_KEY_TAB) {
                     entry.setFocused(false);
                     selected = i;
                 } else {
                     entry.onKeyTyped(keyCode, scanCode, modifiers);
                 }
 
-                handled = keyCode != KeyCodes.KEY_ESCAPE;
+                handled = keyCode != GLFW.GLFW_KEY_ESCAPE;
                 break;
             }
         }
@@ -313,7 +313,7 @@ public abstract class GuiBase extends Screen implements IMessageConsumer, IStrin
         }
 
         if (!handled) {
-            if (keyCode == KeyCodes.KEY_ESCAPE) {
+            if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
                 this.closeGui(!isShiftDown());
 
                 return true;

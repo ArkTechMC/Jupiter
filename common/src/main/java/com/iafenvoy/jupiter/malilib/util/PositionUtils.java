@@ -39,16 +39,12 @@ public class PositionUtils {
     }
 
     public static BlockPos setValue(CoordinateType type, BlockPos valueIn, int newValue) {
-        switch (type) {
-            case X:
-                return BlockPos.ofFloored(newValue, valueIn.getY(), valueIn.getZ());
-            case Y:
-                return BlockPos.ofFloored(valueIn.getX(), newValue, valueIn.getZ());
-            case Z:
-                return BlockPos.ofFloored(valueIn.getX(), valueIn.getY(), newValue);
-        }
+        return switch (type) {
+            case X -> BlockPos.ofFloored(newValue, valueIn.getY(), valueIn.getZ());
+            case Y -> BlockPos.ofFloored(valueIn.getX(), newValue, valueIn.getZ());
+            case Z -> BlockPos.ofFloored(valueIn.getX(), valueIn.getY(), newValue);
+        };
 
-        return valueIn;
     }
 
     public static BlockPos getEntityBlockPos(Entity entity) {
@@ -117,19 +113,14 @@ public class PositionUtils {
 
         y = Math.floor(y + entity.getStandingEyeHeight());
 
-        switch (entity.getHorizontalFacing()) {
-            case EAST:
-                return BlockPos.ofFloored((int) Math.ceil(x + w / 2), (int) y, (int) Math.floor(z));
-            case WEST:
-                return BlockPos.ofFloored((int) Math.floor(x - w / 2) - 1, (int) y, (int) Math.floor(z));
-            case SOUTH:
-                return BlockPos.ofFloored((int) Math.floor(x), (int) y, (int) Math.ceil(z + w / 2));
-            case NORTH:
-                return BlockPos.ofFloored((int) Math.floor(x), (int) y, (int) Math.floor(z - w / 2) - 1);
-            default:
-        }
+        return switch (entity.getHorizontalFacing()) {
+            case EAST -> BlockPos.ofFloored((int) Math.ceil(x + w / 2), (int) y, (int) Math.floor(z));
+            case WEST -> BlockPos.ofFloored((int) Math.floor(x - w / 2) - 1, (int) y, (int) Math.floor(z));
+            case SOUTH -> BlockPos.ofFloored((int) Math.floor(x), (int) y, (int) Math.ceil(z + w / 2));
+            case NORTH -> BlockPos.ofFloored((int) Math.floor(x), (int) y, (int) Math.floor(z - w / 2) - 1);
+            default -> pos;
+        };
 
-        return pos;
     }
 
     /**
@@ -144,22 +135,15 @@ public class PositionUtils {
         int y = basePos.getY();
         int z = basePos.getZ();
 
-        switch (facing) {
-            case UP:
-                return new Vec3d(x + 0.5, y + 1, z + 0.5);
-            case DOWN:
-                return new Vec3d(x + 0.5, y, z + 0.5);
-            case NORTH:
-                return new Vec3d(x + 0.5, y + 0.5, z);
-            case SOUTH:
-                return new Vec3d(x + 0.5, y + 0.5, z + 1);
-            case WEST:
-                return new Vec3d(x, y + 0.5, z);
-            case EAST:
-                return new Vec3d(x + 1, y + 0.5, z + 1);
-            default:
-                return new Vec3d(x, y, z);
-        }
+        return switch (facing) {
+            case UP -> new Vec3d(x + 0.5, y + 1, z + 0.5);
+            case DOWN -> new Vec3d(x + 0.5, y, z + 0.5);
+            case NORTH -> new Vec3d(x + 0.5, y + 0.5, z);
+            case SOUTH -> new Vec3d(x + 0.5, y + 0.5, z + 1);
+            case WEST -> new Vec3d(x, y + 0.5, z);
+            case EAST -> new Vec3d(x + 1, y + 0.5, z + 1);
+            default -> new Vec3d(x, y, z);
+        };
     }
 
     /**

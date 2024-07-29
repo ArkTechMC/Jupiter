@@ -7,9 +7,9 @@ import com.iafenvoy.jupiter.malilib.gui.interfaces.ISelectionListener;
 import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetFileBrowserBase.DirectoryEntry;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
 import com.iafenvoy.jupiter.malilib.util.FileUtils;
-import com.iafenvoy.jupiter.malilib.util.KeyCodes;
 import net.minecraft.client.gui.DrawContext;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.glfw.GLFW;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -54,10 +54,10 @@ public abstract class WidgetFileBrowserBase extends WidgetListBase<DirectoryEntr
             return true;
         }
 
-        if ((keyCode == KeyCodes.KEY_BACKSPACE || keyCode == KeyCodes.KEY_LEFT) && !this.currentDirectoryIsRoot()) {
+        if ((keyCode == GLFW.GLFW_KEY_BACKSPACE || keyCode == GLFW.GLFW_KEY_LEFT) && !this.currentDirectoryIsRoot()) {
             this.switchToParentDirectory();
             return true;
-        } else if ((keyCode == KeyCodes.KEY_RIGHT || keyCode == KeyCodes.KEY_ENTER) &&
+        } else if ((keyCode == GLFW.GLFW_KEY_RIGHT || keyCode == GLFW.GLFW_KEY_ENTER) &&
                 this.getLastSelectedEntry() != null && this.getLastSelectedEntry().getType() == DirectoryEntryType.DIRECTORY) {
             this.switchToDirectory(new File(this.getLastSelectedEntry().getDirectory(), this.getLastSelectedEntry().getName()));
             return true;

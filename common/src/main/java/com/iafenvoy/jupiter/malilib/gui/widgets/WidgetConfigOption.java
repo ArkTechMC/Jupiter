@@ -132,7 +132,7 @@ public class WidgetConfigOption extends WidgetConfigOptionBase<GuiConfigsBase.Co
 
             if (config instanceof IStringRepresentable) {
                 if (this.textField != null) {
-                    modified |= !this.initialStringValue.equals(this.textField.getTextField().getText());
+                    modified |= !this.initialStringValue.equals(this.textField.textField().getText());
                 }
 
                 return modified || !this.initialStringValue.equals(((IStringRepresentable) config).getStringValue());
@@ -149,7 +149,7 @@ public class WidgetConfigOption extends WidgetConfigOptionBase<GuiConfigsBase.Co
         if (this.wrapper.getType() == GuiConfigsBase.ConfigOptionWrapper.Type.CONFIG &&
                 this.wrapper.getConfig() instanceof IStringRepresentable config) {
             if (this.textField != null && this.hasPendingModifications()) {
-                config.setValueFromString(this.textField.getTextField().getText());
+                config.setValueFromString(this.textField.textField().getText());
             }
 
             this.lastAppliedValue = config.getStringValue();

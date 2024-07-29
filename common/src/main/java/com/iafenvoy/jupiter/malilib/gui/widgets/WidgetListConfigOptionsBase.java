@@ -2,8 +2,8 @@ package com.iafenvoy.jupiter.malilib.gui.widgets;
 
 import com.iafenvoy.jupiter.malilib.gui.GuiTextFieldGeneric;
 import com.iafenvoy.jupiter.malilib.gui.wrappers.TextFieldWrapper;
-import com.iafenvoy.jupiter.malilib.util.KeyCodes;
 import net.minecraft.client.gui.screen.Screen;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public abstract class WidgetListConfigOptionsBase<TYPE, WIDGET extends WidgetCon
 
     @Override
     public boolean onKeyTyped(int keyCode, int scanCode, int modifiers) {
-        if (keyCode == KeyCodes.KEY_TAB) {
+        if (keyCode == GLFW.GLFW_KEY_TAB) {
             return this.changeTextFieldFocus(Screen.hasShiftDown());
         } else {
             for (WIDGET widget : this.listWidgets) {
@@ -80,7 +80,7 @@ public abstract class WidgetListConfigOptionsBase<TYPE, WIDGET extends WidgetCon
             int currentIndex = -1;
 
             for (int i = 0; i < size; ++i) {
-                GuiTextFieldGeneric textField = this.textFields.get(i).getTextField();
+                GuiTextFieldGeneric textField = this.textFields.get(i).textField();
 
                 if (textField.isFocused()) {
                     currentIndex = i;
@@ -98,7 +98,7 @@ public abstract class WidgetListConfigOptionsBase<TYPE, WIDGET extends WidgetCon
                     newIndex = size - 1;
                 }
 
-                this.textFields.get(newIndex).getTextField().setFocused(true);
+                this.textFields.get(newIndex).textField().setFocused(true);
                 this.applyPendingModifications();
 
                 return true;
@@ -111,8 +111,8 @@ public abstract class WidgetListConfigOptionsBase<TYPE, WIDGET extends WidgetCon
     protected void clearTextFieldFocus() {
         this.applyPendingModifications();
 
-        for (int i = 0; i < this.textFields.size(); ++i) {
-            GuiTextFieldGeneric textField = this.textFields.get(i).getTextField();
+        for (TextFieldWrapper<? extends GuiTextFieldGeneric> field : this.textFields) {
+            GuiTextFieldGeneric textField = field.textField();
 
             if (textField.isFocused()) {
                 textField.setFocused(false);

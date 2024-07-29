@@ -11,10 +11,10 @@ import com.iafenvoy.jupiter.malilib.gui.interfaces.IDialogHandler;
 import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetConfigOption;
 import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetListConfigOptions;
 import com.iafenvoy.jupiter.malilib.util.GuiUtils;
-import com.iafenvoy.jupiter.malilib.util.KeyCodes;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
 import net.minecraft.client.gui.screen.Screen;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -85,7 +85,7 @@ public abstract class GuiConfigsBase extends GuiListBase<ConfigOptionWrapper, Wi
             return true;
         }
 
-        if (keyCode == KeyCodes.KEY_ESCAPE && this.getParent() != GuiUtils.getCurrentScreen()) {
+        if (keyCode == GLFW.GLFW_KEY_ESCAPE && this.getParent() != GuiUtils.getCurrentScreen()) {
             this.closeGui(true);
             return true;
         }
@@ -141,13 +141,13 @@ public abstract class GuiConfigsBase extends GuiListBase<ConfigOptionWrapper, Wi
         @Nullable
         private final String label;
 
-        public ConfigOptionWrapper(IConfigBase config) {
+        public ConfigOptionWrapper(@Nullable IConfigBase config) {
             this.type = Type.CONFIG;
             this.config = config;
             this.label = null;
         }
 
-        public ConfigOptionWrapper(String label) {
+        public ConfigOptionWrapper(@Nullable String label) {
             this.type = Type.LABEL;
             this.config = null;
             this.label = label;

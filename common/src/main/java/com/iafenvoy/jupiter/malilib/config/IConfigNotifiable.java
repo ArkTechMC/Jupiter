@@ -5,5 +5,5 @@ import com.iafenvoy.jupiter.malilib.interfaces.IValueChangeCallback;
 public interface IConfigNotifiable<T extends IConfigBase> {
     void onValueChanged();
 
-    void setValueChangeCallback(IValueChangeCallback<T> callback);
+    IConfigBase setValueChangeCallback(IValueChangeCallback<T> callback);
 }

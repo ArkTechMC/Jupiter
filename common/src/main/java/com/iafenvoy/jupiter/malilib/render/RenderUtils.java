@@ -2,7 +2,9 @@ package com.iafenvoy.jupiter.malilib.render;
 
 import com.iafenvoy.jupiter.malilib.config.HudAlignment;
 import com.iafenvoy.jupiter.malilib.gui.GuiBase;
-import com.iafenvoy.jupiter.malilib.util.*;
+import com.iafenvoy.jupiter.malilib.util.Color4f;
+import com.iafenvoy.jupiter.malilib.util.GuiUtils;
+import com.iafenvoy.jupiter.malilib.util.PositionUtils;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.block.BlockState;
@@ -20,16 +22,16 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.FilledMapItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.map.MapState;
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.RotationAxis;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.LocalRandom;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
@@ -231,9 +233,7 @@ public class RenderUtils {
             drawGradientRect(textStartX - 3, textStartY - 3, textStartX + maxLineLength + 3, textStartY - 3 + 1, zLevel, fillColor1, fillColor1);
             drawGradientRect(textStartX - 3, textStartY + textHeight + 2, textStartX + maxLineLength + 3, textStartY + textHeight + 3, zLevel, fillColor2, fillColor2);
 
-            for (int i = 0; i < textLines.size(); ++i) {
-                String str = textLines.get(i);
-
+            for (String str : textLines) {
                 drawContext.drawText(font, str, textStartX, textStartY, 0xFFFFFFFF, false);
                 textStartY += lineHeight;
             }
@@ -359,7 +359,7 @@ public class RenderUtils {
                     posX = (scaledWidth / scale) - width - xOff - bgMargin;
                     break;
                 case CENTER:
-                    posX = (scaledWidth / scale / 2) - (width / 2) - xOff;
+                    posX = (scaledWidth / scale / 2) - ((double) width / 2) - xOff;
                     break;
                 default:
             }
@@ -1046,8 +1046,7 @@ public class RenderUtils {
     private static void renderQuads(BufferBuilder renderer, List<BakedQuad> quads, BlockState state, int color) {
         final int quadCount = quads.size();
 
-        for (int i = 0; i < quadCount; ++i) {
-            BakedQuad quad = quads.get(i);
+        for (BakedQuad quad : quads) {
             renderQuad(renderer, quad, state, 0xFFFFFFFF);
         }
     }

@@ -50,19 +50,20 @@ public abstract class ConfigBase<T extends IConfigBase> implements IConfigBase, 
         return this.commentKey;
     }
 
+    public void setCommentKey(String commentKey) {
+        this.commentKey = commentKey;
+    }
+
     @Override
     @Nullable
     public String getComment() {
         return StringUtils.getTranslatedOrFallback("config.comment." + this.getNameKey().toLowerCase(), StringUtils.translate(this.commentKey));
     }
 
-    public void setCommentKey(String commentKey) {
-        this.commentKey = commentKey;
-    }
-
     @Override
-    public void setValueChangeCallback(IValueChangeCallback<T> callback) {
+    public IConfigBase setValueChangeCallback(IValueChangeCallback<T> callback) {
         this.callback = callback;
+        return this;
     }
 
     @SuppressWarnings("unchecked")

@@ -43,8 +43,8 @@ public class ConfigUtils {
     public static List<ConfigTypeWrapper> createConfigWrapperForType(ConfigType wrappedType, List<? extends IConfigValue> toWrap) {
         ImmutableList.Builder<ConfigTypeWrapper> builder = ImmutableList.builder();
 
-        for (int i = 0; i < toWrap.size(); ++i) {
-            builder.add(new ConfigTypeWrapper(wrappedType, toWrap.get(i)));
+        for (IConfigValue iConfigValue : toWrap) {
+            builder.add(new ConfigTypeWrapper(wrappedType, iConfigValue));
         }
 
         return builder.build();

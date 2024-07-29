@@ -3,11 +3,8 @@ package com.iafenvoy.jupiter.config;
 import com.iafenvoy.jupiter.network.ByteBufUtil;
 import com.iafenvoy.jupiter.network.ClientNetworkHelper;
 import com.iafenvoy.jupiter.network.NetworkConstants;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.network.PacketByteBuf;
 
-@Environment(EnvType.CLIENT)
 public class FakeConfigContainer extends AbstractConfigContainer {
     public FakeConfigContainer(AbstractConfigContainer parent) {
         super(parent.getConfigId(), parent.titleNameKey);

@@ -70,48 +70,34 @@ public class ConfigTypeWrapper implements IConfigBoolean, IConfigDouble, IConfig
 
     @SuppressWarnings("unchecked")
     @Override
-    public void setValueChangeCallback(IValueChangeCallback<IConfigBase> callback) {
-        if (this.wrappedConfig instanceof IConfigNotifiable) {
+    public IConfigBase setValueChangeCallback(IValueChangeCallback<IConfigBase> callback) {
+        if (this.wrappedConfig instanceof IConfigNotifiable)
             ((IConfigNotifiable<IConfigBase>) this.wrappedConfig).setValueChangeCallback(callback);
-        }
+        return this;
     }
 
     @Override
     public String getStringValue() {
-        switch (this.wrappedType) {
-            case BOOLEAN:
-                return String.valueOf(((IConfigBoolean) this.wrappedConfig).getBooleanValue());
-            case DOUBLE:
-                return String.valueOf(((IConfigDouble) this.wrappedConfig).getDoubleValue());
-            case INTEGER:
-                return String.valueOf(((IConfigInteger) this.wrappedConfig).getIntegerValue());
-            case COLOR:
-                return String.format("#%08X", ((IConfigInteger) this.wrappedConfig).getIntegerValue());
-            case OPTION_LIST:
-                return ((IConfigOptionList) this.wrappedConfig).getOptionListValue().getStringValue();
-            case STRING:
-            default:
-                return ((IStringRepresentable) this.wrappedConfig).getStringValue();
-        }
+        return switch (this.wrappedType) {
+            case BOOLEAN -> String.valueOf(((IConfigBoolean) this.wrappedConfig).getBooleanValue());
+            case DOUBLE -> String.valueOf(((IConfigDouble) this.wrappedConfig).getDoubleValue());
+            case INTEGER -> String.valueOf(((IConfigInteger) this.wrappedConfig).getIntegerValue());
+            case COLOR -> String.format("#%08X", ((IConfigInteger) this.wrappedConfig).getIntegerValue());
+            case OPTION_LIST -> ((IConfigOptionList) this.wrappedConfig).getOptionListValue().getStringValue();
+            default -> ((IStringRepresentable) this.wrappedConfig).getStringValue();
+        };
     }
 
     @Override
     public String getDefaultStringValue() {
-        switch (this.wrappedType) {
-            case BOOLEAN:
-                return String.valueOf(((IConfigBoolean) this.wrappedConfig).getDefaultBooleanValue());
-            case DOUBLE:
-                return String.valueOf(((IConfigDouble) this.wrappedConfig).getDefaultDoubleValue());
-            case INTEGER:
-                return String.valueOf(((IConfigInteger) this.wrappedConfig).getDefaultIntegerValue());
-            case COLOR:
-                return String.format("#%08X", ((IConfigInteger) this.wrappedConfig).getDefaultIntegerValue());
-            case OPTION_LIST:
-                return ((IConfigOptionList) this.wrappedConfig).getDefaultOptionListValue().getStringValue();
-            case STRING:
-            default:
-                return ((IStringRepresentable) this.wrappedConfig).getDefaultStringValue();
-        }
+        return switch (this.wrappedType) {
+            case BOOLEAN -> String.valueOf(((IConfigBoolean) this.wrappedConfig).getDefaultBooleanValue());
+            case DOUBLE -> String.valueOf(((IConfigDouble) this.wrappedConfig).getDefaultDoubleValue());
+            case INTEGER -> String.valueOf(((IConfigInteger) this.wrappedConfig).getDefaultIntegerValue());
+            case COLOR -> String.format("#%08X", ((IConfigInteger) this.wrappedConfig).getDefaultIntegerValue());
+            case OPTION_LIST -> ((IConfigOptionList) this.wrappedConfig).getDefaultOptionListValue().getStringValue();
+            default -> ((IStringRepresentable) this.wrappedConfig).getDefaultStringValue();
+        };
     }
 
     @Override
@@ -173,21 +159,15 @@ public class ConfigTypeWrapper implements IConfigBoolean, IConfigDouble, IConfig
 
     @Override
     public boolean isModified(String newValue) {
-        switch (this.wrappedType) {
-            case BOOLEAN:
-                return !String.valueOf(((IConfigBoolean) this.wrappedConfig).getBooleanValue()).equals(newValue);
-            case DOUBLE:
-                return !String.valueOf(((IConfigDouble) this.wrappedConfig).getDoubleValue()).equals(newValue);
-            case INTEGER:
-                return !String.valueOf(((IConfigInteger) this.wrappedConfig).getIntegerValue()).equals(newValue);
-            case COLOR:
-                return !((ConfigColor) this.wrappedConfig).getStringValue().equals(newValue);
-            case OPTION_LIST:
-                return !((IConfigOptionList) this.wrappedConfig).getOptionListValue().getStringValue().equals(newValue);
-            case STRING:
-            default:
-                return !((IStringRepresentable) this.wrappedConfig).getStringValue().equals(newValue);
-        }
+        return switch (this.wrappedType) {
+            case BOOLEAN -> !String.valueOf(((IConfigBoolean) this.wrappedConfig).getBooleanValue()).equals(newValue);
+            case DOUBLE -> !String.valueOf(((IConfigDouble) this.wrappedConfig).getDoubleValue()).equals(newValue);
+            case INTEGER -> !String.valueOf(((IConfigInteger) this.wrappedConfig).getIntegerValue()).equals(newValue);
+            case COLOR -> !((ConfigColor) this.wrappedConfig).getStringValue().equals(newValue);
+            case OPTION_LIST ->
+                    !((IConfigOptionList) this.wrappedConfig).getOptionListValue().getStringValue().equals(newValue);
+            default -> !((IStringRepresentable) this.wrappedConfig).getStringValue().equals(newValue);
+        };
     }
 
     @Override
@@ -347,22 +327,16 @@ public class ConfigTypeWrapper implements IConfigBoolean, IConfigDouble, IConfig
 
     @Override
     public JsonElement getAsJsonElement() {
-        switch (this.wrappedType) {
-            case BOOLEAN:
-                return new JsonPrimitive(((IConfigBoolean) this.wrappedConfig).getBooleanValue());
-            case DOUBLE:
-                return new JsonPrimitive(((IConfigDouble) this.wrappedConfig).getDoubleValue());
-            case INTEGER:
-                return new JsonPrimitive(((IConfigInteger) this.wrappedConfig).getIntegerValue());
-            case STRING:
-                return new JsonPrimitive(((IConfigValue) this.wrappedConfig).getStringValue());
-            case COLOR:
-                return new JsonPrimitive(((IConfigInteger) this.wrappedConfig).getStringValue());
-            case OPTION_LIST:
-                return new JsonPrimitive(((IConfigOptionList) this.wrappedConfig).getOptionListValue().getStringValue());
-            default:
-                return new JsonPrimitive(this.getStringValue());
-        }
+        return switch (this.wrappedType) {
+            case BOOLEAN -> new JsonPrimitive(((IConfigBoolean) this.wrappedConfig).getBooleanValue());
+            case DOUBLE -> new JsonPrimitive(((IConfigDouble) this.wrappedConfig).getDoubleValue());
+            case INTEGER -> new JsonPrimitive(((IConfigInteger) this.wrappedConfig).getIntegerValue());
+            case STRING -> new JsonPrimitive(((IConfigValue) this.wrappedConfig).getStringValue());
+            case COLOR -> new JsonPrimitive(((IConfigInteger) this.wrappedConfig).getStringValue());
+            case OPTION_LIST ->
+                    new JsonPrimitive(((IConfigOptionList) this.wrappedConfig).getOptionListValue().getStringValue());
+            default -> new JsonPrimitive(this.getStringValue());
+        };
     }
 
     @Override

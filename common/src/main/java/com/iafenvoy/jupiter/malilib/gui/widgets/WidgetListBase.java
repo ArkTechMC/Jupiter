@@ -4,10 +4,10 @@ import com.iafenvoy.jupiter.malilib.gui.GuiBase;
 import com.iafenvoy.jupiter.malilib.gui.GuiScrollBar;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.ISelectionListener;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
-import com.iafenvoy.jupiter.malilib.util.KeyCodes;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
 
@@ -52,7 +52,7 @@ public abstract class WidgetListBase<TYPE, WIDGET extends WidgetListEntryBase<TY
         this.setSize(width, height);
     }
 
-    protected void setSelectionListener(ISelectionListener<TYPE> listener) {
+    protected void setSelectionListener(@Nullable ISelectionListener<TYPE> listener) {
         this.selectionListener = listener;
     }
 
@@ -79,9 +79,7 @@ public abstract class WidgetListBase<TYPE, WIDGET extends WidgetListEntryBase<TY
         if (relativeY >= 0 &&
                 mouseX >= this.browserEntriesStartX &&
                 mouseX < this.browserEntriesStartX + this.browserEntryWidth) {
-            for (int i = 0; i < this.listWidgets.size(); ++i) {
-                WIDGET widget = this.listWidgets.get(i);
-
+            for (WIDGET widget : this.listWidgets) {
                 if (widget.isMouseOver(mouseX, mouseY)) {
                     if (widget.canSelectAt(mouseX, mouseY, mouseButton)) {
                         int entryIndex = widget.getListIndex();
@@ -105,8 +103,8 @@ public abstract class WidgetListBase<TYPE, WIDGET extends WidgetListEntryBase<TY
             this.scrollBar.setIsDragging(false);
         }
 
-        for (int i = 0; i < this.listWidgets.size(); ++i) {
-            this.listWidgets.get(i).onMouseReleased(mouseX, mouseY, mouseButton);
+        for (WIDGET listWidget : this.listWidgets) {
+            listWidget.onMouseReleased(mouseX, mouseY, mouseButton);
         }
 
         return super.onMouseReleased(mouseX, mouseY, mouseButton);
@@ -154,14 +152,14 @@ public abstract class WidgetListBase<TYPE, WIDGET extends WidgetListEntryBase<TY
         if (this.onKeyTypedSearchBar(keyCode, scanCode, modifiers)) {
             return true;
         } else if (this.allowKeyboardNavigation) {
-            if (keyCode == KeyCodes.KEY_UP) this.offsetSelectionOrScrollbar(-1, true);
-            else if (keyCode == KeyCodes.KEY_DOWN) this.offsetSelectionOrScrollbar(1, true);
-            else if (keyCode == KeyCodes.KEY_PAGE_UP)
+            if (keyCode == GLFW.GLFW_KEY_UP) this.offsetSelectionOrScrollbar(-1, true);
+            else if (keyCode == GLFW.GLFW_KEY_DOWN) this.offsetSelectionOrScrollbar(1, true);
+            else if (keyCode == GLFW.GLFW_KEY_PAGE_UP)
                 this.offsetSelectionOrScrollbar(-this.maxVisibleBrowserEntries / 2, true);
-            else if (keyCode == KeyCodes.KEY_PAGE_DOWN)
+            else if (keyCode == GLFW.GLFW_KEY_PAGE_DOWN)
                 this.offsetSelectionOrScrollbar(this.maxVisibleBrowserEntries / 2, true);
-            else if (keyCode == KeyCodes.KEY_HOME) this.offsetSelectionOrScrollbar(-this.listContents.size(), true);
-            else if (keyCode == KeyCodes.KEY_END) this.offsetSelectionOrScrollbar(this.listContents.size(), true);
+            else if (keyCode == GLFW.GLFW_KEY_HOME) this.offsetSelectionOrScrollbar(-this.listContents.size(), true);
+            else if (keyCode == GLFW.GLFW_KEY_END) this.offsetSelectionOrScrollbar(this.listContents.size(), true);
             else return false;
 
             return true;
@@ -244,7 +242,7 @@ public abstract class WidgetListBase<TYPE, WIDGET extends WidgetListEntryBase<TY
         }
 
         if (this.getShouldSortList()) {
-            Collections.sort(this.listContents, this.getComparator());
+            this.listContents.sort(this.getComparator());
         }
 
         this.reCreateListEntryWidgets();

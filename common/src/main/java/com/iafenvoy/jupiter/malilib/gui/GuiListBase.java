@@ -3,10 +3,10 @@ package com.iafenvoy.jupiter.malilib.gui;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.ISelectionListener;
 import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetListBase;
 import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetListEntryBase;
-import com.iafenvoy.jupiter.malilib.util.KeyCodes;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.glfw.GLFW;
 
 public abstract class GuiListBase<TYPE, WIDGET extends WidgetListEntryBase<TYPE>, WIDGETLIST extends WidgetListBase<TYPE, WIDGET>> extends GuiBase {
     private int listX;
@@ -103,7 +103,7 @@ public abstract class GuiListBase<TYPE, WIDGET extends WidgetListEntryBase<TYPE>
     @Override
     public boolean onKeyTyped(int keyCode, int scanCode, int modifiers) {
         // Try to handle everything except ESC in the parent first
-        if (keyCode != KeyCodes.KEY_ESCAPE && super.onKeyTyped(keyCode, scanCode, modifiers)) {
+        if (keyCode != GLFW.GLFW_KEY_ESCAPE && super.onKeyTyped(keyCode, scanCode, modifiers)) {
             return true;
         }
 
@@ -112,7 +112,7 @@ public abstract class GuiListBase<TYPE, WIDGET extends WidgetListEntryBase<TYPE>
         }
 
         // If the list widget or its sub widgets didn't consume the ESC, then send that to the parent (to close the GUI)
-        return keyCode == KeyCodes.KEY_ESCAPE && super.onKeyTyped(keyCode, scanCode, modifiers);
+        return keyCode == GLFW.GLFW_KEY_ESCAPE && super.onKeyTyped(keyCode, scanCode, modifiers);
     }
 
     @Override

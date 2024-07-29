@@ -4,12 +4,12 @@ import com.iafenvoy.jupiter.malilib.gui.button.ButtonBase;
 import com.iafenvoy.jupiter.malilib.gui.button.ButtonGeneric;
 import com.iafenvoy.jupiter.malilib.gui.button.IButtonActionListener;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
-import com.iafenvoy.jupiter.malilib.util.KeyCodes;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.glfw.GLFW;
 
 public abstract class GuiTextInputBase extends GuiDialogBase {
     protected final GuiTextFieldGeneric textField;
@@ -76,14 +76,14 @@ public abstract class GuiTextInputBase extends GuiDialogBase {
 
     @Override
     public boolean onKeyTyped(int keyCode, int scanCode, int modifiers) {
-        if (keyCode == KeyCodes.KEY_ENTER) {
+        if (keyCode == GLFW.GLFW_KEY_ENTER) {
             // Only close the GUI if the value was successfully applied
             if (this.applyValue(this.textField.getText())) {
                 openGui(this.getParent());
             }
 
             return true;
-        } else if (keyCode == KeyCodes.KEY_ESCAPE) {
+        } else if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
             openGui(this.getParent());
             return true;
         }

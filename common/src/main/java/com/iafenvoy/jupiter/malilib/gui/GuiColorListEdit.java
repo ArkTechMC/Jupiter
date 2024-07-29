@@ -9,11 +9,11 @@ import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetColorListEditEntry;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
 import com.iafenvoy.jupiter.malilib.util.Color4f;
 import com.iafenvoy.jupiter.malilib.util.GuiUtils;
-import com.iafenvoy.jupiter.malilib.util.KeyCodes;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.glfw.GLFW;
 
 public class GuiColorListEdit extends GuiListBase<Color4f, WidgetColorListEditEntry, WidgetColorListEdit> {
     protected final IConfigColorList config;
@@ -123,7 +123,7 @@ public class GuiColorListEdit extends GuiListBase<Color4f, WidgetColorListEditEn
 
     @Override
     public boolean onKeyTyped(int keyCode, int scanCode, int modifiers) {
-        if (keyCode == KeyCodes.KEY_ESCAPE && this.dialogHandler != null) {
+        if (keyCode == GLFW.GLFW_KEY_ESCAPE && this.dialogHandler != null) {
             this.dialogHandler.closeDialog();
             return true;
         } else {

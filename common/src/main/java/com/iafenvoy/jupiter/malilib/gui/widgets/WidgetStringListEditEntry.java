@@ -98,7 +98,7 @@ public class WidgetStringListEditEntry extends WidgetConfigOptionBase<String> {
 
     @Override
     public boolean wasConfigModified() {
-        return !this.isDummy() && !this.textField.getTextField().getText().equals(this.initialStringValue);
+        return !this.isDummy() && !this.textField.textField().getText().equals(this.initialStringValue);
     }
 
     @Override
@@ -106,7 +106,7 @@ public class WidgetStringListEditEntry extends WidgetConfigOptionBase<String> {
         if (!this.isDummy()) {
             IConfigStringList config = this.parent.getConfig();
             List<String> list = config.getStrings();
-            String value = this.textField.getTextField().getText();
+            String value = this.textField.textField().getText();
 
             if (list.size() > this.listIndex) {
                 list.set(this.listIndex, value);
@@ -118,7 +118,7 @@ public class WidgetStringListEditEntry extends WidgetConfigOptionBase<String> {
     private void insertEntryBefore() {
         List<String> list = this.parent.getConfig().getStrings();
         final int size = list.size();
-        int index = this.listIndex < 0 ? size : (this.listIndex >= size ? size : this.listIndex);
+        int index = this.listIndex < 0 ? size : (Math.min(this.listIndex, size));
         list.add(index, "");
         this.parent.refreshEntries();
         this.parent.markConfigsModified();
@@ -224,40 +224,28 @@ public class WidgetStringListEditEntry extends WidgetConfigOptionBase<String> {
         }
     }
 
-    private static class ListenerResetConfig implements IButtonActionListener {
-        private final WidgetStringListEditEntry parent;
-        private final ButtonGeneric buttonReset;
-
-        public ListenerResetConfig(ButtonGeneric buttonReset, WidgetStringListEditEntry parent) {
-            this.buttonReset = buttonReset;
-            this.parent = parent;
-        }
+    private record ListenerResetConfig(ButtonGeneric buttonReset,
+                                       WidgetStringListEditEntry parent) implements IButtonActionListener {
 
         @Override
-        public void actionPerformedWithButton(ButtonBase button, int mouseButton) {
-            this.parent.textField.getTextField().setText(this.parent.defaultValue);
-            this.buttonReset.setEnabled(!this.parent.textField.getTextField().getText().equals(this.parent.defaultValue));
-        }
-    }
-
-    private static class ListenerListActions implements IButtonActionListener {
-        private final ButtonType type;
-        private final WidgetStringListEditEntry parent;
-
-        public ListenerListActions(ButtonType type, WidgetStringListEditEntry parent) {
-            this.type = type;
-            this.parent = parent;
-        }
-
-        @Override
-        public void actionPerformedWithButton(ButtonBase button, int mouseButton) {
-            if (this.type == ButtonType.ADD) {
-                this.parent.insertEntryBefore();
-            } else if (this.type == ButtonType.REMOVE) {
-                this.parent.removeEntry();
-            } else {
-                this.parent.moveEntry(this.type == ButtonType.MOVE_DOWN);
+            public void actionPerformedWithButton(ButtonBase button, int mouseButton) {
+                this.parent.textField.textField().setText(this.parent.defaultValue);
+                this.buttonReset.setEnabled(!this.parent.textField.textField().getText().equals(this.parent.defaultValue));
             }
         }
-    }
+
+    private record ListenerListActions(ButtonType type,
+                                       WidgetStringListEditEntry parent) implements IButtonActionListener {
+
+        @Override
+            public void actionPerformedWithButton(ButtonBase button, int mouseButton) {
+                if (this.type == ButtonType.ADD) {
+                    this.parent.insertEntryBefore();
+                } else if (this.type == ButtonType.REMOVE) {
+                    this.parent.removeEntry();
+                } else {
+                    this.parent.moveEntry(this.type == ButtonType.MOVE_DOWN);
+                }
+            }
+        }
 }

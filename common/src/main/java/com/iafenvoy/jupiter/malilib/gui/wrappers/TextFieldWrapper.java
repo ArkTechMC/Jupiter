@@ -2,25 +2,10 @@ package com.iafenvoy.jupiter.malilib.gui.wrappers;
 
 import com.iafenvoy.jupiter.malilib.gui.GuiTextFieldGeneric;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.ITextFieldListener;
-import com.iafenvoy.jupiter.malilib.util.KeyCodes;
 import net.minecraft.client.gui.DrawContext;
+import org.lwjgl.glfw.GLFW;
 
-public class TextFieldWrapper<T extends GuiTextFieldGeneric> {
-    private final T textField;
-    private final ITextFieldListener<T> listener;
-
-    public TextFieldWrapper(T textField, ITextFieldListener<T> listener) {
-        this.textField = textField;
-        this.listener = listener;
-    }
-
-    public T getTextField() {
-        return this.textField;
-    }
-
-    public ITextFieldListener<T> getListener() {
-        return this.listener;
-    }
+public record TextFieldWrapper<T extends GuiTextFieldGeneric>(T textField, ITextFieldListener<T> listener) {
 
     public boolean isFocused() {
         return this.textField.isFocused();
@@ -57,7 +42,7 @@ public class TextFieldWrapper<T extends GuiTextFieldGeneric> {
 
         if (this.textField.isFocused() && this.textField.keyPressed(keyCode, scanCode, modifiers)) {
             if (this.listener != null &&
-                    (keyCode == KeyCodes.KEY_ENTER || keyCode == KeyCodes.KEY_TAB ||
+                    (keyCode == GLFW.GLFW_KEY_ENTER || keyCode == GLFW.GLFW_KEY_TAB ||
                             !this.textField.getText().equals(textPre))) {
                 this.listener.onTextChange(this.textField);
             }

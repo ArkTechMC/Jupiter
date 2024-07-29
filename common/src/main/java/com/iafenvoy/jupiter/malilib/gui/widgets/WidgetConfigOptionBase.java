@@ -5,10 +5,10 @@ import com.iafenvoy.jupiter.malilib.config.gui.ConfigOptionChangeListenerTextFie
 import com.iafenvoy.jupiter.malilib.gui.GuiTextFieldGeneric;
 import com.iafenvoy.jupiter.malilib.gui.button.ButtonGeneric;
 import com.iafenvoy.jupiter.malilib.gui.wrappers.TextFieldWrapper;
-import com.iafenvoy.jupiter.malilib.util.KeyCodes;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
 import net.minecraft.client.gui.DrawContext;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.glfw.GLFW;
 
 public abstract class WidgetConfigOptionBase<TYPE> extends WidgetListEntryBase<TYPE> {
     protected final WidgetListConfigOptionsBase<?, ?> parent;
@@ -34,7 +34,7 @@ public abstract class WidgetConfigOptionBase<TYPE> extends WidgetListEntryBase<T
 
     public boolean hasPendingModifications() {
         if (this.textField != null) {
-            return !this.textField.getTextField().getText().equals(this.lastAppliedValue);
+            return !this.textField.textField().getText().equals(this.lastAppliedValue);
         }
 
         return false;
@@ -69,7 +69,7 @@ public abstract class WidgetConfigOptionBase<TYPE> extends WidgetListEntryBase<T
         boolean ret = false;
 
         if (this.textField != null) {
-            ret |= this.textField.getTextField().mouseClicked(mouseX, mouseY, mouseButton);
+            ret |= this.textField.textField().mouseClicked(mouseX, mouseY, mouseButton);
         }
 
         if (!this.subWidgets.isEmpty()) {
@@ -84,7 +84,7 @@ public abstract class WidgetConfigOptionBase<TYPE> extends WidgetListEntryBase<T
     @Override
     public boolean onKeyTypedImpl(int keyCode, int scanCode, int modifiers) {
         if (this.textField != null && this.textField.isFocused()) {
-            if (keyCode == KeyCodes.KEY_ENTER) {
+            if (keyCode == GLFW.GLFW_KEY_ENTER) {
                 this.applyNewValueToConfig();
                 return true;
             } else {
@@ -111,7 +111,7 @@ public abstract class WidgetConfigOptionBase<TYPE> extends WidgetListEntryBase<T
 
     protected void drawTextFields(int mouseX, int mouseY, DrawContext drawContext) {
         if (this.textField != null) {
-            this.textField.getTextField().render(drawContext, mouseX, mouseY, 0f);
+            this.textField.textField().render(drawContext, mouseX, mouseY, 0f);
         }
     }
 }

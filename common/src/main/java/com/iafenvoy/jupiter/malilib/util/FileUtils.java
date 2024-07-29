@@ -39,11 +39,7 @@ public class FileUtils {
 
     public static File getCanonicalFileIfPossible(File file) {
         try {
-            File fileCan = file.getCanonicalFile();
-
-            if (fileCan != null) {
-                file = fileCan;
-            }
+            file = file.getCanonicalFile();
         } catch (IOException e) {
         }
 
@@ -51,7 +47,7 @@ public class FileUtils {
     }
 
     public static String getJoinedTrailingPathElements(File file, File rootPath, int maxStringLength, String separator) {
-        String path = "";
+        StringBuilder path = new StringBuilder();
 
         if (maxStringLength <= 0) {
             return "...";
@@ -61,15 +57,15 @@ public class FileUtils {
             String name = file.getName();
 
             if (!path.isEmpty()) {
-                path = name + separator + path;
+                path.insert(0, name + separator);
             } else {
-                path = name;
+                path = new StringBuilder(name);
             }
 
             int len = path.length();
 
             if (len > maxStringLength) {
-                path = "... " + path.substring(len - maxStringLength, len);
+                path = new StringBuilder("... " + path.substring(len - maxStringLength, len));
                 break;
             }
 
@@ -80,7 +76,7 @@ public class FileUtils {
             file = file.getParentFile();
         }
 
-        return path;
+        return path.toString();
     }
 
     public static String getNameWithoutExtension(String name) {

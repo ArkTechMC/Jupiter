@@ -100,12 +100,12 @@ public class WidgetColorListEditEntry extends WidgetConfigOptionBase<Color4f> {
 
     @Override
     public boolean wasConfigModified() {
-        return !this.isDummy() && !this.textField.getTextField().getText().equals(this.initialStringValue);
+        return !this.isDummy() && !this.textField.textField().getText().equals(this.initialStringValue);
     }
 
     @Override
     public void applyNewValueToConfig() {
-        this.applyNewValueToConfig(StringUtils.getColor(this.textField.getTextField().getText(), Color4f.ZERO.intValue));
+        this.applyNewValueToConfig(StringUtils.getColor(this.textField.textField().getText(), Color4f.ZERO.intValue));
     }
 
     protected void applyNewValueToConfig(int color) {
@@ -231,41 +231,29 @@ public class WidgetColorListEditEntry extends WidgetConfigOptionBase<Color4f> {
         }
     }
 
-    private static class ListenerResetConfig implements IButtonActionListener {
-        private final WidgetColorListEditEntry parent;
-        private final ButtonGeneric buttonReset;
-
-        public ListenerResetConfig(ButtonGeneric buttonReset, WidgetColorListEditEntry parent) {
-            this.buttonReset = buttonReset;
-            this.parent = parent;
-        }
+    private record ListenerResetConfig(ButtonGeneric buttonReset,
+                                       WidgetColorListEditEntry parent) implements IButtonActionListener {
 
         @Override
-        public void actionPerformedWithButton(ButtonBase button, int mouseButton) {
-            this.parent.textField.getTextField().setText(this.parent.defaultValue.toString());
-            this.parent.parent.applyPendingModifications();
-            this.buttonReset.setEnabled(!this.parent.textField.getTextField().getText().equals(this.parent.defaultValue));
-        }
-    }
-
-    private static class ListenerListActions implements IButtonActionListener {
-        private final ButtonType type;
-        private final WidgetColorListEditEntry parent;
-
-        public ListenerListActions(ButtonType type, WidgetColorListEditEntry parent) {
-            this.type = type;
-            this.parent = parent;
-        }
-
-        @Override
-        public void actionPerformedWithButton(ButtonBase button, int mouseButton) {
-            if (this.type == ButtonType.ADD) {
-                this.parent.insertEntryBefore();
-            } else if (this.type == ButtonType.REMOVE) {
-                this.parent.removeEntry();
-            } else {
-                this.parent.moveEntry(this.type == ButtonType.MOVE_DOWN);
+            public void actionPerformedWithButton(ButtonBase button, int mouseButton) {
+                this.parent.textField.textField().setText(this.parent.defaultValue.toString());
+                this.parent.parent.applyPendingModifications();
+                this.buttonReset.setEnabled(!this.parent.textField.textField().getText().equals(this.parent.defaultValue));
             }
         }
-    }
+
+    private record ListenerListActions(ButtonType type,
+                                       WidgetColorListEditEntry parent) implements IButtonActionListener {
+
+        @Override
+            public void actionPerformedWithButton(ButtonBase button, int mouseButton) {
+                if (this.type == ButtonType.ADD) {
+                    this.parent.insertEntryBefore();
+                } else if (this.type == ButtonType.REMOVE) {
+                    this.parent.removeEntry();
+                } else {
+                    this.parent.moveEntry(this.type == ButtonType.MOVE_DOWN);
+                }
+            }
+        }
 }

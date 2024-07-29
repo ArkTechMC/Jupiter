@@ -8,11 +8,11 @@ import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetListStringListEdit;
 import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetStringListEditEntry;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
 import com.iafenvoy.jupiter.malilib.util.GuiUtils;
-import com.iafenvoy.jupiter.malilib.util.KeyCodes;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.glfw.GLFW;
 
 public class GuiStringListEdit extends GuiListBase<String, WidgetStringListEditEntry, WidgetListStringListEdit> {
     protected final IConfigStringList config;
@@ -122,7 +122,7 @@ public class GuiStringListEdit extends GuiListBase<String, WidgetStringListEditE
 
     @Override
     public boolean onKeyTyped(int keyCode, int scanCode, int modifiers) {
-        if (keyCode == KeyCodes.KEY_ESCAPE && this.dialogHandler != null) {
+        if (keyCode == GLFW.GLFW_KEY_ESCAPE && this.dialogHandler != null) {
             this.dialogHandler.closeDialog();
             return true;
         } else {

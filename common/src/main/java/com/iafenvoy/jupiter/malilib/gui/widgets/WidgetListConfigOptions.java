@@ -5,7 +5,6 @@ import com.iafenvoy.jupiter.malilib.config.IConfigResettable;
 import com.iafenvoy.jupiter.malilib.gui.GuiConfigsBase;
 import com.iafenvoy.jupiter.malilib.gui.LeftRight;
 import com.iafenvoy.jupiter.malilib.gui.MaLiLibIcons;
-import com.iafenvoy.jupiter.malilib.gui.interfaces.IConfigGui;
 import com.iafenvoy.jupiter.malilib.util.AlphaNumComparator;
 
 import java.util.*;

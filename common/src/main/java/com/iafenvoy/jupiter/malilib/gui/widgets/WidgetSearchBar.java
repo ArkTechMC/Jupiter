@@ -5,9 +5,9 @@ import com.iafenvoy.jupiter.malilib.gui.GuiTextFieldGeneric;
 import com.iafenvoy.jupiter.malilib.gui.LeftRight;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.IGuiIcon;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
-import com.iafenvoy.jupiter.malilib.util.KeyCodes;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.gui.DrawContext;
+import org.lwjgl.glfw.GLFW;
 
 public class WidgetSearchBar extends WidgetBase {
     protected final WidgetIcon iconSearch;
@@ -65,7 +65,7 @@ public class WidgetSearchBar extends WidgetBase {
         if (this.searchOpen) {
             if (this.searchBox.keyPressed(keyCode, scanCode, modifiers)) {
                 return true;
-            } else if (keyCode == KeyCodes.KEY_ESCAPE) {
+            } else if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
                 if (GuiBase.isShiftDown()) {
                     this.mc.currentScreen.close();
                 }

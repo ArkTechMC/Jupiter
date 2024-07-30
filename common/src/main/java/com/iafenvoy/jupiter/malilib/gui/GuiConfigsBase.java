@@ -16,12 +16,10 @@ import net.minecraft.client.gui.screen.Screen;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 public abstract class GuiConfigsBase extends GuiListBase<ConfigOptionWrapper, WidgetConfigOption, WidgetListConfigOptions> implements IConfigGui {
-    protected final List<Runnable> hotkeyChangeListeners = new ArrayList<>();
     protected final ButtonPressDirtyListenerSimple dirtyListener = new ButtonPressDirtyListenerSimple();
     protected final String modId;
     protected int configWidth = 204;
@@ -35,6 +33,11 @@ public abstract class GuiConfigsBase extends GuiListBase<ConfigOptionWrapper, Wi
         this.modId = modId;
         this.setParent(parent);
         this.title = StringUtils.translate(titleKey, args);
+    }
+
+    public GuiConfigsBase setDialogHandler(@Nullable IDialogHandler handler) {
+        this.dialogHandler = handler;
+        return this;
     }
 
     @Override
@@ -80,37 +83,31 @@ public abstract class GuiConfigsBase extends GuiListBase<ConfigOptionWrapper, Wi
     }
 
     @Override
-    public boolean onKeyTyped(int keyCode, int scanCode, int modifiers) {
-        if (this.getListWidget().onKeyTyped(keyCode, scanCode, modifiers)) {
-            return true;
-        }
+    public @Nullable IDialogHandler getDialogHandler() {
+        return this.dialogHandler;
+    }
 
+    @Override
+    public boolean onKeyTyped(int keyCode, int scanCode, int modifiers) {
+        if (this.getListWidget().onKeyTyped(keyCode, scanCode, modifiers))
+            return true;
         if (keyCode == GLFW.GLFW_KEY_ESCAPE && this.getParent() != GuiUtils.getCurrentScreen()) {
             this.closeGui(true);
             return true;
         }
-
         return false;
     }
 
     @Override
     public boolean onCharTyped(char charIn, int modifiers) {
-        if (this.getListWidget().onCharTyped(charIn, modifiers)) {
+        if (this.getListWidget().onCharTyped(charIn, modifiers))
             return true;
-        }
-
         return super.onCharTyped(charIn, modifiers);
     }
 
     @Override
     public boolean onMouseClicked(int mouseX, int mouseY, int mouseButton) {
         return super.onMouseClicked(mouseX, mouseY, mouseButton);
-    }
-
-    protected void updateKeybindButtons() {
-        for (Runnable listener : this.hotkeyChangeListeners) {
-            listener.run();
-        }
     }
 
     @Override
@@ -126,7 +123,6 @@ public abstract class GuiConfigsBase extends GuiListBase<ConfigOptionWrapper, Wi
 
     @Override
     public void clearOptions() {
-        this.hotkeyChangeListeners.clear();
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.iafenvoy.jupiter.malilib.gui.widgets;
 
 import com.iafenvoy.jupiter.malilib.gui.GuiBase;
-import com.iafenvoy.jupiter.malilib.gui.GuiScrollBar;
+import com.iafenvoy.jupiter.malilib.gui.GuiVerticalScrollBar;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.ISelectionListener;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
@@ -14,7 +14,7 @@ import java.util.*;
 public abstract class WidgetListBase<TYPE, WIDGET extends WidgetListEntryBase<TYPE>> extends GuiBase {
     protected final List<TYPE> listContents = new ArrayList<>();
     protected final List<WIDGET> listWidgets = new ArrayList<>();
-    protected final GuiScrollBar scrollBar = new GuiScrollBar();
+    protected final GuiVerticalScrollBar scrollBar = new GuiVerticalScrollBar();
     protected final Set<TYPE> selectedEntries = new HashSet<>();
     protected final int posX;
     protected final int posY;
@@ -496,7 +496,7 @@ public abstract class WidgetListBase<TYPE, WIDGET extends WidgetListEntryBase<TY
     protected void offsetSelectionOrScrollbar(int amount, boolean changeSelection) {
         if (!changeSelection) {
             this.scrollBar.offsetValue(amount);
-        } else if (this.lastSelectedEntryIndex >= 0 && this.listContents.size() > 0) {
+        } else if (this.lastSelectedEntryIndex >= 0 && !this.listContents.isEmpty()) {
             int index = MathHelper.clamp(this.lastSelectedEntryIndex + amount, 0, this.listContents.size() - 1);
 
             if (index != this.lastSelectedEntryIndex) {
@@ -525,7 +525,7 @@ public abstract class WidgetListBase<TYPE, WIDGET extends WidgetListEntryBase<TY
         this.scrollBar.setValue(0);
     }
 
-    public GuiScrollBar getScrollbar() {
+    public GuiVerticalScrollBar getScrollbar() {
         return this.scrollBar;
     }
 }

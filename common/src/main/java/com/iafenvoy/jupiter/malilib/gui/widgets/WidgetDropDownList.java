@@ -1,6 +1,6 @@
 package com.iafenvoy.jupiter.malilib.gui.widgets;
 
-import com.iafenvoy.jupiter.malilib.gui.GuiScrollBar;
+import com.iafenvoy.jupiter.malilib.gui.GuiVerticalScrollBar;
 import com.iafenvoy.jupiter.malilib.gui.GuiTextFieldGeneric;
 import com.iafenvoy.jupiter.malilib.gui.MaLiLibIcons;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.ITextFieldListener;
@@ -27,7 +27,7 @@ import java.util.List;
  * @author masa
  */
 public class WidgetDropDownList<T> extends WidgetBase {
-    protected final GuiScrollBar scrollBar = new GuiScrollBar();
+    protected final GuiVerticalScrollBar scrollBar = new GuiVerticalScrollBar();
     protected final List<T> entries;
     protected final List<T> filteredEntries;
     protected final TextFieldWrapper<GuiTextFieldGeneric> searchBar;

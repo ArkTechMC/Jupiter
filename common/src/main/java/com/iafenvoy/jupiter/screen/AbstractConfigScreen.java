@@ -2,6 +2,7 @@ package com.iafenvoy.jupiter.screen;
 
 import com.iafenvoy.jupiter.config.AbstractConfigContainer;
 import com.iafenvoy.jupiter.malilib.gui.GuiConfigsBase;
+import com.iafenvoy.jupiter.malilib.gui.GuiHorizontalScrollBar;
 import com.iafenvoy.jupiter.malilib.gui.button.ButtonGeneric;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
 import net.fabricmc.api.EnvType;
@@ -16,6 +17,7 @@ import java.util.List;
 public abstract class AbstractConfigScreen extends GuiConfigsBase {
     private static int currentTab = 0;
     protected final AbstractConfigContainer configContainer;
+    protected final GuiHorizontalScrollBar scrollBar = new GuiHorizontalScrollBar();
 
     public AbstractConfigScreen(Screen parent, AbstractConfigContainer configContainer) {
         super(10, 50, configContainer.getModId(), parent, configContainer.getTitleNameKey());
@@ -26,7 +28,7 @@ public abstract class AbstractConfigScreen extends GuiConfigsBase {
     public void initGui() {
         super.initGui();
         this.clearOptions();
-        int x = 10, y = 26;
+        int x = 10, y = 22;
         // tab buttons are set
         List<AbstractConfigContainer.ConfigCategory> configTabs = this.configContainer.getConfigTabs();
         for (int i = 0; i < configTabs.size(); i++) {
@@ -45,6 +47,7 @@ public abstract class AbstractConfigScreen extends GuiConfigsBase {
             });
             x += tabButton.getWidth() + 2;
         }
+        this.scrollBar.setMaxValue(x);
     }
 
     @Override
@@ -82,6 +85,23 @@ public abstract class AbstractConfigScreen extends GuiConfigsBase {
         String currentText = this.getCurrentEditText();
         int textWidth = this.textRenderer.getWidth(currentText);
         drawContext.drawTextWithShadow(this.textRenderer, currentText, this.width - textWidth - 10, 10, -1);
+        this.scrollBar.render(mouseX, mouseY, partialTicks, 10, 43, this.width - 20, 8, this.scrollBar.getMaxValue());
+    }
+
+    @Override
+    public boolean onMouseClicked(int mouseX, int mouseY, int mouseButton) {
+        if (mouseButton == 0 && this.scrollBar.wasMouseOver()) {
+            this.scrollBar.setIsDragging(true);
+            return true;
+        }
+        return super.onMouseClicked(mouseX, mouseY, mouseButton);
+    }
+
+    @Override
+    public boolean onMouseReleased(int mouseX, int mouseY, int mouseButton) {
+        if (mouseButton == 0)
+            this.scrollBar.setIsDragging(false);
+        return super.onMouseReleased(mouseX, mouseY, mouseButton);
     }
 
     protected abstract String getCurrentEditText();

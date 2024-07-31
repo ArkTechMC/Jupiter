@@ -10,9 +10,12 @@ import com.iafenvoy.jupiter.malilib.util.StringUtils;
 public class ConfigColor extends ConfigInteger {
     private Color4f color;
 
+    public ConfigColor(String nameKey, String defaultValue) {
+        this(nameKey, defaultValue, nameKey + COMMENT_SUFFIX);
+    }
+
     public ConfigColor(String nameKey, String defaultValue, String comment) {
         super(nameKey, StringUtils.getColor(defaultValue, 0), comment);
-
         this.color = Color4f.fromColor(this.getIntegerValue());
     }
 

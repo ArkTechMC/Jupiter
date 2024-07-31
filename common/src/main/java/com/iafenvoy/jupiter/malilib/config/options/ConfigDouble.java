@@ -15,17 +15,28 @@ public class ConfigDouble extends ConfigBase<ConfigDouble> implements IConfigDou
     private double value;
     private boolean useSlider;
 
+    public ConfigDouble(String nameKey, double defaultValue) {
+        this(nameKey, defaultValue, nameKey + COMMENT_SUFFIX);
+    }
+
     public ConfigDouble(String nameKey, double defaultValue, String comment) {
         this(nameKey, defaultValue, Double.MIN_VALUE, Double.MAX_VALUE, comment);
+    }
+
+    public ConfigDouble(String nameKey, double defaultValue, double minValue, double maxValue) {
+        this(nameKey, defaultValue, minValue, maxValue, false, nameKey + COMMENT_SUFFIX);
     }
 
     public ConfigDouble(String nameKey, double defaultValue, double minValue, double maxValue, String comment) {
         this(nameKey, defaultValue, minValue, maxValue, false, comment);
     }
 
+    public ConfigDouble(String nameKey, double defaultValue, double minValue, double maxValue, boolean useSlider) {
+        this(nameKey, defaultValue, minValue, maxValue, useSlider, nameKey + COMMENT_SUFFIX);
+    }
+
     public ConfigDouble(String nameKey, double defaultValue, double minValue, double maxValue, boolean useSlider, String comment) {
         super(ConfigType.DOUBLE, nameKey, comment);
-
         this.minValue = minValue;
         this.maxValue = maxValue;
         this.defaultValue = defaultValue;
@@ -46,6 +57,11 @@ public class ConfigDouble extends ConfigBase<ConfigDouble> implements IConfigDou
     @Override
     public double getDoubleValue() {
         return this.value;
+    }
+
+    @Override
+    public float getFloatValue() {
+        return (float) this.getDoubleValue();
     }
 
     @Override

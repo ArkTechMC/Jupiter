@@ -15,17 +15,28 @@ public class ConfigInteger extends ConfigBase<ConfigInteger> implements IConfigI
     protected int value;
     private boolean useSlider;
 
+    public ConfigInteger(String nameKey, int defaultValue) {
+        this(nameKey, defaultValue, nameKey + COMMENT_SUFFIX);
+    }
+
     public ConfigInteger(String nameKey, int defaultValue, String comment) {
         this(nameKey, defaultValue, Integer.MIN_VALUE, Integer.MAX_VALUE, comment);
+    }
+
+    public ConfigInteger(String nameKey, int defaultValue, int minValue, int maxValue) {
+        this(nameKey, defaultValue, minValue, maxValue, false, nameKey + COMMENT_SUFFIX);
     }
 
     public ConfigInteger(String nameKey, int defaultValue, int minValue, int maxValue, String comment) {
         this(nameKey, defaultValue, minValue, maxValue, false, comment);
     }
 
+    public ConfigInteger(String nameKey, int defaultValue, int minValue, int maxValue, boolean useSlider) {
+        this(nameKey, defaultValue, minValue, maxValue, useSlider, nameKey + COMMENT_SUFFIX);
+    }
+
     public ConfigInteger(String nameKey, int defaultValue, int minValue, int maxValue, boolean useSlider, String comment) {
         super(ConfigType.INTEGER, nameKey, comment);
-
         this.minValue = minValue;
         this.maxValue = maxValue;
         this.defaultValue = defaultValue;

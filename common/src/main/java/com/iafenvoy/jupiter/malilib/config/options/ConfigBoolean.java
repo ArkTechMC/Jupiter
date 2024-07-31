@@ -11,6 +11,10 @@ public class ConfigBoolean extends ConfigBase<ConfigBoolean> implements IConfigB
     private final boolean defaultValue;
     private boolean value;
 
+    public ConfigBoolean(String nameKey, boolean defaultValue) {
+        this(nameKey, defaultValue, nameKey + COMMENT_SUFFIX);
+    }
+
     public ConfigBoolean(String nameKey, boolean defaultValue, String comment) {
         this(nameKey, defaultValue, comment, nameKey);
     }

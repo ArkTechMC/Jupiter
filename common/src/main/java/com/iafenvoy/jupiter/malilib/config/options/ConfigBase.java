@@ -9,6 +9,7 @@ import com.iafenvoy.jupiter.malilib.util.StringUtils;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class ConfigBase<T extends IConfigBase> implements IConfigBase, IConfigResettable, IConfigNotifiable<T> {
+    protected static final String COMMENT_SUFFIX = ".comment";
     private final ConfigType type;
     private final String nameKey;
     private final String prettyNameKey;

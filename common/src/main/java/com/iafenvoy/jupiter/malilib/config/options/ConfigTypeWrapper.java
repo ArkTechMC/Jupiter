@@ -257,6 +257,11 @@ public class ConfigTypeWrapper implements IConfigBoolean, IConfigDouble, IConfig
     }
 
     @Override
+    public float getFloatValue() {
+        return (float) this.getDoubleValue();
+    }
+
+    @Override
     public void setDoubleValue(double value) {
         if (this.wrappedType == ConfigType.DOUBLE) {
             ((IConfigDouble) this.wrappedConfig).setDoubleValue(value);

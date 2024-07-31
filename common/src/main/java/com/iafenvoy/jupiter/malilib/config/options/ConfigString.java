@@ -12,9 +12,12 @@ public class ConfigString extends ConfigBase<ConfigString> implements IConfigVal
     private String value;
     private String previousValue;
 
+    public ConfigString(String nameKey, String defaultValue) {
+        this(nameKey, defaultValue, nameKey + COMMENT_SUFFIX);
+    }
+
     public ConfigString(String nameKey, String defaultValue, String comment) {
         super(ConfigType.STRING, nameKey, comment);
-
         this.defaultValue = defaultValue;
         this.value = defaultValue;
         this.previousValue = defaultValue;

@@ -19,11 +19,11 @@ public class TestConfig extends FileConfigContainer {
     @Override
     public void init() {
         this.createTab("tab1", "jupiter.tab1")
-                .addConfig(new ConfigBoolean("this is boolean", false, ""))
-                .addConfig(new ConfigInteger("this is int", 0, ""))
-                .addConfig(new ConfigInteger("this is int with range", 0, -10, 10, ""))
-                .addConfig(new ConfigStringList("this is string list", ImmutableList.of(), ""))
-                .addConfig(new ConfigColor("this is color", "888888", ""));
+                .addConfig(new ConfigBoolean("this is boolean", false))
+                .addConfig(new ConfigInteger("this is int", 0))
+                .addConfig(new ConfigInteger("this is int with range", 0, -10, 10))
+                .addConfig(new ConfigStringList("this is string list", ImmutableList.of()))
+                .addConfig(new ConfigColor("this is color", "888888"));
         this.createTab("tab2", "jupiter.tab2");
         this.createTab("tab3", "jupiter.tab3");
         this.createTab("tab4", "jupiter.tab4");

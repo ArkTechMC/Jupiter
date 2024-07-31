@@ -16,9 +16,12 @@ public class ConfigStringList extends ConfigBase<ConfigStringList> implements IC
     private final ImmutableList<String> defaultValue;
     private final List<String> strings = new ArrayList<>();
 
+    public ConfigStringList(String nameKey, ImmutableList<String> defaultValue) {
+        this(nameKey, defaultValue, nameKey + COMMENT_SUFFIX);
+    }
+
     public ConfigStringList(String nameKey, ImmutableList<String> defaultValue, String comment) {
         super(ConfigType.STRING_LIST, nameKey, comment);
-
         this.defaultValue = defaultValue;
         this.strings.addAll(defaultValue);
     }

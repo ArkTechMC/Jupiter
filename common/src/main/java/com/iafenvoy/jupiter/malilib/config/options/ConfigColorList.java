@@ -18,9 +18,12 @@ public class ConfigColorList extends ConfigBase<ConfigColorList> implements ICon
     private final ImmutableList<Color4f> defaultValue;
     private final List<Color4f> colors = new ArrayList<>();
 
+    public ConfigColorList(String nameKey, ImmutableList<Color4f> defaultValue) {
+        this(nameKey, defaultValue, nameKey + COMMENT_SUFFIX);
+    }
+
     public ConfigColorList(String nameKey, ImmutableList<Color4f> defaultValue, String comment) {
         super(ConfigType.COLOR_LIST, nameKey, comment);
-
         this.defaultValue = defaultValue;
         this.colors.addAll(defaultValue);
     }

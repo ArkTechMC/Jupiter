@@ -9,6 +9,10 @@ public class ConfigOptionList extends ConfigBase<ConfigOptionList> implements IC
     private final IConfigOptionListEntry defaultValue;
     private IConfigOptionListEntry value;
 
+    public ConfigOptionList(String nameKey, IConfigOptionListEntry defaultValue) {
+        this(nameKey, defaultValue, nameKey + COMMENT_SUFFIX);
+    }
+
     public ConfigOptionList(String nameKey, IConfigOptionListEntry defaultValue, String comment) {
         this(nameKey, defaultValue, comment, nameKey);
     }

@@ -3,6 +3,7 @@ package com.iafenvoy.jupiter.malilib.gui;
 import com.iafenvoy.jupiter.malilib.config.IConfigBase;
 import com.iafenvoy.jupiter.malilib.gui.button.ButtonBase;
 import com.iafenvoy.jupiter.malilib.gui.button.IButtonActionListener;
+import com.iafenvoy.jupiter.malilib.gui.interfaces.IConfigGui;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.IMessageConsumer;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.ITextFieldListener;
 import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetBase;
@@ -126,7 +127,7 @@ public abstract class GuiBase extends Screen implements IMessageConsumer, IStrin
 
     @Override
     public boolean shouldPause() {
-        return false;
+        return true;
     }
 
     @Override
@@ -409,7 +410,7 @@ public abstract class GuiBase extends Screen implements IMessageConsumer, IStrin
     }
 
     public WidgetLabel addLabel(int x, int y, int width, int height, int textColor, List<String> lines) {
-        if (lines.size() > 0) {
+        if (!lines.isEmpty()) {
             if (width == -1) {
                 for (String line : lines) {
                     width = Math.max(width, this.getStringWidth(line));

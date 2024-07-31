@@ -11,13 +11,16 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Environment(EnvType.CLIENT)
 public abstract class AbstractConfigScreen extends GuiConfigsBase {
     private static int currentTab = 0;
     protected final AbstractConfigContainer configContainer;
+    protected final List<TabButton> tabButtons = new ArrayList<>();
     protected final GuiHorizontalScrollBar scrollBar = new GuiHorizontalScrollBar();
+    protected boolean needScrollBar = false;
 
     public AbstractConfigScreen(Screen parent, AbstractConfigContainer configContainer) {
         super(10, 50, configContainer.getModId(), parent, configContainer.getTitleNameKey());
@@ -30,12 +33,11 @@ public abstract class AbstractConfigScreen extends GuiConfigsBase {
         this.clearOptions();
         int x = 10, y = 22;
         // tab buttons are set
+        this.tabButtons.clear();
         List<AbstractConfigContainer.ConfigCategory> configTabs = this.configContainer.getConfigTabs();
         for (int i = 0; i < configTabs.size(); i++) {
             AbstractConfigContainer.ConfigCategory category = configTabs.get(i);
-            TabButton tabButton = new TabButton(category, x, y, -1, 20, StringUtils.translate(category.translateKey()));
-            tabButton.setEnabled(i != currentTab);
-            this.addButton(tabButton, (buttonBase, listener) -> {
+            TabButton tabButton = this.addButton(new TabButton(category, x, y, -1, 20, StringUtils.translate(category.translateKey())), (buttonBase, listener) -> {
                 this.onSettingsChanged();
                 // reload the GUI when tab button is clicked
                 currentTab = this.configContainer.getConfigTabs().indexOf(((TabButton) buttonBase).category);
@@ -45,9 +47,24 @@ public abstract class AbstractConfigScreen extends GuiConfigsBase {
                 this.getListWidget().resetScrollbarPosition();
                 this.initGui();
             });
+            tabButton.setEnabled(i != currentTab);
+            this.tabButtons.add(tabButton);
             x += tabButton.getWidth() + 2;
         }
-        this.scrollBar.setMaxValue(x);
+        x += 10;
+        this.needScrollBar = x > this.width - 20;
+        this.scrollBar.setMaxValue(Math.max(0, x - this.width));
+    }
+
+    protected void updateTabPos() {
+        for (TabButton button : this.tabButtons)
+            button.updatePos(this.scrollBar.getValue());
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        this.updateTabPos();
     }
 
     @Override
@@ -85,7 +102,8 @@ public abstract class AbstractConfigScreen extends GuiConfigsBase {
         String currentText = this.getCurrentEditText();
         int textWidth = this.textRenderer.getWidth(currentText);
         drawContext.drawTextWithShadow(this.textRenderer, currentText, this.width - textWidth - 10, 10, -1);
-        this.scrollBar.render(mouseX, mouseY, partialTicks, 10, 43, this.width - 20, 8, this.scrollBar.getMaxValue());
+        if (this.needScrollBar)
+            this.scrollBar.render(mouseX, mouseY, partialTicks, 10, 43, this.width - 20, 8, this.width + this.scrollBar.getMaxValue());
     }
 
     @Override
@@ -108,10 +126,16 @@ public abstract class AbstractConfigScreen extends GuiConfigsBase {
 
     public static class TabButton extends ButtonGeneric {
         private final AbstractConfigContainer.ConfigCategory category;
+        private final int baseX;
 
-        public TabButton(AbstractConfigContainer.ConfigCategory category, int x, int y, int width, int height, String text, String... hoverStrings) {
-            super(x, y, width, height, text, hoverStrings);
+        public TabButton(AbstractConfigContainer.ConfigCategory category, int baseX, int y, int width, int height, String text, String... hoverStrings) {
+            super(baseX, y, width, height, text, hoverStrings);
             this.category = category;
+            this.baseX = baseX;
+        }
+
+        public void updatePos(int offsetX) {
+            this.x = this.baseX - offsetX;
         }
     }
 }

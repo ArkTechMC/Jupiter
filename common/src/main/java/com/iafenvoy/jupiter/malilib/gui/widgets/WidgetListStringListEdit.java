@@ -26,7 +26,7 @@ public class WidgetListStringListEdit extends WidgetListConfigOptionsBase<String
     @Override
     protected void reCreateListEntryWidgets() {
         // Add a dummy entry that allows adding the first actual string to the list
-        if (this.listContents.size() == 0) {
+        if (this.listContents.isEmpty()) {
             this.listWidgets.clear();
             this.maxVisibleBrowserEntries = 1;
 

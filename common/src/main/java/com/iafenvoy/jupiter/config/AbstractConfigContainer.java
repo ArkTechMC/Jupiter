@@ -53,14 +53,29 @@ public abstract class AbstractConfigContainer implements IConfigHandler {
         JsonObject configRoot = new JsonObject();
         for (ConfigCategory category : this.getConfigTabs())
             ConfigUtils.writeConfigBase(configRoot, category.id(), category.getConfigs());
+        this.writeCustomData(configRoot);
         return configRoot.toString();
     }
 
     public void deserialize(String data) {
         JsonElement jsonElement = JsonParser.parseString(data);
-        if (jsonElement instanceof JsonObject obj)
+        if (jsonElement instanceof JsonObject obj) {
+            if (!this.shouldLoad(obj)) return;
             for (ConfigCategory category : this.getConfigTabs())
                 ConfigUtils.readConfigBase(obj, category.id(), category.getConfigs());
+            this.readCustomData(obj);
+        }
+    }
+
+    //Can be used to check version, etc
+    protected boolean shouldLoad(JsonObject obj) {
+        return true;
+    }
+
+    protected void readCustomData(JsonObject obj) {
+    }
+
+    protected void writeCustomData(JsonObject obj) {
     }
 
     public record ConfigCategory(String id, String translateKey, List<IConfigBase> configs) {

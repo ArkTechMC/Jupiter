@@ -3,6 +3,7 @@ package com.iafenvoy.jupiter.malilib.gui.widgets;
 import com.iafenvoy.jupiter.malilib.config.IConfigColorList;
 import com.iafenvoy.jupiter.malilib.gui.GuiColorListEdit;
 import com.iafenvoy.jupiter.malilib.util.Color4f;
+import net.minecraft.client.gui.DrawContext;
 
 import java.util.Collection;
 
@@ -27,7 +28,7 @@ public class WidgetColorListEdit extends WidgetListConfigOptionsBase<Color4f, Wi
     @Override
     protected void reCreateListEntryWidgets() {
         // Add a dummy entry that allows adding the first actual string to the list
-        if (this.listContents.size() == 0) {
+        if (this.listContents.isEmpty()) {
             this.listWidgets.clear();
             this.maxVisibleBrowserEntries = 1;
 

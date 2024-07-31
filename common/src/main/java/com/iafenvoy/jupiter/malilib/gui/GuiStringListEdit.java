@@ -9,6 +9,7 @@ import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetStringListEditEntry;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
 import com.iafenvoy.jupiter.malilib.util.GuiUtils;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import org.jetbrains.annotations.Nullable;
@@ -103,10 +104,8 @@ public class GuiStringListEdit extends GuiListBase<String, WidgetStringListEditE
 
     @Override
     public void render(DrawContext drawContext, int mouseX, int mouseY, float partialTicks) {
-        if (this.getParent() != null) {
+        if (this.getParent() != null)
             this.getParent().render(drawContext, mouseX, mouseY, partialTicks);
-        }
-
         super.render(drawContext, mouseX, mouseY, partialTicks);
     }
 

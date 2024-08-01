@@ -2,6 +2,7 @@ package com.iafenvoy.jupiter.malilib.gui.interfaces;
 
 import com.iafenvoy.jupiter.malilib.config.gui.ButtonPressDirtyListenerSimple;
 import com.iafenvoy.jupiter.malilib.gui.GuiConfigsBase;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface IConfigGui {
      *
      * @return
      */
-    String getModId();
+    Identifier getConfigId();
 
     /**
      * When called, the implementer should clear all the stored config options

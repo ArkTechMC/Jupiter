@@ -9,6 +9,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public abstract class AbstractConfigScreen extends GuiConfigsBase {
     protected boolean needScrollBar = false;
 
     public AbstractConfigScreen(Screen parent, AbstractConfigContainer configContainer) {
-        super(10, 50, configContainer.getModId(), parent, configContainer.getTitleNameKey());
+        super(10, 50, configContainer.getConfigId(), parent, configContainer.getTitleNameKey());
         this.configContainer = configContainer;
     }
 
@@ -68,8 +69,8 @@ public abstract class AbstractConfigScreen extends GuiConfigsBase {
     }
 
     @Override
-    public String getModId() {
-        return this.configContainer.getModId();
+    public Identifier getConfigId() {
+        return this.configContainer.getConfigId();
     }
 
     @Override

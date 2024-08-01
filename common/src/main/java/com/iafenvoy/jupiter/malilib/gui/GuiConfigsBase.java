@@ -13,6 +13,7 @@ import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetListConfigOptions;
 import com.iafenvoy.jupiter.malilib.util.GuiUtils;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
@@ -21,16 +22,16 @@ import java.util.List;
 
 public abstract class GuiConfigsBase extends GuiListBase<ConfigOptionWrapper, WidgetConfigOption, WidgetListConfigOptions> implements IConfigGui {
     protected final ButtonPressDirtyListenerSimple dirtyListener = new ButtonPressDirtyListenerSimple();
-    protected final String modId;
+    protected final Identifier configId;
     protected int configWidth = 204;
     @Nullable
     protected IConfigInfoProvider hoverInfoProvider;
     @Nullable
     protected IDialogHandler dialogHandler;
 
-    public GuiConfigsBase(int listX, int listY, String modId, @Nullable Screen parent, String titleKey, Object... args) {
+    public GuiConfigsBase(int listX, int listY, Identifier configId, @Nullable Screen parent, String titleKey, Object... args) {
         super(listX, listY);
-        this.modId = modId;
+        this.configId = configId;
         this.setParent(parent);
         this.title = StringUtils.translate(titleKey, args);
     }
@@ -79,7 +80,7 @@ public abstract class GuiConfigsBase extends GuiListBase<ConfigOptionWrapper, Wi
     }
 
     protected void onSettingsChanged() {
-        ConfigManager.getInstance().onConfigsChanged(this.modId);
+        ConfigManager.getInstance().onConfigsChanged(this.configId);
     }
 
     @Override

@@ -16,7 +16,7 @@ public final class Jupiter {
     }
 
     public static void process() {
-        ((ConfigManager) ConfigManager.getInstance()).loadAllConfigs();
+        ConfigManager.getInstance().registerConfigHandler(TestConfig.INSTANCE);
         ServerConfigNetwork.init();
         ServerConfigManager.registerServerConfig(TestConfig.INSTANCE, ServerConfigManager.PermissionChecker.IS_OPERATOR);
     }

@@ -96,7 +96,7 @@ public class GuiColorListEdit extends GuiListBase<Color4f, WidgetColorListEditEn
     public void removed() {
         if (this.getListWidget().wereConfigsModified()) {
             this.getListWidget().applyPendingModifications();
-            ConfigManager.getInstance().onConfigsChanged(this.configGui.getModId());
+            ConfigManager.getInstance().onConfigsChanged(this.configGui.getConfigId());
         }
 
         super.removed();

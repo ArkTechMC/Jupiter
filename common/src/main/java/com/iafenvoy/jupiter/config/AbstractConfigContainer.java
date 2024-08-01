@@ -21,11 +21,6 @@ public abstract class AbstractConfigContainer implements IConfigHandler {
     public AbstractConfigContainer(Identifier id, String titleNameKey) {
         this.id = id;
         this.titleNameKey = titleNameKey;
-        ConfigManager.getInstance().registerConfigHandler(id.getNamespace(), this);
-    }
-
-    public String getModId() {
-        return this.id.getNamespace();
     }
 
     public Identifier getConfigId() {

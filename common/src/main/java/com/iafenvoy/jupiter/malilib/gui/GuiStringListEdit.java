@@ -9,7 +9,6 @@ import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetStringListEditEntry;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
 import com.iafenvoy.jupiter.malilib.util.GuiUtils;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import org.jetbrains.annotations.Nullable;
@@ -96,7 +95,7 @@ public class GuiStringListEdit extends GuiListBase<String, WidgetStringListEditE
     public void removed() {
         if (this.getListWidget().wereConfigsModified()) {
             this.getListWidget().applyPendingModifications();
-            ConfigManager.getInstance().onConfigsChanged(this.configGui.getModId());
+            ConfigManager.getInstance().onConfigsChanged(this.configGui.getConfigId());
         }
 
         super.removed();

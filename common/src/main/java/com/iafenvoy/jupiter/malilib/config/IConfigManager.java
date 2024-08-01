@@ -1,18 +1,19 @@
 package com.iafenvoy.jupiter.malilib.config;
 
+import net.minecraft.util.Identifier;
+
 public interface IConfigManager {
+    static IConfigManager getInstance() {
+        return ConfigManager.getInstance();
+    }
+
     /**
      * Registers a config handler
-     *
-     * @param modId
-     * @param handler
      */
-    void registerConfigHandler(String modId, IConfigHandler handler);
+    void registerConfigHandler(Identifier id, IConfigHandler handler);
 
     /**
      * Can be called to save and reload the configs for the given mod.
-     *
-     * @param modId
      */
-    void onConfigsChanged(String modId);
+    void onConfigsChanged(Identifier id);
 }

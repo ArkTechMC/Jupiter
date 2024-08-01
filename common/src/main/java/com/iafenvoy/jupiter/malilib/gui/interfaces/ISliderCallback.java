@@ -18,8 +18,6 @@ public interface ISliderCallback {
 
     /**
      * Sets the value
-     *
-     * @param newValue
      */
     void setValueRelative(double relativeValue);
 

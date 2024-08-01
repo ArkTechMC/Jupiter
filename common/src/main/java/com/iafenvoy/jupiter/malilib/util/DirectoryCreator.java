@@ -23,25 +23,18 @@ public class DirectoryCreator implements IStringConsumerFeedback {
             InfoUtils.showGuiOrActionBarMessage(MessageType.ERROR, "malilib.error.invalid_directory", string);
             return false;
         }
-
         File file = new File(this.dir, string);
-
         if (file.exists()) {
             InfoUtils.showGuiOrActionBarMessage(MessageType.ERROR, "malilib.error.file_or_directory_already_exists", file.getAbsolutePath());
             return false;
         }
-
         if (!file.mkdirs()) {
             InfoUtils.showGuiOrActionBarMessage(MessageType.ERROR, "malilib.error.failed_to_create_directory", file.getAbsolutePath());
             return false;
         }
-
-        if (this.navigator != null) {
+        if (this.navigator != null)
             this.navigator.switchToDirectory(file);
-        }
-
         InfoUtils.showGuiOrActionBarMessage(MessageType.SUCCESS, "malilib.message.directory_created", string);
-
         return true;
     }
 }

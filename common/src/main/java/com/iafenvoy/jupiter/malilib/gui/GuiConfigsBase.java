@@ -10,7 +10,6 @@ import com.iafenvoy.jupiter.malilib.gui.interfaces.IConfigInfoProvider;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.IDialogHandler;
 import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetConfigOption;
 import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetListConfigOptions;
-import com.iafenvoy.jupiter.malilib.util.GuiUtils;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.Identifier;
@@ -92,7 +91,8 @@ public abstract class GuiConfigsBase extends GuiListBase<ConfigOptionWrapper, Wi
     public boolean onKeyTyped(int keyCode, int scanCode, int modifiers) {
         if (this.getListWidget().onKeyTyped(keyCode, scanCode, modifiers))
             return true;
-        if (keyCode == GLFW.GLFW_KEY_ESCAPE && this.getParent() != GuiUtils.getCurrentScreen()) {
+        assert this.client != null;
+        if (keyCode == GLFW.GLFW_KEY_ESCAPE && this.getParent() != this.client.currentScreen) {
             this.closeGui(true);
             return true;
         }

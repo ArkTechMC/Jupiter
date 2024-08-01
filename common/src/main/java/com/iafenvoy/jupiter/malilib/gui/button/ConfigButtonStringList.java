@@ -5,8 +5,8 @@ import com.iafenvoy.jupiter.malilib.gui.GuiBase;
 import com.iafenvoy.jupiter.malilib.gui.GuiStringListEdit;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.IConfigGui;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.IDialogHandler;
-import com.iafenvoy.jupiter.malilib.util.GuiUtils;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
+import net.minecraft.client.MinecraftClient;
 import org.jetbrains.annotations.Nullable;
 
 public class ConfigButtonStringList extends ButtonGeneric {
@@ -32,7 +32,7 @@ public class ConfigButtonStringList extends ButtonGeneric {
         if (this.dialogHandler != null) {
             this.dialogHandler.openDialog(new GuiStringListEdit(this.config, this.configGui, this.dialogHandler, null));
         } else {
-            GuiBase.openGui(new GuiStringListEdit(this.config, this.configGui, null, GuiUtils.getCurrentScreen()));
+            GuiBase.openGui(new GuiStringListEdit(this.config, this.configGui, null, MinecraftClient.getInstance().currentScreen));
         }
 
         return true;

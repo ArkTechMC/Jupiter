@@ -8,8 +8,8 @@ import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetColorListEdit;
 import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetColorListEditEntry;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
 import com.iafenvoy.jupiter.malilib.util.Color4f;
-import com.iafenvoy.jupiter.malilib.util.GuiUtils;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import org.jetbrains.annotations.Nullable;
@@ -50,7 +50,7 @@ public class GuiColorListEdit extends GuiListBase<Color4f, WidgetColorListEditEn
 
     protected void setWidthAndHeight() {
         this.dialogWidth = 400;
-        this.dialogHeight = GuiUtils.getScaledWindowHeight() - 90;
+        this.dialogHeight = MinecraftClient.getInstance().getWindow().getScaledHeight() - 90;
     }
 
     protected void centerOnScreen() {

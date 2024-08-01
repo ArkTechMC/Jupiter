@@ -11,16 +11,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StringUtils {
-    public static String getModVersionString(String modId) {
-        for (net.fabricmc.loader.api.ModContainer container : net.fabricmc.loader.api.FabricLoader.getInstance().getAllMods()) {
-            if (container.getMetadata().getId().equals(modId)) {
-                return container.getMetadata().getVersion().getFriendlyString();
-            }
-        }
-
-        return "?";
-    }
-
     /**
      * Parses the given string as a hexadecimal value, if it begins with '#' or '0x'.
      * Otherwise tries to parse it as a regular base 10 integer.

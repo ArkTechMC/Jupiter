@@ -8,8 +8,8 @@ import com.iafenvoy.jupiter.malilib.gui.interfaces.IFileBrowserIconProvider;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
 import com.iafenvoy.jupiter.malilib.util.DirectoryCreator;
 import com.iafenvoy.jupiter.malilib.util.FileUtils;
-import com.iafenvoy.jupiter.malilib.util.GuiUtils;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import org.jetbrains.annotations.Nullable;
 
@@ -54,7 +54,7 @@ public class WidgetDirectoryNavigation extends WidgetSearchBar {
             } else if (hoveredIcon == this.iconCreateDir) {
                 String title = "malilib.gui.title.create_directory";
                 DirectoryCreator creator = new DirectoryCreator(this.currentDir, this.navigator);
-                GuiTextInputFeedback gui = new GuiTextInputFeedback(256, title, "", GuiUtils.getCurrentScreen(), creator);
+                GuiTextInputFeedback gui = new GuiTextInputFeedback(256, title, "", MinecraftClient.getInstance().currentScreen, creator);
                 GuiBase.openGui(gui);
                 return true;
             }

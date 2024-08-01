@@ -36,9 +36,8 @@ public class InfoUtils {
      * @param args
      */
     public static void showGuiMessage(MessageType type, int lifeTime, String translationKey, Object... args) {
-        if (GuiUtils.getCurrentScreen() instanceof IMessageConsumer) {
-            ((IMessageConsumer) GuiUtils.getCurrentScreen()).addMessage(type, lifeTime, translationKey, args);
-        }
+        if (MinecraftClient.getInstance().currentScreen instanceof IMessageConsumer consumer)
+            consumer.addMessage(type, lifeTime, translationKey, args);
     }
 
     /**
@@ -63,9 +62,9 @@ public class InfoUtils {
      * @param args
      */
     public static void showGuiOrActionBarMessage(MessageType type, int lifeTime, String translationKey, Object... args) {
-        if (GuiUtils.getCurrentScreen() instanceof IMessageConsumer) {
-            ((IMessageConsumer) GuiUtils.getCurrentScreen()).addMessage(type, lifeTime, translationKey, args);
-        } else {
+        if (MinecraftClient.getInstance().currentScreen instanceof IMessageConsumer consumer)
+            consumer.addMessage(type, lifeTime, translationKey, args);
+        else {
             String msg = type.getFormatting() + StringUtils.translate(translationKey, args) + GuiBase.TXT_RST;
             printActionbarMessage(msg);
         }
@@ -93,11 +92,10 @@ public class InfoUtils {
      * @param args
      */
     public static void showGuiOrInGameMessage(MessageType type, int lifeTime, String translationKey, Object... args) {
-        if (GuiUtils.getCurrentScreen() instanceof IMessageConsumer) {
-            ((IMessageConsumer) GuiUtils.getCurrentScreen()).addMessage(type, lifeTime, translationKey, args);
-        } else {
+        if (MinecraftClient.getInstance().currentScreen instanceof IMessageConsumer consumer)
+            consumer.addMessage(type, lifeTime, translationKey, args);
+        else
             showInGameMessage(type, lifeTime, translationKey, args);
-        }
     }
 
     /**
@@ -153,24 +151,6 @@ public class InfoUtils {
      */
     public static void showInGameMessage(MessageType type, int lifeTime, String translationKey, Object... args) {
         IN_GAME_MESSAGES.addMessage(type, lifeTime, translationKey, args);
-    }
-
-    public static void printBooleanConfigToggleMessage(String prettyName, boolean newValue) {
-        String pre = newValue ? GuiBase.TXT_GREEN : GuiBase.TXT_RED;
-        String status = StringUtils.translate("malilib.message.value." + (newValue ? "on" : "off"));
-        String message = StringUtils.translate("malilib.message.toggled", prettyName, pre + status + GuiBase.TXT_RST);
-
-        printActionbarMessage(message);
-    }
-
-    /**
-     * NOT PUBLIC API - DO NOT CALL
-     */
-    public static void renderInGameMessages(net.minecraft.client.gui.DrawContext drawContext) {
-        int x = GuiUtils.getScaledWindowWidth() / 2;
-        int y = GuiUtils.getScaledWindowHeight() - 76;
-
-        IN_GAME_MESSAGES.drawMessages(x, y, drawContext);
     }
 
     public static void sendVanillaMessage(MutableText message) {

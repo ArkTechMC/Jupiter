@@ -52,7 +52,7 @@ public abstract class AbstractConfigContainer implements IConfigHandler {
     public String serialize() {
         JsonObject configRoot = new JsonObject();
         for (ConfigCategory category : this.getConfigTabs())
-            ConfigUtils.writeConfigBase(configRoot, category.id(), category.getConfigs());
+            ConfigUtils.writeConfigBase(configRoot, category.id(), category.getConfigs(), this.shouldCompressKey());
         this.writeCustomData(configRoot);
         return configRoot.toString();
     }
@@ -62,7 +62,7 @@ public abstract class AbstractConfigContainer implements IConfigHandler {
         if (jsonElement instanceof JsonObject obj) {
             if (!this.shouldLoad(obj)) return;
             for (ConfigCategory category : this.getConfigTabs())
-                ConfigUtils.readConfigBase(obj, category.id(), category.getConfigs());
+                ConfigUtils.readConfigBase(obj, category.id(), category.getConfigs(), this.shouldCompressKey());
             this.readCustomData(obj);
         }
     }
@@ -76,6 +76,10 @@ public abstract class AbstractConfigContainer implements IConfigHandler {
     }
 
     protected void writeCustomData(JsonObject obj) {
+    }
+
+    protected boolean shouldCompressKey() {
+        return true;
     }
 
     public record ConfigCategory(String id, String translateKey, List<IConfigBase> configs) {

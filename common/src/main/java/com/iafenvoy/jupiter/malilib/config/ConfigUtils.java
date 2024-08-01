@@ -8,25 +8,35 @@ import com.iafenvoy.jupiter.malilib.util.JsonUtils;
 import java.util.List;
 
 public class ConfigUtils {
-    public static void readConfigBase(JsonObject root, String category, List<? extends IConfigBase> options) {
+    private static String compressKey(String name) {
+        String[] s = name.split("\\.");
+        if (s.length == 0) return "";
+        return s[s.length - 1];
+    }
+
+    public static void readConfigBase(JsonObject root, String category, List<? extends IConfigBase> options, boolean compress) {
         JsonObject obj = JsonUtils.getNestedObject(root, category, false);
 
         if (obj != null) {
             for (IConfigBase option : options) {
                 String name = option.getNameKey();
-
-                if (obj.has(name)) {
+                if (compress) name = compressKey(name);
+                if (obj.has(name))
                     option.setValueFromJsonElement(obj.get(name));
-                }
             }
         }
     }
 
-    public static void writeConfigBase(JsonObject root, String category, List<? extends IConfigBase> options) {
+    public static void writeConfigBase(JsonObject root, String category, List<? extends IConfigBase> options, boolean compress) {
         JsonObject obj = JsonUtils.getNestedObject(root, category, true);
+        assert obj != null;
 
         for (IConfigBase option : options) {
-            obj.add(option.getNameKey(), option.getAsJsonElement());
+            if (!(option instanceof IConfigResettable resettable) || resettable.isModified()) {
+                String name = option.getNameKey();
+                if (compress) name = compressKey(name);
+                obj.add(name, option.getAsJsonElement());
+            }
         }
     }
 

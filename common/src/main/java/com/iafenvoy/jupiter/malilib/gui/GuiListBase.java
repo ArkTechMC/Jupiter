@@ -42,7 +42,6 @@ public abstract class GuiListBase<TYPE, WIDGET extends WidgetListEntryBase<TYPE>
         return null;
     }
 
-    @Nullable
     protected WIDGETLIST getListWidget() {
         if (this.widget == null) {
             this.reCreateListWidget();

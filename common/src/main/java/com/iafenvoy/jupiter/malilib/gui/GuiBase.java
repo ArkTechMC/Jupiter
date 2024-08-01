@@ -3,7 +3,6 @@ package com.iafenvoy.jupiter.malilib.gui;
 import com.iafenvoy.jupiter.malilib.config.IConfigBase;
 import com.iafenvoy.jupiter.malilib.gui.button.ButtonBase;
 import com.iafenvoy.jupiter.malilib.gui.button.IButtonActionListener;
-import com.iafenvoy.jupiter.malilib.gui.interfaces.IConfigGui;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.IMessageConsumer;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.ITextFieldListener;
 import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetBase;
@@ -263,6 +262,12 @@ public abstract class GuiBase extends Screen implements IMessageConsumer, IStrin
         }
 
         return false;
+    }
+
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
+        if (super.mouseScrolled(mouseX, mouseY, amount)) return true;
+        return this.onMouseScrolled((int) mouseX, (int) mouseY, amount, amount);
     }
 
     public boolean onMouseScrolled(int mouseX, int mouseY, double horizontalAmount, double verticalAmount) {

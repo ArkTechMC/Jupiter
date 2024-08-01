@@ -36,7 +36,7 @@ public interface IConfigBase {
      * @return
      */
     default String getPrettyName() {
-        return this.getNameKey();
+        return StringUtils.translate(this.getNameKey());
     }
 
     /**
@@ -45,7 +45,7 @@ public interface IConfigBase {
      * @return
      */
     default String getConfigGuiDisplayName() {
-        return StringUtils.getTranslatedOrFallback("config.name." + this.getNameKey().toLowerCase(), this.getNameKey());
+        return this.getPrettyName();
     }
 
     /**

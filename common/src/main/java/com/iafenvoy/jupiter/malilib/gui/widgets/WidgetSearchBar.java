@@ -15,8 +15,7 @@ public class WidgetSearchBar extends WidgetBase {
     protected final GuiTextFieldGeneric searchBox;
     protected boolean searchOpen;
 
-    public WidgetSearchBar(int x, int y, int width, int height,
-                           int searchBarOffsetX, IGuiIcon iconSearch, LeftRight iconAlignment) {
+    public WidgetSearchBar(int x, int y, int width, int height, int searchBarOffsetX, IGuiIcon iconSearch, LeftRight iconAlignment) {
         super(x, y, width, height);
 
         int iw = iconSearch.getWidth();

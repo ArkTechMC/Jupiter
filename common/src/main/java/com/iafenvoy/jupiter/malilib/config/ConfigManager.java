@@ -30,14 +30,6 @@ public class ConfigManager implements IConfigManager {
     public void onConfigsChanged(Identifier id) {
         IConfigHandler handler = this.configHandlers.get(id);
         if (handler != null)
-            handler.onConfigsChanged();
-    }
-
-    /**
-     * NOT PUBLIC API - DO NOT CALL
-     */
-    public void saveAllConfigs() {
-        for (IConfigHandler handler : this.configHandlers.values())
             handler.save();
     }
 }

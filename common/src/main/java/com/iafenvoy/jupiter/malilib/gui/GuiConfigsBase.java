@@ -133,7 +133,6 @@ public abstract class GuiConfigsBase extends GuiListBase<ConfigOptionWrapper, Wi
 
     public static class ConfigOptionWrapper {
         private final Type type;
-        @Nullable
         private final IConfigBase config;
         @Nullable
         private final String label;
@@ -164,7 +163,6 @@ public abstract class GuiConfigsBase extends GuiListBase<ConfigOptionWrapper, Wi
             return this.type;
         }
 
-        @Nullable
         public IConfigBase getConfig() {
             return this.config;
         }

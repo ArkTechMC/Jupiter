@@ -17,11 +17,11 @@ import java.util.List;
 
 @Environment(EnvType.CLIENT)
 public abstract class AbstractConfigScreen extends GuiConfigsBase {
-    private static int currentTab = 0;
     protected final AbstractConfigContainer configContainer;
     protected final List<TabButton> tabButtons = new ArrayList<>();
     protected final GuiHorizontalScrollBar scrollBar = new GuiHorizontalScrollBar();
     protected boolean needScrollBar = false;
+    private int currentTab = 0;
 
     public AbstractConfigScreen(Screen parent, AbstractConfigContainer configContainer) {
         super(10, 50, configContainer.getConfigId(), parent, configContainer.getTitleNameKey());
@@ -83,13 +83,18 @@ public abstract class AbstractConfigScreen extends GuiConfigsBase {
     }
 
     @Override
-    public void close() {
-        this.closeGui(true);
+    public boolean onMouseScrolled(int mouseX, int mouseY, double horizontalAmount, double verticalAmount) {
+        if (super.onMouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount)) return true;
+        if (mouseX >= 10 && mouseX <= this.width - 20 && mouseY >= 22 && mouseY <= 42) {
+            this.scrollBar.setValue(this.scrollBar.getValue() + (horizontalAmount > 0 ? -20 : 20));
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public boolean shouldPause() {
-        return true;
+    public void close() {
+        this.closeGui(true);
     }
 
     @Override
@@ -137,6 +142,11 @@ public abstract class AbstractConfigScreen extends GuiConfigsBase {
 
         public void updatePos(int offsetX) {
             this.x = this.baseX - offsetX;
+        }
+
+        @Override
+        public boolean onMouseScrolledImpl(int mouseX, int mouseY, double horizontalAmount, double verticalAmount) {
+            return false;
         }
     }
 }

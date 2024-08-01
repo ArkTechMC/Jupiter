@@ -119,9 +119,8 @@ public abstract class WidgetListBase<TYPE, WIDGET extends WidgetListEntryBase<TY
         // The scroll event could be/should be distributed to the entry widgets here
         // It's not done (for now?) to prevent accidentally messing up stuff when scrolling over lists that have buttons
 
-        if (mouseX >= this.posX && mouseX <= this.posX + this.browserWidth &&
-                mouseY >= this.posY && mouseY <= this.posY + this.browserHeight) {
-            this.offsetSelectionOrScrollbar(verticalAmount < 0 ? 3 : -3, false);
+        if (mouseX >= this.posX && mouseX <= this.posX + this.browserWidth && mouseY >= this.posY && mouseY <= this.posY + this.browserHeight) {
+            this.offsetSelectionOrScrollbar(verticalAmount < 0 ? 1 : -1, false);
             return true;
         }
 

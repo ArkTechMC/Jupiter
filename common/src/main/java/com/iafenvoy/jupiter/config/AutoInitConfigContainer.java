@@ -25,19 +25,23 @@ public class AutoInitConfigContainer extends FileConfigContainer {
 
     public static class AutoInitConfigCategoryBase {
         private final ConfigCategory category;
+        private boolean loaded = false;
 
         public AutoInitConfigCategoryBase(String id, String translateKey) {
             this.category = new ConfigCategory(id, translateKey, new ArrayList<>());
-            for (Field field : this.getClass().getFields())
-                if (IConfigBase.class.isAssignableFrom(field.getType()))
-                    try {
-                        this.category.addConfig((IConfigBase) field.get(this));
-                    } catch (Exception e) {
-                        Jupiter.LOGGER.error("Failed to auto init config key {}", field.getName(), e);
-                    }
         }
 
         public ConfigCategory getCategory() {
+            if (!loaded) {
+                this.loaded = true;
+                for (Field field : this.getClass().getFields())
+                    if (IConfigBase.class.isAssignableFrom(field.getType()))
+                        try {
+                            this.category.addConfig((IConfigBase) field.get(this));
+                        } catch (Exception e) {
+                            Jupiter.LOGGER.error("Failed to auto init config key {}", field.getName(), e);
+                        }
+            }
             return category;
         }
     }

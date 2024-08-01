@@ -31,6 +31,7 @@ public class ConfigManager implements IConfigManager {
      */
     public void loadAllConfigs() {
         for (IConfigHandler handler : this.configHandlers.values()) {
+            handler.init();
             handler.load();
         }
     }

@@ -18,4 +18,6 @@ public interface IConfigHandler {
      * Called to save any potential config changes to a file
      */
     void save();
+
+    void init();
 }

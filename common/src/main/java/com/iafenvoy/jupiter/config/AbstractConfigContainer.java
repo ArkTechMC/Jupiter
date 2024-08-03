@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.iafenvoy.jupiter.malilib.config.ConfigManager;
 import com.iafenvoy.jupiter.malilib.config.ConfigUtils;
 import com.iafenvoy.jupiter.malilib.config.IConfigBase;
 import com.iafenvoy.jupiter.malilib.config.IConfigHandler;
@@ -44,7 +43,7 @@ public abstract class AbstractConfigContainer implements IConfigHandler {
     public String serialize() {
         JsonObject configRoot = new JsonObject();
         for (ConfigCategory category : this.getConfigTabs())
-            ConfigUtils.writeConfigBase(configRoot, category.id(), category.getConfigs(), this.shouldCompressKey());
+            ConfigUtils.writeConfigBase(configRoot, category.id(), category.getConfigs(), this.shouldCompressKey(), this.saveFullOption().shouldSaveFully(this instanceof FileConfigContainer));
         this.writeCustomData(configRoot);
         return configRoot.toString();
     }
@@ -74,6 +73,10 @@ public abstract class AbstractConfigContainer implements IConfigHandler {
         return true;
     }
 
+    protected SaveFullOption saveFullOption() {
+        return SaveFullOption.LOCAL;
+    }
+
     public record ConfigCategory(String id, String translateKey, List<IConfigBase> configs) {
         public <T extends IConfigBase> ConfigCategory addConfig(T config) {
             this.configs.add(config);
@@ -91,6 +94,21 @@ public abstract class AbstractConfigContainer implements IConfigHandler {
 
         public ConfigCategory copy() {
             return new ConfigCategory(this.id, this.translateKey, this.configs.stream().map(IConfigBase::copy).toList());
+        }
+    }
+
+    protected enum SaveFullOption {
+        NONE(false, false), LOCAL(true, false), ALL(true, true);
+
+        private final boolean local, network;
+
+        SaveFullOption(boolean local, boolean network) {
+            this.local = local;
+            this.network = network;
+        }
+
+        public boolean shouldSaveFully(boolean isLocal) {
+            return isLocal ? this.local : this.network;
         }
     }
 }

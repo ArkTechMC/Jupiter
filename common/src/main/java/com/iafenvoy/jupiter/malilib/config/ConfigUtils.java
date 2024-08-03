@@ -27,12 +27,12 @@ public class ConfigUtils {
         }
     }
 
-    public static void writeConfigBase(JsonObject root, String category, List<? extends IConfigBase> options, boolean compress) {
+    public static void writeConfigBase(JsonObject root, String category, List<? extends IConfigBase> options, boolean compress, boolean shouldSaveFully) {
         JsonObject obj = JsonUtils.getNestedObject(root, category, true);
         assert obj != null;
 
         for (IConfigBase option : options) {
-            if (!(option instanceof IConfigResettable resettable) || resettable.isModified()) {
+            if (shouldSaveFully || !(option instanceof IConfigResettable resettable) || resettable.isModified()) {
                 String name = option.getNameKey();
                 if (compress) name = compressKey(name);
                 obj.add(name, option.getAsJsonElement());

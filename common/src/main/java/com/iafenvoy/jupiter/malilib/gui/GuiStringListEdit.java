@@ -7,8 +7,8 @@ import com.iafenvoy.jupiter.malilib.gui.interfaces.IDialogHandler;
 import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetListStringListEdit;
 import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetStringListEditEntry;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
-import com.iafenvoy.jupiter.malilib.util.GuiUtils;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import org.jetbrains.annotations.Nullable;
@@ -49,7 +49,7 @@ public class GuiStringListEdit extends GuiListBase<String, WidgetStringListEditE
 
     protected void setWidthAndHeight() {
         this.dialogWidth = 400;
-        this.dialogHeight = GuiUtils.getScaledWindowHeight() - 90;
+        this.dialogHeight = MinecraftClient.getInstance().getWindow().getScaledHeight() - 90;
     }
 
     protected void centerOnScreen() {

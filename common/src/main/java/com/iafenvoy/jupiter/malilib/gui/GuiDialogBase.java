@@ -1,6 +1,6 @@
 package com.iafenvoy.jupiter.malilib.gui;
 
-import com.iafenvoy.jupiter.malilib.util.GuiUtils;
+import net.minecraft.client.MinecraftClient;
 
 public class GuiDialogBase extends GuiBase {
     protected int dialogWidth;
@@ -26,8 +26,8 @@ public class GuiDialogBase extends GuiBase {
             left = this.getParent().width / 2 - this.dialogWidth / 2;
             top = this.getParent().height / 2 - this.dialogHeight / 2;
         } else {
-            left = GuiUtils.getScaledWindowWidth() / 2 - this.dialogWidth / 2;
-            top = GuiUtils.getScaledWindowHeight() / 2 - this.dialogHeight / 2;
+            left = MinecraftClient.getInstance().getWindow().getScaledWidth() / 2 - this.dialogWidth / 2;
+            top = MinecraftClient.getInstance().getWindow().getScaledHeight() / 2 - this.dialogHeight / 2;
         }
 
         this.setPosition(left, top);

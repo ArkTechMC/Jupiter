@@ -15,7 +15,7 @@ import com.iafenvoy.jupiter.malilib.gui.interfaces.IConfigInfoProvider;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.IGuiIcon;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.ISliderCallback;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
-import com.iafenvoy.jupiter.malilib.util.GuiUtils;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import org.jetbrains.annotations.Nullable;
@@ -224,7 +224,7 @@ public class WidgetConfigOption extends WidgetConfigOptionBase<GuiConfigsBase.Co
         public void actionPerformedWithButton(ButtonBase button, int mouseButton) {
             this.config.toggleUseSlider();
 
-            Screen gui = GuiUtils.getCurrentScreen();
+            Screen gui = MinecraftClient.getInstance().currentScreen;
 
             if (gui instanceof GuiBase) {
                 ((GuiBase) gui).initGui();

@@ -7,8 +7,8 @@ import com.iafenvoy.jupiter.malilib.gui.GuiBase;
 import com.iafenvoy.jupiter.malilib.gui.GuiColorEditorHSV;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
 import com.iafenvoy.jupiter.malilib.util.Color4f;
-import com.iafenvoy.jupiter.malilib.util.GuiUtils;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 
 import java.util.function.IntConsumer;
@@ -32,7 +32,7 @@ public class WidgetColorIndicator extends WidgetBase {
 
     @Override
     protected boolean onMouseClickedImpl(int mouseX, int mouseY, int mouseButton) {
-        GuiColorEditorHSV gui = new GuiColorEditorHSV(this.config, null, GuiUtils.getCurrentScreen());
+        GuiColorEditorHSV gui = new GuiColorEditorHSV(this.config, null, MinecraftClient.getInstance().currentScreen);
         GuiBase.openGui(gui);
         return true;
     }

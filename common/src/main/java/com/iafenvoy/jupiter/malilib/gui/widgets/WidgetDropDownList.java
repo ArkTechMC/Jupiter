@@ -1,6 +1,6 @@
 package com.iafenvoy.jupiter.malilib.gui.widgets;
 
-import com.iafenvoy.jupiter.malilib.gui.GuiVerticalScrollBar;
+import com.iafenvoy.jupiter.malilib.gui.scrollbar.GuiVerticalScrollBar;
 import com.iafenvoy.jupiter.malilib.gui.GuiTextFieldGeneric;
 import com.iafenvoy.jupiter.malilib.gui.MaLiLibIcons;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.ITextFieldListener;
@@ -8,7 +8,6 @@ import com.iafenvoy.jupiter.malilib.gui.wrappers.TextFieldWrapper;
 import com.iafenvoy.jupiter.malilib.interfaces.IStringRetriever;
 import com.iafenvoy.jupiter.malilib.interfaces.IStringValue;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
-import com.iafenvoy.jupiter.malilib.util.GuiUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -59,7 +58,7 @@ public class WidgetDropDownList<T> extends WidgetBase {
 
         int v = Math.min(maxVisibleEntries, entries.size());
         v = Math.min(v, maxHeight / height);
-        v = Math.min(v, (GuiUtils.getScaledWindowHeight() - y) / height);
+        v = Math.min(v, (MinecraftClient.getInstance().getWindow().getScaledHeight() - y) / height);
         v = Math.max(v, 1);
 
         this.maxVisibleEntries = v;

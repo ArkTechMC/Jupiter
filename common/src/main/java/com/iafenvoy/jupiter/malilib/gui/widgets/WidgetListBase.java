@@ -1,7 +1,7 @@
 package com.iafenvoy.jupiter.malilib.gui.widgets;
 
 import com.iafenvoy.jupiter.malilib.gui.GuiBase;
-import com.iafenvoy.jupiter.malilib.gui.GuiVerticalScrollBar;
+import com.iafenvoy.jupiter.malilib.gui.scrollbar.GuiVerticalScrollBar;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.ISelectionListener;
 import com.iafenvoy.jupiter.malilib.render.RenderUtils;
 import net.minecraft.client.gui.DrawContext;

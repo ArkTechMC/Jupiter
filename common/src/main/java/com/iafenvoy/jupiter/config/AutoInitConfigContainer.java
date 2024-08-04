@@ -32,7 +32,7 @@ public class AutoInitConfigContainer extends FileConfigContainer {
         }
 
         public ConfigCategory getCategory() {
-            if (!loaded) {
+            if (!this.loaded) {
                 this.loaded = true;
                 for (Field field : this.getClass().getFields())
                     if (IConfigBase.class.isAssignableFrom(field.getType()))
@@ -42,7 +42,7 @@ public class AutoInitConfigContainer extends FileConfigContainer {
                             Jupiter.LOGGER.error("Failed to auto init config key {}", field.getName(), e);
                         }
             }
-            return category;
+            return this.category;
         }
     }
 }

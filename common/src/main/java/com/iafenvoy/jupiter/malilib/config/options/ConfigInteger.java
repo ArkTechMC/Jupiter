@@ -2,6 +2,7 @@ package com.iafenvoy.jupiter.malilib.config.options;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
+import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.malilib.MaLiLib;
 import com.iafenvoy.jupiter.malilib.config.ConfigType;
 import com.iafenvoy.jupiter.malilib.config.IConfigBase;
@@ -98,6 +99,7 @@ public class ConfigInteger extends ConfigBase<ConfigInteger> implements IConfigI
         try {
             return Integer.parseInt(newValue) != this.defaultValue;
         } catch (Exception e) {
+            Jupiter.LOGGER.error("Failed to get integer", e);
         }
 
         return true;

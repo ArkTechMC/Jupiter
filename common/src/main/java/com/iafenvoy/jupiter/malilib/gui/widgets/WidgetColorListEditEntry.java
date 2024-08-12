@@ -93,18 +93,21 @@ public class WidgetColorListEditEntry extends WidgetConfigOptionBase<Color4f> {
     protected ButtonGeneric createResetButton(int x, int y, GuiTextFieldGeneric textField) {
         String labelReset = StringUtils.translate("malilib.gui.button.reset.caps");
         ButtonGeneric resetButton = new ButtonGeneric(x, y, -1, 20, labelReset);
-        resetButton.setEnabled(!textField.getText().equals(this.defaultValue));
+        resetButton.setEnabled(!textField.getText().equals(this.defaultValue.toString()));
 
         return resetButton;
     }
 
     @Override
     public boolean wasConfigModified() {
-        return !this.isDummy() && !this.textField.textField().getText().equals(this.initialStringValue);
+        if (this.isDummy()) return false;
+        assert this.textField != null;
+        return !this.textField.textField().getText().equals(this.initialStringValue);
     }
 
     @Override
     public void applyNewValueToConfig() {
+        assert this.textField != null;
         this.applyNewValueToConfig(StringUtils.getColor(this.textField.textField().getText(), Color4f.ZERO.intValue));
     }
 
@@ -192,7 +195,7 @@ public class WidgetColorListEditEntry extends WidgetConfigOptionBase<Color4f> {
         super.render(mouseX, mouseY, selected, drawContext);
     }
 
-    private enum ButtonType {
+    protected enum ButtonType {
         ADD(MaLiLibIcons.PLUS, "malilib.gui.button.hovertext.add"),
         REMOVE(MaLiLibIcons.MINUS, "malilib.gui.button.hovertext.remove"),
         MOVE_UP(MaLiLibIcons.ARROW_UP, "malilib.gui.button.hovertext.move_up"),
@@ -236,9 +239,10 @@ public class WidgetColorListEditEntry extends WidgetConfigOptionBase<Color4f> {
 
         @Override
             public void actionPerformedWithButton(ButtonBase button, int mouseButton) {
-                this.parent.textField.textField().setText(this.parent.defaultValue.toString());
+            assert this.parent.textField != null;
+            this.parent.textField.textField().setText(this.parent.defaultValue.toString());
                 this.parent.parent.applyPendingModifications();
-                this.buttonReset.setEnabled(!this.parent.textField.textField().getText().equals(this.parent.defaultValue));
+                this.buttonReset.setEnabled(!this.parent.textField.textField().getText().equals(this.parent.defaultValue.toString()));
             }
         }
 

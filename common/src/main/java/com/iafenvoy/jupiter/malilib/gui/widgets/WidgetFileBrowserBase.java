@@ -14,10 +14,7 @@ import org.lwjgl.glfw.GLFW;
 import java.io.File;
 import java.io.FileFilter;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public abstract class WidgetFileBrowserBase extends WidgetListBase<DirectoryEntry, WidgetDirectoryEntry> implements IDirectoryNavigator {
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -139,6 +136,7 @@ public abstract class WidgetFileBrowserBase extends WidgetListBase<DirectoryEntr
     }
 
     protected void addFilteredContents(File dir) {
+        assert this.widgetSearchBar != null;
         String filterText = this.widgetSearchBar.getFilter();
         List<DirectoryEntry> list = new ArrayList<>();
         this.addFilteredContents(dir, filterText, list, null);
@@ -173,7 +171,7 @@ public abstract class WidgetFileBrowserBase extends WidgetListBase<DirectoryEntr
     }
 
     protected void addMatchingEntriesToList(FileFilter filter, File dir, List<DirectoryEntry> list, @Nullable String filterText, @Nullable String displayNamePrefix) {
-        for (File file : dir.listFiles(filter)) {
+        for (File file : Objects.requireNonNull(dir.listFiles(filter))) {
             String name = FileUtils.getNameWithoutExtension(file.getName().toLowerCase());
 
             if (filterText == null || this.matchesFilter(name, filterText)) {
@@ -185,7 +183,7 @@ public abstract class WidgetFileBrowserBase extends WidgetListBase<DirectoryEntr
     protected List<File> getSubDirectories(File dir) {
         List<File> dirs = new ArrayList<>();
 
-        Collections.addAll(dirs, dir.listFiles(DIRECTORY_FILTER));
+        Collections.addAll(dirs, Objects.requireNonNull(dir.listFiles(DIRECTORY_FILTER)));
 
         return dirs;
     }

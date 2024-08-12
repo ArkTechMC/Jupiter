@@ -3,7 +3,6 @@ package com.iafenvoy.jupiter.malilib.gui.widgets;
 import com.iafenvoy.jupiter.malilib.config.IConfigColorList;
 import com.iafenvoy.jupiter.malilib.gui.GuiColorListEdit;
 import com.iafenvoy.jupiter.malilib.util.Color4f;
-import net.minecraft.client.gui.DrawContext;
 
 import java.util.Collection;
 

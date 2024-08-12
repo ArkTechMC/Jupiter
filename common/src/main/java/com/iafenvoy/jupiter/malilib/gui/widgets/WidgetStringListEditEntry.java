@@ -98,7 +98,9 @@ public class WidgetStringListEditEntry extends WidgetConfigOptionBase<String> {
 
     @Override
     public boolean wasConfigModified() {
-        return !this.isDummy() && !this.textField.textField().getText().equals(this.initialStringValue);
+        if (this.isDummy()) return false;
+        assert this.textField != null;
+        return !this.textField.textField().getText().equals(this.initialStringValue);
     }
 
     @Override
@@ -106,6 +108,7 @@ public class WidgetStringListEditEntry extends WidgetConfigOptionBase<String> {
         if (!this.isDummy()) {
             IConfigStringList config = this.parent.getConfig();
             List<String> list = config.getStrings();
+            assert this.textField != null;
             String value = this.textField.textField().getText();
 
             if (list.size() > this.listIndex) {
@@ -185,7 +188,7 @@ public class WidgetStringListEditEntry extends WidgetConfigOptionBase<String> {
         super.render(mouseX, mouseY, selected, drawContext);
     }
 
-    private enum ButtonType {
+    protected enum ButtonType {
         ADD(MaLiLibIcons.PLUS, "malilib.gui.button.hovertext.add"),
         REMOVE(MaLiLibIcons.MINUS, "malilib.gui.button.hovertext.remove"),
         MOVE_UP(MaLiLibIcons.ARROW_UP, "malilib.gui.button.hovertext.move_up"),
@@ -229,7 +232,8 @@ public class WidgetStringListEditEntry extends WidgetConfigOptionBase<String> {
 
         @Override
             public void actionPerformedWithButton(ButtonBase button, int mouseButton) {
-                this.parent.textField.textField().setText(this.parent.defaultValue);
+            assert this.parent.textField != null;
+            this.parent.textField.textField().setText(this.parent.defaultValue);
                 this.buttonReset.setEnabled(!this.parent.textField.textField().getText().equals(this.parent.defaultValue));
             }
         }

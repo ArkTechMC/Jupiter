@@ -130,14 +130,15 @@ public class WidgetConfigOption extends WidgetConfigOptionBase<GuiConfigsBase.Co
             IConfigBase config = this.wrapper.getConfig();
             boolean modified = false;
 
-            if (config instanceof IStringRepresentable) {
+            if (config instanceof IStringRepresentable representable) {
+                assert this.initialStringValue != null;
                 if (this.textField != null) {
-                    modified |= !this.initialStringValue.equals(this.textField.textField().getText());
+                    modified = !this.initialStringValue.equals(this.textField.textField().getText());
                 }
 
-                return modified || !this.initialStringValue.equals(((IStringRepresentable) config).getStringValue());
-            } else if (this.initialStringList != null && config instanceof IConfigStringList) {
-                return !this.initialStringList.equals(((IConfigStringList) config).getStrings());
+                return modified || !this.initialStringValue.equals(representable.getStringValue());
+            } else if (this.initialStringList != null && config instanceof IConfigStringList stringList) {
+                return !this.initialStringList.equals(stringList.getStrings());
             }
         }
 

@@ -5,7 +5,6 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.VertexConsumerProvider.Immediate;
 import net.minecraft.text.OrderedText;
-import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
 
 public class MalilibDrawContext extends DrawContext {

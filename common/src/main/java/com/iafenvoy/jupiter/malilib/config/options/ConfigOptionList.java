@@ -2,6 +2,7 @@ package com.iafenvoy.jupiter.malilib.config.options;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
+import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.malilib.MaLiLib;
 import com.iafenvoy.jupiter.malilib.config.*;
 
@@ -54,6 +55,7 @@ public class ConfigOptionList extends ConfigBase<ConfigOptionList> implements IC
         try {
             return this.value.fromString(newValue) != this.defaultValue;
         } catch (Exception e) {
+            Jupiter.LOGGER.error("Failed to get list", e);
         }
 
         return true;

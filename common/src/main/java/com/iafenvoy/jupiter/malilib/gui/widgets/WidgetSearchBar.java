@@ -66,6 +66,7 @@ public class WidgetSearchBar extends WidgetBase {
                 return true;
             } else if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
                 if (GuiBase.isShiftDown()) {
+                    assert this.mc.currentScreen != null;
                     this.mc.currentScreen.close();
                 }
 

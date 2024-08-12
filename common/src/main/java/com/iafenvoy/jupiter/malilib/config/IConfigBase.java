@@ -33,7 +33,6 @@ public interface IConfigBase {
      * Returns the "pretty name" for this config.
      * This is used in the possible toggle messages.
      *
-     * @return
      */
     default String getPrettyName() {
         return StringUtils.translate(this.getNameKey());
@@ -42,7 +41,6 @@ public interface IConfigBase {
     /**
      * Returns the display name used for this config in the config GUIs
      *
-     * @return
      */
     default String getConfigGuiDisplayName() {
         return this.getPrettyName();
@@ -51,14 +49,12 @@ public interface IConfigBase {
     /**
      * Set the value of this config option from a JSON element (is possible)
      *
-     * @param element
      */
     void setValueFromJsonElement(JsonElement element);
 
     /**
      * Return the value of this config option as a JSON element, for saving into a config file.
      *
-     * @return
      */
     JsonElement getAsJsonElement();
 

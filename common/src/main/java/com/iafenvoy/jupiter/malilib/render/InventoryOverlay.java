@@ -235,9 +235,6 @@ public class InventoryOverlay {
      * Don't hold on to the instance, as the values will mutate when this
      * method is called again!
      *
-     * @param type
-     * @param totalSlots
-     * @return
      */
     public static InventoryProperties getInventoryPropsTemp(InventoryRenderType type, int totalSlots) {
         INV_PROPS_TEMP.totalSlots = totalSlots;

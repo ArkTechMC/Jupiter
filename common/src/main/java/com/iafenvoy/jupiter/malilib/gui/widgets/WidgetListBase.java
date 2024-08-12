@@ -434,8 +434,6 @@ public abstract class WidgetListBase<TYPE, WIDGET extends WidgetListEntryBase<TY
      * Create a header widget, that will always be displayed as the first entry of the list.
      * If no such header should be used, then return null,
      *
-     * @param x
-     * @param y
      * @param listIndexStart the listContents index of the first visible entry
      * @param usableHeight   the total usable height available for the list entry widgets
      * @param usedHeight     the currently used up height. Check that (usedHeight + widgetHeight) <= usableHeight before adding an entry widget.

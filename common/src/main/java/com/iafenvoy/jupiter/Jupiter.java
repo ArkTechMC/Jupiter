@@ -12,7 +12,6 @@ public final class Jupiter {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public static void init() {
-
     }
 
     public static void process() {

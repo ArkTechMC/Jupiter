@@ -46,9 +46,6 @@ public class ConfigUtils {
      * <b>** WARNING **</b>: The configs in toWrap are assumed to actually implement the
      * interface that the wrapped type is of!! Otherwise things will crash!
      *
-     * @param wrappedType
-     * @param toWrap
-     * @return
      */
     public static List<ConfigTypeWrapper> createConfigWrapperForType(ConfigType wrappedType, List<? extends IConfigValue> toWrap) {
         ImmutableList.Builder<ConfigTypeWrapper> builder = ImmutableList.builder();

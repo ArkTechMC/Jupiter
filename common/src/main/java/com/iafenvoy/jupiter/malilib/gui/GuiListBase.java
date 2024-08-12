@@ -3,7 +3,6 @@ package com.iafenvoy.jupiter.malilib.gui;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.ISelectionListener;
 import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetListBase;
 import com.iafenvoy.jupiter.malilib.gui.widgets.WidgetListEntryBase;
-import com.iafenvoy.jupiter.malilib.render.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import org.jetbrains.annotations.Nullable;

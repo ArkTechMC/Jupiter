@@ -1,5 +1,6 @@
 package com.iafenvoy.jupiter.malilib.gui;
 
+import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.malilib.config.IConfigInteger;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.IDialogHandler;
 import com.iafenvoy.jupiter.malilib.gui.interfaces.ITextFieldListener;
@@ -244,9 +245,6 @@ public class GuiColorEditorHSV extends GuiDialogBase {
         this.textFieldFullColor = new GuiTextFieldGeneric(this.xH, y + 1, 68, 14, this.textRenderer);
         this.textFieldFullColor.setMaxLength(12);
         this.addTextField(this.textFieldFullColor, new TextFieldListener(null, this));
-
-        //String str = StringUtils.translate("malilib.gui.label.color_editor.current_color");
-        //this.addLabel(this.xHS, this.yHS + this.sizeHS + 10, 60, 12, 0xFFFFFF, str);
 
         this.setColor(this.config.getIntegerValue()); // Set the text field values
     }
@@ -604,9 +602,6 @@ public class GuiColorEditorHSV extends GuiDialogBase {
 
         RenderUtils.color(1, 1, 1, 1);
 
-        //GlProgramManager.useProgram(SHADER_HUE.getProgram());
-        //GL20.glUniform1f(GL20.glGetUniformLocation(SHADER_HUE.getProgram(), "hue_value"), this.relH);
-
         buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
 
         buffer.vertex(x, y, z).texture(1, 0).next();
@@ -806,6 +801,7 @@ public class GuiColorEditorHSV extends GuiDialogBase {
 
                         return true;
                     } catch (Exception e) {
+                        Jupiter.LOGGER.error("", e);
                     }
                 }
 

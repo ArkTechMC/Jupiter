@@ -10,13 +10,6 @@ public class ButtonOnOff extends ButtonGeneric {
      * to a value where the ON and OFF buttons are the same width,
      * using the given translation key.
      *
-     * @param x
-     * @param y
-     * @param width
-     * @param rightAlign
-     * @param translationKey
-     * @param isCurrentlyOn
-     * @param hoverStrings
      */
     public ButtonOnOff(int x, int y, int width, boolean rightAlign, String translationKey, boolean isCurrentlyOn, String... hoverStrings) {
         super(x, y, width, 20, "", hoverStrings);

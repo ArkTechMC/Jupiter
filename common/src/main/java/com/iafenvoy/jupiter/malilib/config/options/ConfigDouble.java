@@ -2,6 +2,7 @@ package com.iafenvoy.jupiter.malilib.config.options;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
+import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.malilib.MaLiLib;
 import com.iafenvoy.jupiter.malilib.config.ConfigType;
 import com.iafenvoy.jupiter.malilib.config.IConfigBase;
@@ -103,6 +104,7 @@ public class ConfigDouble extends ConfigBase<ConfigDouble> implements IConfigDou
         try {
             return Double.parseDouble(newValue) != this.defaultValue;
         } catch (Exception e) {
+            Jupiter.LOGGER.error("Failed to get double", e);
         }
 
         return true;

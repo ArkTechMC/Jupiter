@@ -1,6 +1,7 @@
 package com.iafenvoy.jupiter.malilib.util;
 
 import com.google.common.collect.ImmutableSet;
+import com.iafenvoy.jupiter.Jupiter;
 import net.minecraft.client.MinecraftClient;
 
 import java.io.File;
@@ -23,10 +24,6 @@ public class FileUtils {
      * Checks that the target directory exists, and the file either doesn't exist,
      * or the canOverwrite argument is true and the file is writable
      *
-     * @param dir
-     * @param fileName
-     * @param canOverwrite
-     * @return
      */
     public static boolean canWriteToFile(File dir, String fileName, boolean canOverwrite) {
         if (dir.exists() && dir.isDirectory()) {
@@ -41,6 +38,7 @@ public class FileUtils {
         try {
             file = file.getCanonicalFile();
         } catch (IOException e) {
+            Jupiter.LOGGER.error("Failed to get file", e);
         }
 
         return file;

@@ -32,6 +32,7 @@ public class WidgetListConfigOptions extends WidgetListConfigOptionsBase<GuiConf
     @Override
     public void resize(MinecraftClient mc, int width, int height) {
         super.resize(mc, width, height);
+        assert this.widgetSearchBar != null;
         this.widgetSearchBar.setWidth(width - 14);
     }
 

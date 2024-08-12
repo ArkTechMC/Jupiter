@@ -4,7 +4,6 @@ public interface IConfigResettable {
     /**
      * Returns true if the value has been changed from the default value
      *
-     * @return
      */
     boolean isModified();
 

@@ -15,9 +15,6 @@ public class StringUtils {
      * Parses the given string as a hexadecimal value, if it begins with '#' or '0x'.
      * Otherwise tries to parse it as a regular base 10 integer.
      *
-     * @param colorStr
-     * @param defaultColor
-     * @return
      */
     public static int getColor(String colorStr, int defaultColor) {
         Pattern pattern = Pattern.compile("(?:0x|#)([a-fA-F0-9]{1,8})");
@@ -41,8 +38,6 @@ public class StringUtils {
     /**
      * Splits the given camel-case string into parts separated by a space
      *
-     * @param str
-     * @return
      */
     // https://stackoverflow.com/questions/2559759/how-do-i-convert-camelcase-into-human-readable-names-in-java
     public static String splitCamelCase(String str) {
@@ -73,9 +68,6 @@ public class StringUtils {
     /**
      * Splits the given string into lines up to maxLineLength long
      *
-     * @param linesOut
-     * @param textIn
-     * @param maxLineLength
      */
     public static void splitTextToLines(List<String> linesOut, String textIn, int maxLineLength) {
         String[] lines = textIn.split("\\\\n");
@@ -240,9 +232,6 @@ public class StringUtils {
     /**
      * Just a wrapper around I18n, to reduce the number of changed lines between MCP/Yarn versions of mods
      *
-     * @param translationKey
-     * @param args
-     * @return
      */
     public static String translate(String translationKey, Object... args) {
         return net.minecraft.client.resource.language.I18n.translate(translationKey, args);
@@ -251,7 +240,6 @@ public class StringUtils {
     /**
      * Just a wrapper to get the font height from the Font/TextRenderer
      *
-     * @return
      */
     public static int getFontHeight() {
         return net.minecraft.client.MinecraftClient.getInstance().textRenderer.fontHeight;

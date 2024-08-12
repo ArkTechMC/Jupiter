@@ -55,8 +55,6 @@ public class PositionUtils {
      * Returns the closest direction the given entity is looking towards,
      * with a vertical/pitch threshold of 60 degrees.
      *
-     * @param entity
-     * @return
      */
     public static Direction getClosestLookingDirection(Entity entity) {
         return getClosestLookingDirection(entity, 60);
@@ -65,9 +63,7 @@ public class PositionUtils {
     /**
      * Returns the closest direction the given entity is looking towards.
      *
-     * @param entity
      * @param verticalThreshold the pitch threshold to return the up or down facing instead of horizontals
-     * @return
      */
     public static Direction getClosestLookingDirection(Entity entity, float verticalThreshold) {
         if (entity.getPitch() >= verticalThreshold) {
@@ -83,8 +79,6 @@ public class PositionUtils {
      * Returns the closest block position directly infront of the
      * given entity that is not colliding with it.
      *
-     * @param entity
-     * @return
      */
     public static BlockPos getPositionInfrontOfEntity(Entity entity) {
         return getPositionInfrontOfEntity(entity, 60);
@@ -94,9 +88,6 @@ public class PositionUtils {
      * Returns the closest block position directly infront of the
      * given entity that is not colliding with it.
      *
-     * @param entity
-     * @param verticalThreshold
-     * @return
      */
     public static BlockPos getPositionInfrontOfEntity(Entity entity, float verticalThreshold) {
         double x = entity.getX();
@@ -126,9 +117,6 @@ public class PositionUtils {
     /**
      * Returns the hit vector at the center point of the given side/face of the given block position.
      *
-     * @param basePos
-     * @param facing
-     * @return
      */
     public static Vec3d getHitVecCenter(BlockPos basePos, Direction facing) {
         int x = basePos.getX();
@@ -142,7 +130,6 @@ public class PositionUtils {
             case SOUTH -> new Vec3d(x + 0.5, y + 0.5, z + 1);
             case WEST -> new Vec3d(x, y + 0.5, z);
             case EAST -> new Vec3d(x + 1, y + 0.5, z + 1);
-            default -> new Vec3d(x, y, z);
         };
     }
 
@@ -150,11 +137,6 @@ public class PositionUtils {
      * Returns the part of the block face the player is currently targeting.
      * The block face is divided into four side segments and a center segment.
      *
-     * @param originalSide
-     * @param playerFacingH
-     * @param pos
-     * @param hitVec
-     * @return
      */
     public static HitPart getHitPart(Direction originalSide, Direction playerFacingH, BlockPos pos, Vec3d hitVec) {
         Vec3d positions = getHitPartPositions(originalSide, playerFacingH, pos, hitVec);
@@ -227,11 +209,6 @@ public class PositionUtils {
     /**
      * Returns the direction the targeted part of the targeting overlay is pointing towards.
      *
-     * @param side
-     * @param playerFacingH
-     * @param pos
-     * @param hitVec
-     * @return
      */
     public static Direction getTargetedDirection(Direction side, Direction playerFacingH, BlockPos pos, Vec3d hitVec) {
         Vec3d positions = getHitPartPositions(side, playerFacingH, pos, hitVec);

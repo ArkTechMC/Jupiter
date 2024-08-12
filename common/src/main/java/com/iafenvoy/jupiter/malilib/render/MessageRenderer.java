@@ -40,8 +40,6 @@ public class MessageRenderer {
      * to a given direction from that point.
      * If centeredV is false, then the value set in {@link #setExpandUp(boolean)} determines whether the box expands up or down.
      *
-     * @param centeredH
-     * @param centeredV
      */
     public MessageRenderer setCentered(boolean centeredH, boolean centeredV) {
         this.centeredH = centeredH;

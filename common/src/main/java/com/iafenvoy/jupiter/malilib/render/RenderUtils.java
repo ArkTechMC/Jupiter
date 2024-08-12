@@ -1,34 +1,16 @@
 package com.iafenvoy.jupiter.malilib.render;
 
-import com.iafenvoy.jupiter.malilib.gui.GuiBase;
-import com.iafenvoy.jupiter.malilib.util.Color4f;
-import com.iafenvoy.jupiter.malilib.util.PositionUtils;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.*;
-import net.minecraft.client.render.model.BakedModel;
-import net.minecraft.client.render.model.BakedQuad;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.FilledMapItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.map.MapState;
-import net.minecraft.screen.PlayerScreenHandler;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.LocalRandom;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 
@@ -166,7 +148,7 @@ public class RenderUtils {
     }
 
     public static void drawHoverText(int x, int y, List<String> textLines, DrawContext drawContext) {
-        MinecraftClient mc = mc();
+        MinecraftClient mc = MinecraftClient.getInstance();
 
         if (!textLines.isEmpty() && MinecraftClient.getInstance().currentScreen != null) {
             RenderSystem.enableDepthTest();
@@ -227,9 +209,6 @@ public class RenderUtils {
 
             matrixStack.pop();
             RenderSystem.applyModelViewMatrix();
-
-            //RenderSystem.enableDepthTest();
-            //enableDiffuseLightingGui3D();
         }
     }
 
@@ -263,7 +242,7 @@ public class RenderUtils {
     }
 
     public static void drawCenteredString(int x, int y, int color, String text, DrawContext drawContext) {
-        TextRenderer textRenderer = mc().textRenderer;
+        TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
         drawContext.drawCenteredTextWithShadow(textRenderer, text, x, y, color);
     }
 
@@ -277,14 +256,14 @@ public class RenderUtils {
 
     public static void renderSprite(int x, int y, int width, int height, Identifier atlas, Identifier texture, DrawContext drawContext) {
         if (texture != null) {
-            Sprite sprite = mc().getSpriteAtlas(atlas).apply(texture);
+            Sprite sprite = MinecraftClient.getInstance().getSpriteAtlas(atlas).apply(texture);
             drawContext.drawSprite(x, y, 0, width, height, sprite);
         }
     }
 
     public static void renderText(int x, int y, int color, String text, DrawContext drawContext) {
         String[] parts = text.split("\\\\n");
-        TextRenderer textRenderer = mc().textRenderer;
+        TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 
         for (String line : parts) {
             drawContext.drawText(textRenderer, line, x, y, color, true);
@@ -294,7 +273,7 @@ public class RenderUtils {
 
     public static void renderText(int x, int y, int color, List<String> lines, DrawContext drawContext) {
         if (!lines.isEmpty()) {
-            TextRenderer textRenderer = mc().textRenderer;
+            TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 
             for (String line : lines) {
                 drawContext.drawText(textRenderer, line, x, y, color, false);
@@ -308,7 +287,7 @@ public class RenderUtils {
      * The plate will always face towards the viewer.
      */
     public static void drawTextPlate(List<String> text, double x, double y, double z, float scale) {
-        Entity entity = mc().getCameraEntity();
+        Entity entity = MinecraftClient.getInstance().getCameraEntity();
 
         if (entity != null) {
             drawTextPlate(text, x, y, z, entity.getYaw(), entity.getPitch(), scale, 0xFFFFFFFF, 0x40000000, true);
@@ -317,11 +296,11 @@ public class RenderUtils {
 
     public static void drawTextPlate(List<String> text, double x, double y, double z, float yaw, float pitch,
                                      float scale, int textColor, int bgColor, boolean disableDepth) {
-        Vec3d cameraPos = mc().gameRenderer.getCamera().getPos();
+        Vec3d cameraPos = MinecraftClient.getInstance().gameRenderer.getCamera().getPos();
         double cx = cameraPos.x;
         double cy = cameraPos.y;
         double cz = cameraPos.z;
-        TextRenderer textRenderer = mc().textRenderer;
+        TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 
         MatrixStack globalStack = RenderSystem.getModelViewStack();
         globalStack.push();
@@ -410,9 +389,5 @@ public class RenderUtils {
     public static void setupGuiTransform(MatrixStack matrixStack, int xPosition, int yPosition, float zLevel) {
         matrixStack.translate(xPosition + 8.0, yPosition + 8.0, zLevel + 100.0);
         matrixStack.scale(16, -16, 16);
-    }
-
-    private static MinecraftClient mc() {
-        return MinecraftClient.getInstance();
     }
 }

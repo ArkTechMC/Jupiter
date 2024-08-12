@@ -6,7 +6,6 @@ public interface IDialogHandler {
     /**
      * Open the provided GUI as a "dialog window"
      *
-     * @param gui
      */
     void openDialog(GuiBase gui);
 

@@ -1,9 +1,10 @@
 package com.iafenvoy.jupiter.screen;
 
 import com.iafenvoy.jupiter.config.AbstractConfigContainer;
+import com.iafenvoy.jupiter.config.FakeConfigContainer;
 import com.iafenvoy.jupiter.malilib.gui.GuiConfigsBase;
-import com.iafenvoy.jupiter.malilib.gui.scrollbar.GuiHorizontalScrollBar;
 import com.iafenvoy.jupiter.malilib.gui.button.ButtonGeneric;
+import com.iafenvoy.jupiter.malilib.gui.scrollbar.GuiHorizontalScrollBar;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -44,7 +45,6 @@ public abstract class AbstractConfigScreen extends GuiConfigsBase {
                 currentTab = this.configContainer.getConfigTabs().indexOf(((TabButton) buttonBase).category);
                 buttonBase.setEnabled(false);
                 this.reCreateListWidget();
-                //noinspection ConstantConditions
                 this.getListWidget().resetScrollbarPosition();
                 this.initGui();
             });
@@ -94,6 +94,8 @@ public abstract class AbstractConfigScreen extends GuiConfigsBase {
 
     @Override
     public void close() {
+        if (this.configContainer instanceof FakeConfigContainer)
+            this.configContainer.onConfigsChanged();
         this.closeGui(true);
     }
 

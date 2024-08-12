@@ -63,8 +63,6 @@ public class ButtonGeneric extends ButtonBase {
      * Set the icon aligment.<br>
      * Note: Only LEFT and RIGHT alignments work properly.
      *
-     * @param alignment
-     * @return
      */
     public ButtonGeneric setIconAlignment(LeftRight alignment) {
         this.alignment = alignment;

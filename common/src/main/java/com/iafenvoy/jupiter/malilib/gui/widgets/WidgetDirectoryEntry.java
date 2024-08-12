@@ -53,10 +53,7 @@ public class WidgetDirectoryEntry extends WidgetListEntryBase<WidgetFileBrowserB
             RenderUtils.drawRect(this.x, this.y, this.width, this.height, 0x38FFFFFF);
         }
 
-        IGuiIcon icon = switch (this.entry.getType()) {
-            case DIRECTORY -> this.iconProvider.getIconDirectory();
-            default -> this.iconProvider.getIconForFile(this.entry.getFullPath());
-        };
+        IGuiIcon icon = this.entry.getType() == WidgetFileBrowserBase.DirectoryEntryType.DIRECTORY ? this.iconProvider.getIconDirectory() : this.iconProvider.getIconForFile(this.entry.getFullPath());
 
         int iconWidth = icon != null ? icon.getWidth() : 0;
         int xOffset = iconWidth + 2;

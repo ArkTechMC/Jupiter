@@ -2,6 +2,7 @@ package com.iafenvoy.jupiter.malilib.config.options;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
+import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.malilib.MaLiLib;
 import com.iafenvoy.jupiter.malilib.config.ConfigType;
 import com.iafenvoy.jupiter.malilib.util.Color4f;
@@ -55,6 +56,7 @@ public class ConfigColor extends ConfigInteger {
         try {
             return StringUtils.getColor(newValue, 0) != this.getDefaultIntegerValue();
         } catch (Exception e) {
+            Jupiter.LOGGER.error("Failed to get color", e);
         }
 
         return true;

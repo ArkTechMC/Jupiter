@@ -8,6 +8,7 @@ import com.iafenvoy.jupiter.malilib.config.ConfigUtils;
 import com.iafenvoy.jupiter.malilib.config.IConfigBase;
 import com.iafenvoy.jupiter.malilib.config.IConfigHandler;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,14 @@ public abstract class AbstractConfigContainer implements IConfigHandler {
         JsonElement jsonElement = JsonParser.parseString(data);
         if (jsonElement instanceof JsonObject obj) {
             if (!this.shouldLoad(obj)) return;
+            this.deserializeWithoutCheck(data);
+        }
+    }
+
+    @ApiStatus.Internal
+    public final void deserializeWithoutCheck(String data) {
+        JsonElement jsonElement = JsonParser.parseString(data);
+        if (jsonElement instanceof JsonObject obj) {
             for (ConfigCategory category : this.getConfigTabs())
                 ConfigUtils.readConfigBase(obj, category.id(), category.getConfigs(), this.shouldCompressKey());
             this.readCustomData(obj);

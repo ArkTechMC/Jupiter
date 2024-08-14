@@ -1,5 +1,6 @@
 package com.iafenvoy.jupiter.malilib.config;
 
+import com.iafenvoy.jupiter.ServerConfigManager;
 import com.iafenvoy.jupiter.config.AbstractConfigContainer;
 import net.minecraft.util.Identifier;
 
@@ -31,5 +32,9 @@ public class ConfigManager implements IConfigManager {
         IConfigHandler handler = this.configHandlers.get(id);
         if (handler != null)
             handler.save();
+    }
+
+    public void registerServerConfig(AbstractConfigContainer data, ServerConfigManager.PermissionChecker checker) {
+        ServerConfigManager.registerServerConfig(data, checker);
     }
 }

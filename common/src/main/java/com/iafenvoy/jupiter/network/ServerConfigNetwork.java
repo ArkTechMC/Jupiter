@@ -28,7 +28,7 @@ public class ServerConfigNetwork {
                 if (ServerConfigManager.checkPermission(id, server, player)) {
                     AbstractConfigContainer container = ServerConfigManager.getConfig(id);
                     if (container != null) {
-                        container.deserialize(data);
+                        container.deserializeWithoutCheck(data);
                         container.onConfigsChanged();
                         Jupiter.LOGGER.info("Player {} changed config {}", player.getName().getString(), id);
                     }

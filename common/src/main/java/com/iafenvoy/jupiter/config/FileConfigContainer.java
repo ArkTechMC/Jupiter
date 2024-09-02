@@ -21,6 +21,7 @@ public abstract class FileConfigContainer extends AbstractConfigContainer {
             this.deserialize(FileUtils.readFileToString(new File(this.path), StandardCharsets.UTF_8));
         } catch (Exception e) {
             Jupiter.LOGGER.error("Failed to load config: {}", this.path, e);
+            this.save();
         }
     }
 
@@ -29,7 +30,7 @@ public abstract class FileConfigContainer extends AbstractConfigContainer {
         try {
             FileUtils.write(new File(this.path), this.serialize(), StandardCharsets.UTF_8);
         } catch (Exception e) {
-            Jupiter.LOGGER.error("Failed to load config: {}", this.path, e);
+            Jupiter.LOGGER.error("Failed to save config: {}", this.path, e);
         }
     }
 }

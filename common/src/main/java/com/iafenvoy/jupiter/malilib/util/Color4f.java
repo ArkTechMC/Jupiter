@@ -1,10 +1,25 @@
 package com.iafenvoy.jupiter.malilib.util;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.DynamicOps;
+import com.mojang.serialization.codecs.PrimitiveCodec;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.Objects;
 
 public class Color4f {
+    public static final Codec<Color4f> CODEC = new PrimitiveCodec<Color4f>() {
+        @Override
+        public <T> DataResult<Color4f> read(DynamicOps<T> ops, T input) {
+            return DataResult.success(Color4f.fromColor(ops.getNumberValue(input, 0).intValue()));
+        }
+
+        @Override
+        public <T> T write(DynamicOps<T> ops, Color4f value) {
+            return ops.createInt(value.intValue);
+        }
+    }.orElse(Color4f.fromColor(0));
     public static final Color4f ZERO = new Color4f(0F, 0F, 0F, 0F);
     public final float r;
     public final float g;

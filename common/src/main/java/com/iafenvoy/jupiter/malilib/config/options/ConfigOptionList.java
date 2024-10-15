@@ -5,6 +5,10 @@ import com.google.gson.JsonPrimitive;
 import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.malilib.MaLiLib;
 import com.iafenvoy.jupiter.malilib.config.*;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.DynamicOps;
+import com.mojang.serialization.codecs.PrimitiveCodec;
 
 public class ConfigOptionList extends ConfigBase<ConfigOptionList> implements IConfigOptionList, IStringRepresentable {
     private final IConfigOptionListEntry defaultValue;
@@ -102,5 +106,20 @@ public class ConfigOptionList extends ConfigBase<ConfigOptionList> implements IC
     @Override
     public IConfigBase copy() {
         return new ConfigOptionList(this.getNameKey(), this.defaultValue, this.getCommentKey(), this.getPrettyNameKey());
+    }
+
+    @Override
+    public Codec<?> getCodec() {
+        return new PrimitiveCodec<IConfigOptionListEntry>() {
+            @Override
+            public <T> DataResult<IConfigOptionListEntry> read(DynamicOps<T> ops, T input) {
+                return ops.getStringValue(input).result().map(x -> DataResult.success(defaultValue.fromString(x))).orElse(DataResult.error(() -> "Cannot parse to IConfigOptionListEntry"));
+            }
+
+            @Override
+            public <T> T write(DynamicOps<T> ops, IConfigOptionListEntry value) {
+                return ops.createString(value.getStringValue());
+            }
+        }.orElse(this.defaultValue);
     }
 }

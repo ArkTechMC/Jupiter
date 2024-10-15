@@ -10,6 +10,7 @@ import com.iafenvoy.jupiter.malilib.config.IConfigBase;
 import com.iafenvoy.jupiter.malilib.config.IConfigColorList;
 import com.iafenvoy.jupiter.malilib.util.Color4f;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
+import com.mojang.serialization.Codec;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,5 +90,10 @@ public class ConfigColorList extends ConfigBase<ConfigColorList> implements ICon
     @Override
     public IConfigBase copy() {
         return new ConfigColorList(this.getNameKey(), this.defaultValue, this.getCommentKey());
+    }
+
+    @Override
+    public Codec<?> getCodec() {
+        return Color4f.CODEC.listOf().orElse(this.defaultValue);
     }
 }

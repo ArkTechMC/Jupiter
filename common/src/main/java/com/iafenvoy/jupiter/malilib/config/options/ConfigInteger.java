@@ -7,6 +7,7 @@ import com.iafenvoy.jupiter.malilib.MaLiLib;
 import com.iafenvoy.jupiter.malilib.config.ConfigType;
 import com.iafenvoy.jupiter.malilib.config.IConfigBase;
 import com.iafenvoy.jupiter.malilib.config.IConfigInteger;
+import com.mojang.serialization.Codec;
 import net.minecraft.util.math.MathHelper;
 
 public class ConfigInteger extends ConfigBase<ConfigInteger> implements IConfigInteger {
@@ -150,5 +151,10 @@ public class ConfigInteger extends ConfigBase<ConfigInteger> implements IConfigI
     @Override
     public IConfigBase copy() {
         return new ConfigInteger(this.getNameKey(), this.defaultValue, this.minValue, this.maxValue, this.useSlider, this.getPrettyNameKey());
+    }
+
+    @Override
+    public Codec<?> getCodec() {
+        return Codec.intRange(this.minValue, this.maxValue).orElse(this.defaultValue);
     }
 }

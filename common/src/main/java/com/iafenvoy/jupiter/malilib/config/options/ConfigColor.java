@@ -7,6 +7,7 @@ import com.iafenvoy.jupiter.malilib.MaLiLib;
 import com.iafenvoy.jupiter.malilib.config.ConfigType;
 import com.iafenvoy.jupiter.malilib.util.Color4f;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
+import com.mojang.serialization.Codec;
 
 public class ConfigColor extends ConfigInteger {
     private Color4f color;
@@ -79,5 +80,10 @@ public class ConfigColor extends ConfigInteger {
     @Override
     public JsonElement getAsJsonElement() {
         return new JsonPrimitive(this.getStringValue());
+    }
+
+    @Override
+    public Codec<?> getCodec() {
+        return Color4f.CODEC.orElse(this.getColor());
     }
 }

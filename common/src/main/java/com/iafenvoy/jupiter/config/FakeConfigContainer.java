@@ -25,4 +25,9 @@ public class FakeConfigContainer extends AbstractConfigContainer {
         buf.writeString(this.serialize());
         ClientNetworkHelper.sendToServer(NetworkConstants.CONFIG_SYNC_C2S, buf);
     }
+
+    @Override
+    protected SaveFullOption saveFullOption() {
+        return SaveFullOption.ALL;
+    }
 }

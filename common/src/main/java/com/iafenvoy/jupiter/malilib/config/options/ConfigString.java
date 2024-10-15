@@ -6,6 +6,7 @@ import com.iafenvoy.jupiter.malilib.MaLiLib;
 import com.iafenvoy.jupiter.malilib.config.ConfigType;
 import com.iafenvoy.jupiter.malilib.config.IConfigBase;
 import com.iafenvoy.jupiter.malilib.config.IConfigValue;
+import com.mojang.serialization.Codec;
 
 public class ConfigString extends ConfigBase<ConfigString> implements IConfigValue {
     private final String defaultValue;
@@ -84,5 +85,10 @@ public class ConfigString extends ConfigBase<ConfigString> implements IConfigVal
     @Override
     public IConfigBase copy() {
         return new ConfigString(this.getNameKey(), this.defaultValue, this.getCommentKey());
+    }
+
+    @Override
+    public Codec<?> getCodec() {
+        return Codec.STRING.orElse(this.defaultValue);
     }
 }

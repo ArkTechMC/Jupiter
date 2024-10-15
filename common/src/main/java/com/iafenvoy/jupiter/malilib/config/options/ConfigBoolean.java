@@ -6,6 +6,7 @@ import com.iafenvoy.jupiter.malilib.MaLiLib;
 import com.iafenvoy.jupiter.malilib.config.ConfigType;
 import com.iafenvoy.jupiter.malilib.config.IConfigBase;
 import com.iafenvoy.jupiter.malilib.config.IConfigBoolean;
+import com.mojang.serialization.Codec;
 
 public class ConfigBoolean extends ConfigBase<ConfigBoolean> implements IConfigBoolean {
     private final boolean defaultValue;
@@ -97,5 +98,10 @@ public class ConfigBoolean extends ConfigBase<ConfigBoolean> implements IConfigB
     @Override
     public IConfigBase copy() {
         return new ConfigBoolean(this.getNameKey(), this.defaultValue, this.getCommentKey(), this.getPrettyNameKey());
+    }
+
+    @Override
+    public Codec<?> getCodec() {
+        return Codec.BOOL.orElse(this.defaultValue);
     }
 }

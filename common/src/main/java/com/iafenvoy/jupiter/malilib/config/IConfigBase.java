@@ -2,6 +2,7 @@ package com.iafenvoy.jupiter.malilib.config;
 
 import com.google.gson.JsonElement;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
+import com.mojang.serialization.Codec;
 import org.jetbrains.annotations.Nullable;
 
 public interface IConfigBase {
@@ -32,7 +33,6 @@ public interface IConfigBase {
     /**
      * Returns the "pretty name" for this config.
      * This is used in the possible toggle messages.
-     *
      */
     default String getPrettyName() {
         return StringUtils.translate(this.getNameKey());
@@ -40,7 +40,6 @@ public interface IConfigBase {
 
     /**
      * Returns the display name used for this config in the config GUIs
-     *
      */
     default String getConfigGuiDisplayName() {
         return this.getPrettyName();
@@ -48,15 +47,15 @@ public interface IConfigBase {
 
     /**
      * Set the value of this config option from a JSON element (is possible)
-     *
      */
     void setValueFromJsonElement(JsonElement element);
 
     /**
      * Return the value of this config option as a JSON element, for saving into a config file.
-     *
      */
     JsonElement getAsJsonElement();
 
     IConfigBase copy();
+
+    Codec<?> getCodec();
 }

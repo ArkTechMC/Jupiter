@@ -7,6 +7,7 @@ import com.iafenvoy.jupiter.malilib.MaLiLib;
 import com.iafenvoy.jupiter.malilib.config.ConfigType;
 import com.iafenvoy.jupiter.malilib.config.IConfigBase;
 import com.iafenvoy.jupiter.malilib.config.IConfigDouble;
+import com.mojang.serialization.Codec;
 import net.minecraft.util.math.MathHelper;
 
 public class ConfigDouble extends ConfigBase<ConfigDouble> implements IConfigDouble {
@@ -155,5 +156,10 @@ public class ConfigDouble extends ConfigBase<ConfigDouble> implements IConfigDou
     @Override
     public IConfigBase copy() {
         return new ConfigDouble(this.getNameKey(), this.defaultValue, this.minValue, this.maxValue, this.useSlider, this.getCommentKey());
+    }
+
+    @Override
+    public Codec<?> getCodec() {
+        return Codec.doubleRange(this.minValue, this.maxValue).orElse(this.defaultValue);
     }
 }

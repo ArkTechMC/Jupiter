@@ -8,6 +8,7 @@ import com.iafenvoy.jupiter.malilib.MaLiLib;
 import com.iafenvoy.jupiter.malilib.config.ConfigType;
 import com.iafenvoy.jupiter.malilib.config.IConfigBase;
 import com.iafenvoy.jupiter.malilib.config.IConfigStringList;
+import com.mojang.serialization.Codec;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,5 +90,10 @@ public class ConfigStringList extends ConfigBase<ConfigStringList> implements IC
     @Override
     public IConfigBase copy() {
         return new ConfigStringList(this.getNameKey(), this.defaultValue, this.getCommentKey());
+    }
+
+    @Override
+    public Codec<?> getCodec() {
+        return Codec.STRING.listOf().orElse(this.defaultValue);
     }
 }

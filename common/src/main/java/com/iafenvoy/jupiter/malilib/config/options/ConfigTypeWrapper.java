@@ -5,6 +5,11 @@ import com.google.gson.JsonPrimitive;
 import com.iafenvoy.jupiter.malilib.MaLiLib;
 import com.iafenvoy.jupiter.malilib.config.*;
 import com.iafenvoy.jupiter.malilib.interfaces.IValueChangeCallback;
+import com.iafenvoy.jupiter.malilib.util.Color4f;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.DynamicOps;
+import com.mojang.serialization.codecs.PrimitiveCodec;
 
 public class ConfigTypeWrapper implements IConfigBoolean, IConfigDouble, IConfigInteger, IConfigOptionList, IConfigNotifiable<IConfigBase> {
     private final ConfigType wrappedType;
@@ -347,5 +352,28 @@ public class ConfigTypeWrapper implements IConfigBoolean, IConfigDouble, IConfig
     @Override
     public IConfigBase copy() {
         return new ConfigTypeWrapper(this.wrappedType, this.wrappedConfig);
+    }
+
+    @Override
+    public Codec<?> getCodec() {
+        return switch (this.wrappedType) {
+            case BOOLEAN -> Codec.BOOL.orElse(((IConfigBoolean) this.wrappedConfig).getDefaultBooleanValue());
+            case DOUBLE -> Codec.DOUBLE.orElse(((IConfigDouble) this.wrappedConfig).getDefaultDoubleValue());
+            case INTEGER -> Codec.INT.orElse(((IConfigInteger) this.wrappedConfig).getDefaultIntegerValue());
+            case STRING -> Codec.STRING.orElse(((IConfigValue) this.wrappedConfig).getDefaultStringValue());
+            case COLOR -> Color4f.CODEC.orElse(Color4f.fromColor(((IConfigInteger) this.wrappedConfig).getDefaultIntegerValue()));
+            case OPTION_LIST -> new PrimitiveCodec<IConfigOptionListEntry>() {
+                @Override
+                public <T> DataResult<IConfigOptionListEntry> read(DynamicOps<T> ops, T input) {
+                    return ops.getStringValue(input).result().map(x -> DataResult.success(((IConfigOptionList) wrappedConfig).getOptionListValue().fromString(x))).orElse(DataResult.error(() -> "Cannot parse to IConfigOptionListEntry"));
+                }
+
+                @Override
+                public <T> T write(DynamicOps<T> ops, IConfigOptionListEntry value) {
+                    return ops.createString(value.getStringValue());
+                }
+            }.orElse(((IConfigOptionList) this.wrappedConfig).getDefaultOptionListValue());
+            default -> Codec.EMPTY.codec();
+        };
     }
 }

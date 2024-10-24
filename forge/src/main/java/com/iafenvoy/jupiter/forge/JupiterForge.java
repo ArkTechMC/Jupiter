@@ -1,6 +1,7 @@
 package com.iafenvoy.jupiter.forge;
 
 import com.iafenvoy.jupiter.Jupiter;
+import com.iafenvoy.jupiter.ServerConfigManager;
 import com.iafenvoy.jupiter.forge.network.PacketByteBufC2S;
 import com.iafenvoy.jupiter.forge.network.PacketByteBufS2C;
 import com.iafenvoy.jupiter.malilib.config.ConfigManager;
@@ -10,6 +11,8 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ConfigScreenHandler;
+import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -17,8 +20,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
-
-import java.util.List;
 
 @Mod(Jupiter.MOD_ID)
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -44,6 +45,19 @@ public final class JupiterForge {
             Jupiter.processClient();
             ForgeEntryPointLoader.INSTANCE.getEntries().forEach(x -> x.initializeClientConfig(ConfigManager.getInstance()));
             ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> new ConfigScreenHandler.ConfigScreenFactory((client, screen) -> new ConfigSelectScreen<>(Text.translatable("jupiter.test_config"), screen, TestConfig.INSTANCE, null)));
+        }
+
+        @SubscribeEvent
+        public static void registerClientListener(RegisterClientReloadListenersEvent event) {
+            event.registerReloadListener(ConfigManager.getInstance());
+        }
+    }
+
+    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
+    public static class ForgeEvents {
+        @SubscribeEvent
+        public static void registerServerListener(AddReloadListenerEvent event) {
+            event.addListener(new ServerConfigManager());
         }
     }
 }

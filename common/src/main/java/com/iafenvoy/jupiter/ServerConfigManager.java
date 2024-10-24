@@ -1,6 +1,8 @@
 package com.iafenvoy.jupiter;
 
 import com.iafenvoy.jupiter.config.AbstractConfigContainer;
+import net.minecraft.resource.ResourceManager;
+import net.minecraft.resource.SynchronousResourceReloader;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
@@ -9,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ServerConfigManager {
+public class ServerConfigManager implements SynchronousResourceReloader {
     private static final Map<Identifier, ServerConfigHolder> CONFIGS = new HashMap<>();
 
     public static void registerServerConfig(AbstractConfigContainer data, PermissionChecker checker) {
@@ -27,6 +29,12 @@ public class ServerConfigManager {
         ServerConfigHolder holder = CONFIGS.get(id);
         if (holder == null) return false;
         return holder.checker.check(server, player);
+    }
+
+    @Override
+    public void reload(ResourceManager manager) {
+        CONFIGS.values().forEach(x -> x.data.load());
+        Jupiter.LOGGER.info("Successfully reload {} server config(s).", CONFIGS.size());
     }
 
     @FunctionalInterface

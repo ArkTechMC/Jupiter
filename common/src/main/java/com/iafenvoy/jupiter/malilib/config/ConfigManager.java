@@ -23,6 +23,7 @@ public class ConfigManager implements IConfigManager, SynchronousResourceReloade
     public void registerConfigHandler(Identifier id, IConfigHandler handler) {
         this.configHandlers.put(id, handler);
         handler.init();
+        handler.load();
     }
 
     public void registerConfigHandler(AbstractConfigContainer configContainer) {

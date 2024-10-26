@@ -1,4 +1,4 @@
-package com.iafenvoy.jupiter.config;
+package com.iafenvoy.jupiter.container;
 
 import com.iafenvoy.jupiter.network.ByteBufUtil;
 import com.iafenvoy.jupiter.network.ClientNetworkHelper;

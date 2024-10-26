@@ -2,7 +2,7 @@ package com.iafenvoy.jupiter.test;
 
 import com.google.common.collect.ImmutableList;
 import com.iafenvoy.jupiter.Jupiter;
-import com.iafenvoy.jupiter.config.FileConfigContainer;
+import com.iafenvoy.jupiter.container.FileConfigContainer;
 import com.iafenvoy.jupiter.malilib.config.IConfigOptionListEntry;
 import com.iafenvoy.jupiter.malilib.config.options.*;
 import net.minecraft.util.Identifier;

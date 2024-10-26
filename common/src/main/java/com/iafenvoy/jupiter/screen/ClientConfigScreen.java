@@ -1,6 +1,6 @@
 package com.iafenvoy.jupiter.screen;
 
-import com.iafenvoy.jupiter.config.AbstractConfigContainer;
+import com.iafenvoy.jupiter.container.AbstractConfigContainer;
 import com.iafenvoy.jupiter.malilib.util.StringUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

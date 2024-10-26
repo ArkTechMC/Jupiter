@@ -1,4 +1,4 @@
-package com.iafenvoy.jupiter.config;
+package com.iafenvoy.jupiter.container;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonElement;

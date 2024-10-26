@@ -1,9 +1,9 @@
 package com.iafenvoy.jupiter.screen;
 
 import com.iafenvoy.jupiter.Jupiter;
-import com.iafenvoy.jupiter.config.AbstractConfigContainer;
-import com.iafenvoy.jupiter.config.FakeConfigContainer;
-import com.iafenvoy.jupiter.config.FileConfigContainer;
+import com.iafenvoy.jupiter.container.AbstractConfigContainer;
+import com.iafenvoy.jupiter.container.FakeConfigContainer;
+import com.iafenvoy.jupiter.container.FileConfigContainer;
 import com.iafenvoy.jupiter.network.ClientConfigNetwork;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

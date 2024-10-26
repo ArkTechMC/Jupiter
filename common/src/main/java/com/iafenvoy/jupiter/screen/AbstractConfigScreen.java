@@ -1,7 +1,7 @@
 package com.iafenvoy.jupiter.screen;
 
-import com.iafenvoy.jupiter.config.AbstractConfigContainer;
-import com.iafenvoy.jupiter.config.FakeConfigContainer;
+import com.iafenvoy.jupiter.container.AbstractConfigContainer;
+import com.iafenvoy.jupiter.container.FakeConfigContainer;
 import com.iafenvoy.jupiter.malilib.gui.GuiConfigsBase;
 import com.iafenvoy.jupiter.malilib.gui.button.ButtonGeneric;
 import com.iafenvoy.jupiter.malilib.gui.scrollbar.GuiHorizontalScrollBar;

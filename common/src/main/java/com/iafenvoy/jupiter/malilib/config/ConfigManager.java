@@ -2,7 +2,7 @@ package com.iafenvoy.jupiter.malilib.config;
 
 import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.ServerConfigManager;
-import com.iafenvoy.jupiter.config.AbstractConfigContainer;
+import com.iafenvoy.jupiter.container.AbstractConfigContainer;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.SynchronousResourceReloader;
 import net.minecraft.util.Identifier;

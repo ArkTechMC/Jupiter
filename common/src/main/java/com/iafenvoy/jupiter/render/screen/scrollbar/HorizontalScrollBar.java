@@ -1,4 +1,4 @@
-package com.iafenvoy.jupiter.client.screen.scrollbar;
+package com.iafenvoy.jupiter.render.screen.scrollbar;
 
 import com.iafenvoy.jupiter.malilib.gui.interfaces.IGuiIcon;
 import com.iafenvoy.jupiter.util.RenderUtils;
@@ -9,7 +9,7 @@ import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
 
 @Environment(EnvType.CLIENT)
-public class VerticalScrollBar {
+public class HorizontalScrollBar {
     @Nullable
     protected final IGuiIcon barTexture;
     protected final MinecraftClient mc = MinecraftClient.getInstance();
@@ -21,17 +21,17 @@ public class VerticalScrollBar {
     protected int backgroundColor = 0x44FFFFFF;
     protected int foregroundColor = 0xFFFFFFFF;
     protected int dragStartValue = 0;
-    protected int dragStartY = 0;
+    protected int dragStartX = 0;
 
-    public VerticalScrollBar() {
+    public HorizontalScrollBar() {
         this(null);
     }
 
-    public VerticalScrollBar(@Nullable IGuiIcon barTexture) {
+    public HorizontalScrollBar(@Nullable IGuiIcon barTexture) {
         this.barTexture = barTexture;
     }
 
-    public VerticalScrollBar setRenderBarBackground(boolean render) {
+    public HorizontalScrollBar setRenderBarBackground(boolean render) {
         this.renderScrollbarBackground = render;
         return this;
     }
@@ -65,19 +65,19 @@ public class VerticalScrollBar {
         this.dragging = isDragging;
     }
 
-    public void render(int mouseX, int mouseY, float partialTicks, int xPosition, int yPosition, int width, int height, int totalHeight) {
+    public void render(int mouseX, int mouseY, float partialTicks, int xPosition, int yPosition, int width, int height, int totalWidth) {
         if (this.renderScrollbarBackground) {
             RenderUtils.drawRect(xPosition, yPosition, width, height, this.backgroundColor);
         }
 
-        if (totalHeight > 0) {
-            int slideHeight = height - 2;
-            float relative = Math.min(1.0F, (float) slideHeight / (float) totalHeight);
-            int barHeight = (int) (relative * slideHeight);
-            int barTravel = slideHeight - barHeight;
-            int barPosition = yPosition + 1 + (this.maxValue > 0 ? (int) ((this.currentValue / (float) this.maxValue) * barTravel) : 0);
+        if (totalWidth > 0) {
+            int slideWidth = width - 2;
+            float relative = Math.min(1.0F, (float) slideWidth / (float) totalWidth);
+            int barWidth = (int) (relative * slideWidth);
+            int barTravel = slideWidth - barWidth;
+            int barPosition = xPosition + 1 + (this.maxValue > 0 ? (int) ((this.currentValue / (float) this.maxValue) * barTravel) : 0);
 
-            if (this.barTexture != null && barHeight >= 4) {
+            if (this.barTexture != null && barWidth >= 4) {
                 RenderUtils.color(1f, 1f, 1f, 1f);
                 RenderUtils.bindTexture(this.barTexture.getTexture());
                 int u = this.barTexture.getU();
@@ -85,23 +85,23 @@ public class VerticalScrollBar {
                 int w = this.barTexture.getWidth();
                 int h = this.barTexture.getHeight();
 
-                RenderUtils.drawTexturedRect(xPosition + 1, barPosition, u, v, w, barHeight - 2);
-                RenderUtils.drawTexturedRect(xPosition + 1, barPosition + barHeight - 2, u, v + h - 2, w, 2);
+                RenderUtils.drawTexturedRect(barPosition, yPosition + 1, u, v, barWidth - 2, h);
+                RenderUtils.drawTexturedRect(barPosition + barWidth - 2, yPosition + 1, u, v + h - 2, 2, h);
             } else {
-                RenderUtils.drawRect(xPosition + 1, barPosition, width - 2, barHeight, this.foregroundColor);
+                RenderUtils.drawRect(barPosition, yPosition + 1, barWidth, height - 2, this.foregroundColor);
             }
 
-            this.mouseOver = mouseX > xPosition && mouseX < xPosition + width && mouseY > barPosition && mouseY < barPosition + barHeight;
-            this.handleDrag(mouseY, barTravel);
+            this.mouseOver = mouseY > yPosition && mouseY < yPosition + height && mouseX > barPosition && mouseX < barPosition + barWidth;
+            this.handleDrag(mouseX, barTravel);
         }
     }
 
-    public void handleDrag(int mouseY, int barTravel) {
+    public void handleDrag(int mouseX, int barTravel) {
         if (this.dragging) {
             float valuePerPixel = (float) this.maxValue / barTravel;
-            this.setValue((int) (this.dragStartValue + ((mouseY - this.dragStartY) * valuePerPixel)));
+            this.setValue((int) (this.dragStartValue + ((mouseX - this.dragStartX) * valuePerPixel)));
         } else {
-            this.dragStartY = mouseY;
+            this.dragStartX = mouseX;
             this.dragStartValue = this.currentValue;
         }
     }

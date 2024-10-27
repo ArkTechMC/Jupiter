@@ -1,6 +1,6 @@
-package com.iafenvoy.jupiter.config;
+package com.iafenvoy.jupiter.config.holder;
 
-import com.iafenvoy.jupiter.ConfigType;
+import com.iafenvoy.jupiter.config.ConfigType;
 import com.iafenvoy.jupiter.interfaces.IConfigBase;
 import com.iafenvoy.jupiter.interfaces.ITextFieldConfig;
 import com.mojang.serialization.Codec;

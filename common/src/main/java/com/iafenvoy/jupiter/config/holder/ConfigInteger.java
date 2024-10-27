@@ -1,52 +1,52 @@
-package com.iafenvoy.jupiter.config;
+package com.iafenvoy.jupiter.config.holder;
 
-import com.iafenvoy.jupiter.ConfigType;
+import com.iafenvoy.jupiter.config.ConfigType;
 import com.iafenvoy.jupiter.interfaces.IConfigBase;
 import com.iafenvoy.jupiter.interfaces.IRangeConfigBase;
 import com.mojang.serialization.Codec;
 
-public class ConfigDouble extends ConfigBase<Double> implements IRangeConfigBase<Double> {
-    private final double minValue, maxValue;
+public class ConfigInteger extends ConfigBase<Integer> implements IRangeConfigBase<Integer> {
+    private final int minValue, maxValue;
     private boolean useSlider = false;
 
-    public ConfigDouble(String nameKey, double defaultValue) {
+    public ConfigInteger(String nameKey, int defaultValue) {
         this(nameKey, defaultValue, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 
-    public ConfigDouble(String nameKey, double defaultValue, double minValue, double maxValue) {
+    public ConfigInteger(String nameKey, int defaultValue, int minValue, int maxValue) {
         super(nameKey, defaultValue);
         this.minValue = minValue;
         this.maxValue = maxValue;
     }
 
-    public ConfigDouble slider() {
+    public ConfigInteger slider() {
         if (Integer.MIN_VALUE < this.minValue && this.maxValue < Integer.MAX_VALUE)
             this.useSlider = true;
         return this;
     }
 
     @Override
-    public ConfigType<Double> getType() {
-        return ConfigType.DOUBLE;
+    public ConfigType<Integer> getType() {
+        return ConfigType.INTEGER;
     }
 
     @Override
-    public IConfigBase<Double> newInstance() {
-        return new ConfigDouble(this.nameKey, this.defaultValue, this.minValue, this.maxValue).comment(this.commentKey).json(this.jsonKey);
+    public IConfigBase<Integer> newInstance() {
+        return new ConfigInteger(this.nameKey, this.defaultValue, this.minValue, this.maxValue).comment(this.commentKey).json(this.jsonKey);
     }
 
     @Override
-    public Codec<Double> getCodec() {
-        return Codec.doubleRange(this.minValue, this.maxValue);
+    public Codec<Integer> getCodec() {
+        return Codec.intRange(this.minValue, this.maxValue);
     }
 
     @Override
-    public Double getMinValue() {
+    public Integer getMinValue() {
         return this.minValue;
     }
 
     @Override
-    public Double getMaxValue() {
+    public Integer getMaxValue() {
         return this.maxValue;
     }
 
@@ -62,6 +62,6 @@ public class ConfigDouble extends ConfigBase<Double> implements IRangeConfigBase
 
     @Override
     public void setValueFromString(String s) {
-        this.setValue(Double.parseDouble(s));
+        this.setValue(Integer.parseInt(s));
     }
 }

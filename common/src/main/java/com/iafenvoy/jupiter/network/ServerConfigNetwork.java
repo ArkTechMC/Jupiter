@@ -2,7 +2,7 @@ package com.iafenvoy.jupiter.network;
 
 import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.ServerConfigManager;
-import com.iafenvoy.jupiter.container.AbstractConfigContainer;
+import com.iafenvoy.jupiter.config.container.AbstractConfigContainer;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 

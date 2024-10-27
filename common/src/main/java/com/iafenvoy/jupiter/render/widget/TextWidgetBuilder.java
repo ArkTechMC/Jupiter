@@ -1,4 +1,4 @@
-package com.iafenvoy.jupiter.client.widget;
+package com.iafenvoy.jupiter.render.widget;
 
 import com.iafenvoy.jupiter.interfaces.IConfigBase;
 import net.fabricmc.api.EnvType;

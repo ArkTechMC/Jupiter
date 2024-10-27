@@ -1,4 +1,4 @@
-package com.iafenvoy.jupiter.container;
+package com.iafenvoy.jupiter.config.container;
 
 import com.iafenvoy.jupiter.Jupiter;
 import net.minecraft.util.Identifier;

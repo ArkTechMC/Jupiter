@@ -1,4 +1,4 @@
-package com.iafenvoy.jupiter.config;
+package com.iafenvoy.jupiter.config.holder;
 
 import com.iafenvoy.jupiter.interfaces.IConfigBase;
 import org.jetbrains.annotations.Nullable;

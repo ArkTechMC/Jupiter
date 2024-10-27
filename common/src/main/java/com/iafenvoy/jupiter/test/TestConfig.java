@@ -2,9 +2,9 @@ package com.iafenvoy.jupiter.test;
 
 import com.google.common.collect.ImmutableList;
 import com.iafenvoy.jupiter.Jupiter;
-import com.iafenvoy.jupiter.container.FileConfigContainer;
+import com.iafenvoy.jupiter.config.container.FileConfigContainer;
 import com.iafenvoy.jupiter.malilib.config.IConfigOptionListEntry;
-import com.iafenvoy.jupiter.malilib.config.options.*;
+import com.iafenvoy.jupiter.config.holder.*;
 import net.minecraft.util.Identifier;
 
 public class TestConfig extends FileConfigContainer {
@@ -17,13 +17,12 @@ public class TestConfig extends FileConfigContainer {
     @Override
     public void init() {
         this.createTab("tab1", "jupiter.tab1")
-                .addConfig(new ConfigBoolean("this is boolean", false))
-                .addConfig(new ConfigInteger("this is int", 0))
-                .addConfig(new ConfigInteger("this is int with range", 0, -10, 10))
-                .addConfig(new ConfigStringList("this is string list", ImmutableList.of()))
-                .addConfig(new ConfigColor("this is color", "888888"));
+                .add(new ConfigBoolean("this is boolean", false))
+                .add(new ConfigInteger("this is int", 0))
+                .add(new ConfigInteger("this is int with range", 0, -10, 10))
+                .add(new ConfigListString("this is string list", ImmutableList.of()));
         this.createTab("tab2", "jupiter.tab2")
-                .addConfig(new ConfigOptionList("this is an option list", OptionsExample.FIRST));
+//                .add(new ConfigOptionList("this is an option list", OptionsExample.FIRST));
         this.createTab("tab3", "jupiter.tab3");
         this.createTab("tab4", "jupiter.tab4");
         this.createTab("tab5", "jupiter.tab5");

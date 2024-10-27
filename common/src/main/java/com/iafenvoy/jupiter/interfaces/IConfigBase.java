@@ -1,7 +1,10 @@
 package com.iafenvoy.jupiter.interfaces;
 
-import com.iafenvoy.jupiter.ConfigType;
+import com.iafenvoy.jupiter.Jupiter;
+import com.iafenvoy.jupiter.config.ConfigType;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.DynamicOps;
 import org.jetbrains.annotations.Nullable;
 
 public interface IConfigBase<T> {
@@ -32,12 +35,12 @@ public interface IConfigBase<T> {
 
     Codec<T> getCodec();
 
-    default Codec<IConfigBase<T>> getConfigCodec() {
-        return this.getCodec().xmap(v -> {
-            IConfigBase<T> i = this.newInstance();
-            i.setValue(v);
-            return i;
-        }, IConfigBase::getValue);
+    default <R> DataResult<R> encode(DynamicOps<R> ops) {
+        return this.getCodec().encodeStart(ops, this.getValue());
+    }
+
+    default <R> void decode(DynamicOps<R> ops, R input) {
+        this.setValue(this.getCodec().parse(ops, input).getOrThrow(true, Jupiter.LOGGER::error));
     }
 
     void reset();

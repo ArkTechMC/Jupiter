@@ -1,7 +1,8 @@
-package com.iafenvoy.jupiter.container;
+package com.iafenvoy.jupiter.config.container;
 
 import com.iafenvoy.jupiter.Jupiter;
-import com.iafenvoy.jupiter.malilib.config.IConfigBase;
+import com.iafenvoy.jupiter.config.ConfigGroup;
+import com.iafenvoy.jupiter.interfaces.IConfigBase;
 import net.minecraft.util.Identifier;
 
 import java.lang.reflect.Field;
@@ -24,20 +25,20 @@ public class AutoInitConfigContainer extends FileConfigContainer {
     }
 
     public static class AutoInitConfigCategoryBase {
-        private final ConfigCategory category;
+        private final ConfigGroup category;
         private boolean loaded = false;
 
         public AutoInitConfigCategoryBase(String id, String translateKey) {
-            this.category = new ConfigCategory(id, translateKey, new ArrayList<>());
+            this.category = new ConfigGroup(id, translateKey, new ArrayList<>());
         }
 
-        public ConfigCategory getCategory() {
+        public ConfigGroup getCategory() {
             if (!this.loaded) {
                 this.loaded = true;
                 for (Field field : this.getClass().getFields())
                     if (IConfigBase.class.isAssignableFrom(field.getType()))
                         try {
-                            this.category.addConfig((IConfigBase) field.get(this));
+                            this.category.add((IConfigBase<?>) field.get(this));
                         } catch (Exception e) {
                             Jupiter.LOGGER.error("Failed to auto init config key {}", field.getName(), e);
                         }

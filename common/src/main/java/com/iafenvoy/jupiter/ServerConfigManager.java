@@ -1,6 +1,6 @@
 package com.iafenvoy.jupiter;
 
-import com.iafenvoy.jupiter.container.AbstractConfigContainer;
+import com.iafenvoy.jupiter.config.container.AbstractConfigContainer;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.SynchronousResourceReloader;
 import net.minecraft.server.MinecraftServer;

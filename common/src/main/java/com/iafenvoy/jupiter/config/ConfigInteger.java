@@ -1,13 +1,12 @@
-package com.iafenvoy.jupiter.config.config;
+package com.iafenvoy.jupiter.config;
 
-import com.iafenvoy.jupiter.config.ConfigType;
-import com.iafenvoy.jupiter.config.interfaces.IConfigBase;
-import com.iafenvoy.jupiter.config.interfaces.IRangeConfigBase;
+import com.iafenvoy.jupiter.ConfigType;
+import com.iafenvoy.jupiter.interfaces.IConfigBase;
+import com.iafenvoy.jupiter.interfaces.IRangeConfigBase;
 import com.mojang.serialization.Codec;
 
 public class ConfigInteger extends ConfigBase<Integer> implements IRangeConfigBase<Integer> {
-    private final int defaultValue, minValue, maxValue;
-    private int value;
+    private final int minValue, maxValue;
     private boolean useSlider = false;
 
     public ConfigInteger(String nameKey, int defaultValue) {
@@ -15,8 +14,7 @@ public class ConfigInteger extends ConfigBase<Integer> implements IRangeConfigBa
     }
 
     public ConfigInteger(String nameKey, int defaultValue, int minValue, int maxValue) {
-        super(nameKey);
-        this.defaultValue = this.value = defaultValue;
+        super(nameKey, defaultValue);
         this.minValue = minValue;
         this.maxValue = maxValue;
     }
@@ -38,22 +36,6 @@ public class ConfigInteger extends ConfigBase<Integer> implements IRangeConfigBa
     }
 
     @Override
-    public Integer getValue() {
-        return this.value;
-    }
-
-    @Override
-    public Integer getDefaultValue() {
-        return this.defaultValue;
-    }
-
-    @Override
-    public void setValue(Integer value) {
-        this.value = value;
-        super.setValue(value);
-    }
-
-    @Override
     public Codec<Integer> getCodec() {
         return Codec.intRange(this.minValue, this.maxValue);
     }
@@ -71,5 +53,15 @@ public class ConfigInteger extends ConfigBase<Integer> implements IRangeConfigBa
     @Override
     public boolean useSlider() {
         return this.useSlider;
+    }
+
+    @Override
+    public String valueAsString() {
+        return String.valueOf(this.getValue());
+    }
+
+    @Override
+    public void setValueFromString(String s) {
+        this.setValue(Integer.parseInt(s));
     }
 }

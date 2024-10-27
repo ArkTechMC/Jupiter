@@ -1,4 +1,4 @@
-package com.iafenvoy.jupiter.config.screen;
+package com.iafenvoy.jupiter.client.screen;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

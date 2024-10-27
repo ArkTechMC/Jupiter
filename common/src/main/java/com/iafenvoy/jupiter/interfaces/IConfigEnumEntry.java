@@ -1,4 +1,4 @@
-package com.iafenvoy.jupiter.config.interfaces;
+package com.iafenvoy.jupiter.interfaces;
 
 import org.jetbrains.annotations.NotNull;
 

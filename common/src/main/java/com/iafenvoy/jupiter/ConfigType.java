@@ -1,6 +1,6 @@
-package com.iafenvoy.jupiter.config;
+package com.iafenvoy.jupiter;
 
-import com.iafenvoy.jupiter.config.interfaces.IConfigEnumEntry;
+import com.iafenvoy.jupiter.interfaces.IConfigEnumEntry;
 
 import java.util.List;
 import java.util.Map;

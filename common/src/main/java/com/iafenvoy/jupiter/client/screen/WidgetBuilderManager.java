@@ -1,9 +1,9 @@
-package com.iafenvoy.jupiter.config.screen;
+package com.iafenvoy.jupiter.client.screen;
 
-import com.iafenvoy.jupiter.config.ConfigType;
-import com.iafenvoy.jupiter.config.interfaces.IConfigBase;
-import com.iafenvoy.jupiter.config.widget.ButtonWidgetBuilder;
-import com.iafenvoy.jupiter.config.widget.IWidgetBuilder;
+import com.iafenvoy.jupiter.ConfigType;
+import com.iafenvoy.jupiter.interfaces.IConfigBase;
+import com.iafenvoy.jupiter.client.widget.ButtonWidgetBuilder;
+import com.iafenvoy.jupiter.client.widget.IWidgetBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.widget.ClickableWidget;

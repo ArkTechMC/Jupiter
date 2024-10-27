@@ -1,13 +1,12 @@
-package com.iafenvoy.jupiter.config.config;
+package com.iafenvoy.jupiter.config;
 
-import com.iafenvoy.jupiter.config.ConfigType;
-import com.iafenvoy.jupiter.config.interfaces.IConfigBase;
-import com.iafenvoy.jupiter.config.interfaces.IRangeConfigBase;
+import com.iafenvoy.jupiter.ConfigType;
+import com.iafenvoy.jupiter.interfaces.IConfigBase;
+import com.iafenvoy.jupiter.interfaces.IRangeConfigBase;
 import com.mojang.serialization.Codec;
 
 public class ConfigDouble extends ConfigBase<Double> implements IRangeConfigBase<Double> {
-    private final double defaultValue, minValue, maxValue;
-    private double value;
+    private final double minValue, maxValue;
     private boolean useSlider = false;
 
     public ConfigDouble(String nameKey, double defaultValue) {
@@ -15,8 +14,7 @@ public class ConfigDouble extends ConfigBase<Double> implements IRangeConfigBase
     }
 
     public ConfigDouble(String nameKey, double defaultValue, double minValue, double maxValue) {
-        super(nameKey);
-        this.defaultValue = this.value = defaultValue;
+        super(nameKey, defaultValue);
         this.minValue = minValue;
         this.maxValue = maxValue;
     }
@@ -38,22 +36,6 @@ public class ConfigDouble extends ConfigBase<Double> implements IRangeConfigBase
     }
 
     @Override
-    public Double getValue() {
-        return this.value;
-    }
-
-    @Override
-    public Double getDefaultValue() {
-        return this.defaultValue;
-    }
-
-    @Override
-    public void setValue(Double value) {
-        this.value = value;
-        super.setValue(value);
-    }
-
-    @Override
     public Codec<Double> getCodec() {
         return Codec.doubleRange(this.minValue, this.maxValue);
     }
@@ -71,5 +53,15 @@ public class ConfigDouble extends ConfigBase<Double> implements IRangeConfigBase
     @Override
     public boolean useSlider() {
         return this.useSlider;
+    }
+
+    @Override
+    public String valueAsString() {
+        return String.valueOf(this.getValue());
+    }
+
+    @Override
+    public void setValueFromString(String s) {
+        this.setValue(Double.parseDouble(s));
     }
 }

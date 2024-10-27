@@ -1,6 +1,6 @@
-package com.iafenvoy.jupiter.config;
+package com.iafenvoy.jupiter;
 
-import com.iafenvoy.jupiter.config.interfaces.IConfigBase;
+import com.iafenvoy.jupiter.interfaces.IConfigBase;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 

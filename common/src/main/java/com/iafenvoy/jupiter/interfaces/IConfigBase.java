@@ -1,6 +1,6 @@
-package com.iafenvoy.jupiter.config.interfaces;
+package com.iafenvoy.jupiter.interfaces;
 
-import com.iafenvoy.jupiter.config.ConfigType;
+import com.iafenvoy.jupiter.ConfigType;
 import com.mojang.serialization.Codec;
 import org.jetbrains.annotations.Nullable;
 
@@ -39,4 +39,6 @@ public interface IConfigBase<T> {
             return i;
         }, IConfigBase::getValue);
     }
+
+    void reset();
 }

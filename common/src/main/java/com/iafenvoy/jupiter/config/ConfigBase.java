@@ -1,6 +1,6 @@
-package com.iafenvoy.jupiter.config.config;
+package com.iafenvoy.jupiter.config;
 
-import com.iafenvoy.jupiter.config.interfaces.IConfigBase;
+import com.iafenvoy.jupiter.interfaces.IConfigBase;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -12,10 +12,14 @@ public abstract class ConfigBase<T> implements IConfigBase<T> {
     protected String jsonKey;
     @Nullable
     protected String commentKey;
+    protected final T defaultValue;
+    protected T value;
     private final List<Consumer<T>> callbacks = new ArrayList<>();
 
-    public ConfigBase(String nameKey) {
+    public ConfigBase(String nameKey, T defaultValue) {
         this.nameKey = this.jsonKey = nameKey;
+        this.defaultValue = defaultValue;
+        this.reset();
     }
 
     public ConfigBase<T> comment(@Nullable String commentKey) {
@@ -35,6 +39,7 @@ public abstract class ConfigBase<T> implements IConfigBase<T> {
 
     @Override
     public void setValue(T value) {
+        this.value = value;
         this.callbacks.forEach(x -> x.accept(value));
     }
 
@@ -51,5 +56,20 @@ public abstract class ConfigBase<T> implements IConfigBase<T> {
     @Override
     public String getJsonKey() {
         return this.jsonKey;
+    }
+
+    @Override
+    public T getDefaultValue() {
+        return this.defaultValue;
+    }
+
+    @Override
+    public T getValue() {
+        return this.value;
+    }
+
+    @Override
+    public void reset() {
+        this.value = this.defaultValue;
     }
 }

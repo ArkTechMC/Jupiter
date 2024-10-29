@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.config.ConfigGroup;
+import com.iafenvoy.jupiter.interfaces.IConfig;
 import com.iafenvoy.jupiter.malilib.config.IConfigHandler;
 import com.mojang.serialization.*;
 import net.minecraft.util.Identifier;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public abstract class AbstractConfigContainer implements IConfigHandler {
+public abstract class AbstractConfigContainer implements IConfigHandler, IConfig {
     protected final List<ConfigGroup> configTabs = new ArrayList<>();
     protected final Identifier id;
     protected final String titleNameKey;
@@ -25,10 +26,12 @@ public abstract class AbstractConfigContainer implements IConfigHandler {
         this.titleNameKey = titleNameKey;
     }
 
+    @Override
     public Identifier getConfigId() {
         return this.id;
     }
 
+    @Override
     public String getTitleNameKey() {
         return this.titleNameKey;
     }

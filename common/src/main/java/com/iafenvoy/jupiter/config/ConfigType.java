@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 public class ConfigType<T> {
-    public static final ConfigType<Void> VOID = new ConfigType<>();
     public static final ConfigType<Boolean> BOOLEAN = new ConfigType<>();
     public static final ConfigType<Integer> INTEGER = new ConfigType<>();
     public static final ConfigType<Double> DOUBLE = new ConfigType<>();

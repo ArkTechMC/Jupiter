@@ -2,7 +2,7 @@ package com.iafenvoy.jupiter.config.container;
 
 import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.config.ConfigGroup;
-import com.iafenvoy.jupiter.interfaces.IConfigBase;
+import com.iafenvoy.jupiter.interfaces.IConfigEntry;
 import net.minecraft.util.Identifier;
 
 import java.lang.reflect.Field;
@@ -36,9 +36,9 @@ public class AutoInitConfigContainer extends FileConfigContainer {
             if (!this.loaded) {
                 this.loaded = true;
                 for (Field field : this.getClass().getFields())
-                    if (IConfigBase.class.isAssignableFrom(field.getType()))
+                    if (IConfigEntry.class.isAssignableFrom(field.getType()))
                         try {
-                            this.category.add((IConfigBase<?>) field.get(this));
+                            this.category.add((IConfigEntry<?>) field.get(this));
                         } catch (Exception e) {
                             Jupiter.LOGGER.error("Failed to auto init config key {}", field.getName(), e);
                         }

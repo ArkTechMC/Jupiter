@@ -2,7 +2,6 @@ package com.iafenvoy.jupiter.render.screen;
 
 import com.iafenvoy.jupiter.config.ConfigGroup;
 import com.iafenvoy.jupiter.config.container.AbstractConfigContainer;
-import com.iafenvoy.jupiter.config.container.FakeConfigContainer;
 import com.iafenvoy.jupiter.interfaces.IConfig;
 import com.iafenvoy.jupiter.interfaces.IConfigEntry;
 import com.iafenvoy.jupiter.render.screen.scrollbar.HorizontalScrollBar;
@@ -14,6 +13,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -32,10 +32,9 @@ public abstract class ConfigScreen extends Screen implements IConfig {
     private final Screen parent;
     protected final AbstractConfigContainer configContainer;
     protected final List<TabButton> groupButtons = new ArrayList<>();
-    protected final List<WidgetBuilder<?, ?>> configWidgets = new ArrayList<>();
+    protected final List<WidgetBuilder<?, ? extends ClickableWidget>> configWidgets = new ArrayList<>();
     protected final HorizontalScrollBar groupScrollBar = new HorizontalScrollBar();
     protected final VerticalScrollBar itemScrollBar = new VerticalScrollBar();
-    protected boolean needScrollBar = false;
     private int currentTab = 0;
     private ConfigGroup currentGroup;
     private int configPerPage;
@@ -56,7 +55,7 @@ public abstract class ConfigScreen extends Screen implements IConfig {
         List<ConfigGroup> configTabs = this.configContainer.getConfigTabs();
         for (int i = 0; i < configTabs.size(); i++) {
             ConfigGroup category = configTabs.get(i);
-            TabButton tabButton = this.addDrawableChild(new TabButton(category, x, y, this.textRenderer.getWidth(I18n.translate(category.getTranslateKey())), 20, button -> {
+            TabButton tabButton = this.addDrawableChild(new TabButton(category, x, y, this.textRenderer.getWidth(I18n.translate(category.getTranslateKey())) + 5, 20, button -> {
                 currentTab = this.configContainer.getConfigTabs().indexOf(button.group);
                 this.currentGroup = button.group;
                 this.clearAndInit();
@@ -66,12 +65,12 @@ public abstract class ConfigScreen extends Screen implements IConfig {
             x += tabButton.getWidth() + 2;
         }
         x += 10;
-        this.needScrollBar = x > this.width - 20;
         this.groupScrollBar.setMaxValue(Math.max(0, x - this.width));
         this.calculateMaxItems();
+        this.textMaxLength = this.currentGroup.getConfigs().stream().map(IConfigEntry::getNameKey).map(I18n::translate).map(t -> this.textRenderer.getWidth(t)).max(Comparator.naturalOrder()).orElse(0) + 30;
         this.configWidgets.clear();
         this.configWidgets.addAll(this.currentGroup.getConfigs().stream().map(WidgetBuilderManager::get).toList());
-        this.textMaxLength = this.currentGroup.getConfigs().stream().map(IConfigEntry::getNameKey).map(I18n::translate).map(t -> this.textRenderer.getWidth(t)).max(Comparator.naturalOrder()).orElse(0) + 10;
+        this.configWidgets.forEach(b -> b.addElements(this::addDrawableChild, this.textMaxLength, 0, Math.max(10, this.width - this.textMaxLength - 30), ITEM_HEIGHT));
         this.updateItemPos();
     }
 
@@ -88,24 +87,19 @@ public abstract class ConfigScreen extends Screen implements IConfig {
     }
 
     public void calculateMaxItems() {
-        int height = this.height - 45;
-        this.configPerPage = Math.max(0, height / (ITEM_HEIGHT + ITEM_SEP));
-        this.itemScrollBar.setMaxValue(this.configPerPage);
+        this.configPerPage = Math.max(0, (this.height - 55) / (ITEM_HEIGHT + ITEM_SEP));
+        this.itemScrollBar.setMaxValue(Math.max(0, this.currentGroup.getConfigs().size() - this.configPerPage));
     }
 
     public void updateItemPos() {
         int top = this.itemScrollBar.getValue();
         List<IConfigEntry<?>> entries = this.currentGroup.getConfigs();
         for (int i = 0; i < top && i < entries.size(); i++)
-            this.configWidgets.get(i).update(false, this.textMaxLength, 0, 10);
+            this.configWidgets.get(i).update(false, 0);
         for (int i = top; i < top + this.configPerPage && i < entries.size(); i++)
-            this.configWidgets.get(i).update(true, this.textMaxLength, 45 + ITEM_SEP + (i - top) * (ITEM_HEIGHT + ITEM_SEP), Math.max(10, this.width - this.textMaxLength - 30));
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-//        this.updateTabPos();
+            this.configWidgets.get(i).update(true, 55 + ITEM_SEP + (i - top) * (ITEM_HEIGHT + ITEM_SEP));
+        for (int i = top + this.configPerPage; i < entries.size(); i++)
+            this.configWidgets.get(i).update(false, 0);
     }
 
     @Override
@@ -144,8 +138,8 @@ public abstract class ConfigScreen extends Screen implements IConfig {
 
     @Override
     public void close() {
-        if (this.configContainer instanceof FakeConfigContainer)
-            this.configContainer.onConfigsChanged();
+        this.configContainer.onConfigsChanged();
+        assert this.client != null;
         this.client.setScreen(this.parent);
     }
 
@@ -157,8 +151,10 @@ public abstract class ConfigScreen extends Screen implements IConfig {
         String currentText = this.getCurrentEditText();
         int textWidth = this.textRenderer.getWidth(currentText);
         context.drawTextWithShadow(this.textRenderer, currentText, this.width - textWidth - 10, 10, -1);
-        if (this.needScrollBar)
-            this.groupScrollBar.render(mouseX, mouseY, partialTicks, 10, 43, this.width - 20, 8, this.width + this.groupScrollBar.getMaxValue());
+        this.groupScrollBar.render(mouseX, mouseY, partialTicks, 10, 43, this.width - 20, 8, this.width + this.groupScrollBar.getMaxValue());
+        if (this.groupScrollBar.isDragging()) this.updateTabPos();
+        this.itemScrollBar.render(mouseX, mouseY, partialTicks, this.width - 18, 55, 8, this.height - 70, (this.configPerPage + this.itemScrollBar.getMaxValue()) * (ITEM_HEIGHT + ITEM_SEP));
+        if (this.itemScrollBar.isDragging()) this.updateItemPos();
     }
 
     @Override
@@ -168,13 +164,22 @@ public abstract class ConfigScreen extends Screen implements IConfig {
             this.updateTabPos();
             return true;
         }
-        return super.mouseClicked(mouseX, mouseY, mouseButton);
+        if (mouseButton == 0 && this.itemScrollBar.wasMouseOver()) {
+            this.itemScrollBar.setIsDragging(true);
+            this.updateItemPos();
+            return true;
+        }
+        boolean b = super.mouseClicked(mouseX, mouseY, mouseButton);
+        if (!b) this.setFocused(null);
+        return b;
     }
 
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int mouseButton) {
-        if (mouseButton == 0)
+        if (mouseButton == 0) {
             this.groupScrollBar.setIsDragging(false);
+            this.itemScrollBar.setIsDragging(false);
+        }
         return super.mouseReleased(mouseX, mouseY, mouseButton);
     }
 

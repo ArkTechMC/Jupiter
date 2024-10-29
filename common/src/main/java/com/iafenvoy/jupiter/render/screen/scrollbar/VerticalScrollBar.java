@@ -105,4 +105,8 @@ public class VerticalScrollBar {
             this.dragStartValue = this.currentValue;
         }
     }
+
+    public boolean isDragging() {
+        return dragging;
+    }
 }

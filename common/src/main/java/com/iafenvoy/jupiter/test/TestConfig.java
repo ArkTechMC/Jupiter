@@ -19,7 +19,16 @@ public class TestConfig extends FileConfigContainer {
         this.createTab("tab1", "jupiter.tab1")
                 .add(new BooleanEntry("this is boolean", false))
                 .add(new IntegerEntry("this is int", 0))
-                .add(new IntegerEntry("this is int with range", 0, -10, 10));
+                .add(new IntegerEntry("this is int with range", 0, -10, 10))
+                .add(new IntegerEntry("this is int", 0))
+                .add(new IntegerEntry("this is int", 0))
+                .add(new IntegerEntry("this is int", 0))
+                .add(new IntegerEntry("this is int", 0))
+                .add(new IntegerEntry("this is int", 0))
+                .add(new IntegerEntry("this is int", 0))
+                .add(new IntegerEntry("this is int", 0))
+                .add(new IntegerEntry("this is int", 0))
+                .add(new IntegerEntry("this is int", 0));
 //                .add(new ListStringEntry("this is string list", ImmutableList.of()));
         this.createTab("tab2", "jupiter.tab2");
 //                .add(new ConfigOptionList("this is an option list", OptionsExample.FIRST));

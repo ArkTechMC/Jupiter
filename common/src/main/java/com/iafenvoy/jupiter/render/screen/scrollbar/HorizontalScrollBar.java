@@ -105,4 +105,8 @@ public class HorizontalScrollBar {
             this.dragStartValue = this.currentValue;
         }
     }
+
+    public boolean isDragging() {
+        return dragging;
+    }
 }

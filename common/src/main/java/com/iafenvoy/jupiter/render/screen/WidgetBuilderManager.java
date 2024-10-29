@@ -7,6 +7,7 @@ import com.iafenvoy.jupiter.render.widget.TextFieldWidgetBuilder;
 import com.iafenvoy.jupiter.render.widget.WidgetBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.text.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class WidgetBuilderManager {
     }
 
     static {
-        register(ConfigType.BOOLEAN, config -> new ButtonWidgetBuilder<>(config, button -> config.setValue(!config.getValue())));
+        register(ConfigType.BOOLEAN, config -> new ButtonWidgetBuilder<>(config, button -> config.setValue(!config.getValue()), () -> Text.of(config.getValue() ? "§atrue" : "§cfalse")));
         register(ConfigType.INTEGER, TextFieldWidgetBuilder::new);
         register(ConfigType.DOUBLE, TextFieldWidgetBuilder::new);
     }

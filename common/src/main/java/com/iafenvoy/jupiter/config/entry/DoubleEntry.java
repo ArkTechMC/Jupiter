@@ -62,6 +62,8 @@ public class DoubleEntry extends BaseEntry<Double> implements IRangeConfigEntry<
 
     @Override
     public void setValueFromString(String s) {
-        this.setValue(Double.parseDouble(s));
+        double d = Double.parseDouble(s);
+        if (d < this.minValue || d > this.maxValue) throw new IllegalArgumentException();
+        this.setValue(d);
     }
 }

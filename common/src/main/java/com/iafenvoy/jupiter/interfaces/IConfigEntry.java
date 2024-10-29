@@ -7,6 +7,8 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.Consumer;
+
 public interface IConfigEntry<T> {
     ConfigType<T> getType();
 
@@ -24,6 +26,8 @@ public interface IConfigEntry<T> {
     default void copyFrom(IConfigEntry<T> another) {
         this.setValue(another.getValue());
     }
+
+    void registerCallback(Consumer<T> callback);
 
     T getValue();
 

@@ -38,6 +38,11 @@ public abstract class BaseEntry<T> implements IConfigEntry<T> {
     }
 
     @Override
+    public void registerCallback(Consumer<T> callback) {
+        this.callback(callback);
+    }
+
+    @Override
     public void setValue(T value) {
         this.value = value;
         this.callbacks.forEach(x -> x.accept(value));

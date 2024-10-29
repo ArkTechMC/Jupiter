@@ -62,6 +62,8 @@ public class IntegerEntry extends BaseEntry<Integer> implements IRangeConfigEntr
 
     @Override
     public void setValueFromString(String s) {
-        this.setValue(Integer.parseInt(s));
+        int d = Integer.parseInt(s);
+        if (d < this.minValue || d > this.maxValue) throw new IllegalArgumentException();
+        this.setValue(d);
     }
 }

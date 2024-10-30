@@ -30,7 +30,7 @@ public abstract class WidgetBuilder<T> {
         TextRenderer textRenderer = CLIENT.get().textRenderer;
         this.textWidget = new TextWidget(20, y, textRenderer.getWidth(text), height, Text.of(text), textRenderer);
         appender.accept(this.textWidget);
-        this.resetButton = ButtonWidget.builder(Text.translatable("malilib.gui.button.remove"), button -> {
+        this.resetButton = ButtonWidget.builder(Text.translatable("jupiter.screen.button.remove"), button -> {
             this.config.reset();
             this.refresh();
         }).dimensions(x + width - 50, y, 50, height).build();
@@ -44,7 +44,7 @@ public abstract class WidgetBuilder<T> {
         TextRenderer textRenderer = CLIENT.get().textRenderer;
         this.textWidget = new TextWidget(20, y, textRenderer.getWidth(name), height, Text.of(name), textRenderer);
         appender.accept(this.textWidget);
-        this.resetButton = ButtonWidget.builder(Text.translatable("malilib.gui.button.reset"), button -> {
+        this.resetButton = ButtonWidget.builder(Text.translatable("jupiter.screen.button.reset"), button -> {
             this.config.reset();
             this.refresh();
         }).dimensions(x + width - 50, y, 50, height).build();

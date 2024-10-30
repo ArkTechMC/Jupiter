@@ -2,21 +2,19 @@
 
 Jupiter is a powerful, auto sync config library.
 
+**IMPORTANT NOTICE: Jupiter V2 is not compatible with mods which based on V1!**
+
 ## Features
 
 1.Simple creation of config instance.
 
-2.Config support `int`, `double`, `string`, `color`, `list` and so on.
+2.Config support `int`, `double`, `string`,`list` and so on.
 
 3.Can set range for `int`, `double`
 
 4.Automatically sync config with dedicate server.
 
 5.Permission control for dedicate server config.
-
-## Credit
-
-`Masa`: Provide gui code from `malilib` under `LGPL-3.0` license.
 
 ## How to use (For developer)
 

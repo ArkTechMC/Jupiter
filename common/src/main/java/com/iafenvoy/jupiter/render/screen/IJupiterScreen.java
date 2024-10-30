@@ -2,7 +2,6 @@ package com.iafenvoy.jupiter.render.screen;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public interface IJupiterScreen {

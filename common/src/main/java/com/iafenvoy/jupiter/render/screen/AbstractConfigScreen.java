@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 @Environment(EnvType.CLIENT)
-public abstract class ConfigScreen extends Screen implements IJupiterScreen {
+public abstract class AbstractConfigScreen extends Screen implements IJupiterScreen {
     private final Screen parent;
     protected final AbstractConfigContainer configContainer;
     protected final List<TabButton> groupButtons = new ArrayList<>();
@@ -34,7 +34,7 @@ public abstract class ConfigScreen extends Screen implements IJupiterScreen {
     private int configPerPage;
     private int textMaxLength;
 
-    public ConfigScreen(Screen parent, AbstractConfigContainer configContainer) {
+    public AbstractConfigScreen(Screen parent, AbstractConfigContainer configContainer) {
         super(Text.translatable(configContainer.getTitleNameKey()));
         this.parent = parent;
         this.configContainer = configContainer;

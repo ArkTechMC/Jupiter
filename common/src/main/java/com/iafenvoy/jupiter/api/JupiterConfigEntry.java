@@ -1,6 +1,6 @@
 package com.iafenvoy.jupiter.api;
 
-import com.iafenvoy.jupiter.malilib.config.ConfigManager;
+import com.iafenvoy.jupiter.ConfigManager;
 import net.minecraft.util.Identifier;
 
 public interface JupiterConfigEntry {

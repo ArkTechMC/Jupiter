@@ -3,7 +3,7 @@ package com.iafenvoy.jupiter.fabric;
 import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.api.JupiterConfigEntry;
 import com.iafenvoy.jupiter.fabric.reloader.ServerConfigReloader;
-import com.iafenvoy.jupiter.malilib.config.ConfigManager;
+import com.iafenvoy.jupiter.ConfigManager;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resource.ResourceType;

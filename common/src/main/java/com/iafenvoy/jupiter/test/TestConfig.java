@@ -3,8 +3,9 @@ package com.iafenvoy.jupiter.test;
 import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.config.container.FileConfigContainer;
 import com.iafenvoy.jupiter.config.entry.*;
-import com.iafenvoy.jupiter.malilib.config.IConfigOptionListEntry;
+import com.iafenvoy.jupiter.interfaces.IConfigEnumEntry;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
@@ -43,27 +44,22 @@ public class TestConfig extends FileConfigContainer {
         this.createTab("tab9", "jupiter.tab9");
     }
 
-    private enum OptionsExample implements IConfigOptionListEntry {
+    private enum OptionsExample implements IConfigEnumEntry {
         FIRST, SECOND, THIRD;
 
         @Override
-        public String getStringValue() {
+        public String getName() {
             return this.name();
         }
 
         @Override
-        public String getDisplayName() {
-            return this.name();
+        public @NotNull IConfigEnumEntry getByName(String name) {
+            return valueOf(name);
         }
 
         @Override
-        public IConfigOptionListEntry cycle(boolean forward) {
-            return values()[(this.ordinal() + (forward ? 1 : -1)) % values().length];
-        }
-
-        @Override
-        public IConfigOptionListEntry fromString(String value) {
-            return valueOf(value);
+        public IConfigEnumEntry cycle(boolean clockWise) {
+            return values()[(this.ordinal() + (clockWise ? 1 : -1)) % values().length];
         }
     }
 }

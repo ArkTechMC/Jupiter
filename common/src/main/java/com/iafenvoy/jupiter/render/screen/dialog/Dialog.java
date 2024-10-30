@@ -1,6 +1,7 @@
 package com.iafenvoy.jupiter.render.screen.dialog;
 
 import com.iafenvoy.jupiter.interfaces.IConfigEntry;
+import com.iafenvoy.jupiter.render.screen.IJupiterScreen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawContext;
@@ -8,7 +9,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
 @Environment(EnvType.CLIENT)
-public class Dialog<T> extends Screen {
+public class Dialog<T> extends Screen implements IJupiterScreen {
     protected final IConfigEntry<T> entry;
     private final Screen parent;
 

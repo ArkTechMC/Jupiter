@@ -1,7 +1,6 @@
 package com.iafenvoy.jupiter.render.screen.dialog;
 
 import com.iafenvoy.jupiter.config.entry.ListBaseEntry;
-import com.iafenvoy.jupiter.render.screen.IJupiterScreen;
 import com.iafenvoy.jupiter.render.screen.WidgetBuilderManager;
 import com.iafenvoy.jupiter.render.screen.scrollbar.VerticalScrollBar;
 import com.iafenvoy.jupiter.render.widget.WidgetBuilder;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Environment(EnvType.CLIENT)
-public class ListDialog<T> extends Dialog<List<T>> implements IJupiterScreen {
+public class ListDialog<T> extends Dialog<List<T>> {
     protected final ListBaseEntry<T> entry;
     protected final VerticalScrollBar itemScrollBar = new VerticalScrollBar();
     protected final List<WidgetBuilder<T>> widgets = new ArrayList<>();

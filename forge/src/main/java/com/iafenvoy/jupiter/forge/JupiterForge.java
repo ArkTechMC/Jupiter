@@ -4,7 +4,7 @@ import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.ServerConfigManager;
 import com.iafenvoy.jupiter.forge.network.PacketByteBufC2S;
 import com.iafenvoy.jupiter.forge.network.PacketByteBufS2C;
-import com.iafenvoy.jupiter.malilib.config.ConfigManager;
+import com.iafenvoy.jupiter.ConfigManager;
 import net.minecraft.util.Identifier;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;

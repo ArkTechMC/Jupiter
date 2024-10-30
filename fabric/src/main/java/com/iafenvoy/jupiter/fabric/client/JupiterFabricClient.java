@@ -4,7 +4,7 @@ import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.api.JupiterConfigEntry;
 import com.iafenvoy.jupiter.fabric.FabricEntryPointLoader;
 import com.iafenvoy.jupiter.fabric.reloader.ClientConfigReloader;
-import com.iafenvoy.jupiter.malilib.config.ConfigManager;
+import com.iafenvoy.jupiter.ConfigManager;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resource.ResourceType;

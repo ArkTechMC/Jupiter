@@ -1,17 +1,13 @@
 package com.iafenvoy.jupiter.render.screen.scrollbar;
 
-import com.iafenvoy.jupiter.malilib.gui.interfaces.IGuiIcon;
 import com.iafenvoy.jupiter.util.RenderUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.math.MathHelper;
-import org.jetbrains.annotations.Nullable;
 
 @Environment(EnvType.CLIENT)
 public class HorizontalScrollBar {
-    @Nullable
-    protected final IGuiIcon barTexture;
     protected final MinecraftClient mc = MinecraftClient.getInstance();
     protected boolean mouseOver = false;
     protected boolean dragging = false;
@@ -22,14 +18,6 @@ public class HorizontalScrollBar {
     protected int foregroundColor = 0xFFFFFFFF;
     protected int dragStartValue = 0;
     protected int dragStartX = 0;
-
-    public HorizontalScrollBar() {
-        this(null);
-    }
-
-    public HorizontalScrollBar(@Nullable IGuiIcon barTexture) {
-        this.barTexture = barTexture;
-    }
 
     public HorizontalScrollBar setRenderBarBackground(boolean render) {
         this.renderScrollbarBackground = render;
@@ -76,21 +64,7 @@ public class HorizontalScrollBar {
             int barWidth = (int) (relative * slideWidth);
             int barTravel = slideWidth - barWidth;
             int barPosition = xPosition + 1 + (this.maxValue > 0 ? (int) ((this.currentValue / (float) this.maxValue) * barTravel) : 0);
-
-            if (this.barTexture != null && barWidth >= 4) {
-                RenderUtils.color(1f, 1f, 1f, 1f);
-                RenderUtils.bindTexture(this.barTexture.getTexture());
-                int u = this.barTexture.getU();
-                int v = this.barTexture.getV();
-                int w = this.barTexture.getWidth();
-                int h = this.barTexture.getHeight();
-
-                RenderUtils.drawTexturedRect(barPosition, yPosition + 1, u, v, barWidth - 2, h);
-                RenderUtils.drawTexturedRect(barPosition + barWidth - 2, yPosition + 1, u, v + h - 2, 2, h);
-            } else {
-                RenderUtils.drawRect(barPosition, yPosition + 1, barWidth, height - 2, this.foregroundColor);
-            }
-
+            RenderUtils.drawRect(barPosition, yPosition + 1, barWidth, height - 2, this.foregroundColor);
             this.mouseOver = mouseY > yPosition && mouseY < yPosition + height && mouseX > barPosition && mouseX < barPosition + barWidth;
             this.handleDrag(mouseX, barTravel);
         }

@@ -4,7 +4,7 @@ import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.ServerConfigManager;
 import com.iafenvoy.jupiter.api.JupiterConfig;
 import com.iafenvoy.jupiter.api.JupiterConfigEntry;
-import com.iafenvoy.jupiter.malilib.config.ConfigManager;
+import com.iafenvoy.jupiter.ConfigManager;
 import net.minecraft.util.Identifier;
 
 @JupiterConfig

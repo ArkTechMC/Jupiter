@@ -1,7 +1,6 @@
 package com.iafenvoy.jupiter.render.screen.dialog;
 
 import com.iafenvoy.jupiter.config.entry.MapBaseEntry;
-import com.iafenvoy.jupiter.render.screen.IJupiterScreen;
 import com.iafenvoy.jupiter.render.screen.WidgetBuilderManager;
 import com.iafenvoy.jupiter.render.screen.scrollbar.VerticalScrollBar;
 import com.iafenvoy.jupiter.render.widget.WidgetBuilder;
@@ -18,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @Environment(EnvType.CLIENT)
-public class MapDialog<T> extends Dialog<Map<String, T>> implements IJupiterScreen {
+public class MapDialog<T> extends Dialog<Map<String, T>> {
     protected final MapBaseEntry<T> entry;
     protected final VerticalScrollBar itemScrollBar = new VerticalScrollBar();
     protected final List<WidgetBuilder<Map.Entry<String, T>>> widgets = new ArrayList<>();

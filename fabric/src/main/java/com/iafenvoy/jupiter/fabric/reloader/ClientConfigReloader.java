@@ -1,7 +1,7 @@
 package com.iafenvoy.jupiter.fabric.reloader;
 
 import com.iafenvoy.jupiter.Jupiter;
-import com.iafenvoy.jupiter.malilib.config.ConfigManager;
+import com.iafenvoy.jupiter.ConfigManager;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.minecraft.util.Identifier;
 

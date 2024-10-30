@@ -3,8 +3,7 @@ package com.iafenvoy.jupiter.config.container;
 import com.google.gson.*;
 import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.config.ConfigGroup;
-import com.iafenvoy.jupiter.interfaces.IConfig;
-import com.iafenvoy.jupiter.malilib.config.IConfigHandler;
+import com.iafenvoy.jupiter.interfaces.IConfigHandler;
 import com.mojang.serialization.*;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.ApiStatus;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public abstract class AbstractConfigContainer implements IConfigHandler, IConfig {
+public abstract class AbstractConfigContainer implements IConfigHandler {
     protected static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     protected final List<ConfigGroup> configTabs = new ArrayList<>();
     protected final Identifier id;

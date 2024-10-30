@@ -2,7 +2,6 @@ package com.iafenvoy.jupiter.render.screen;
 
 import com.iafenvoy.jupiter.config.ConfigGroup;
 import com.iafenvoy.jupiter.config.container.AbstractConfigContainer;
-import com.iafenvoy.jupiter.interfaces.IConfig;
 import com.iafenvoy.jupiter.interfaces.IConfigEntry;
 import com.iafenvoy.jupiter.render.screen.scrollbar.HorizontalScrollBar;
 import com.iafenvoy.jupiter.render.screen.scrollbar.VerticalScrollBar;
@@ -15,7 +14,6 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -24,7 +22,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 @Environment(EnvType.CLIENT)
-public abstract class ConfigScreen extends Screen implements IConfig, IJupiterScreen {
+public abstract class ConfigScreen extends Screen implements IJupiterScreen {
     private final Screen parent;
     protected final AbstractConfigContainer configContainer;
     protected final List<TabButton> groupButtons = new ArrayList<>();
@@ -97,16 +95,6 @@ public abstract class ConfigScreen extends Screen implements IConfig, IJupiterSc
             this.configWidgets.get(i).update(true, 55 + ITEM_SEP + (i - top) * (ITEM_HEIGHT + ITEM_SEP));
         for (int i = top + this.configPerPage; i < entries.size(); i++)
             this.configWidgets.get(i).update(false, 0);
-    }
-
-    @Override
-    public Identifier getConfigId() {
-        return this.configContainer.getConfigId();
-    }
-
-    @Override
-    public String getTitleNameKey() {
-        return this.configContainer.getTitleNameKey();
     }
 
     @Override

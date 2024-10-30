@@ -1,6 +1,7 @@
 package com.iafenvoy.jupiter.config.entry;
 
-import com.iafenvoy.jupiter.config.ConfigType;
+import com.iafenvoy.jupiter.config.type.ConfigType;
+import com.iafenvoy.jupiter.config.type.ConfigTypes;
 import com.iafenvoy.jupiter.interfaces.IConfigEntry;
 import com.iafenvoy.jupiter.interfaces.ITextFieldConfig;
 import com.mojang.serialization.Codec;
@@ -12,7 +13,7 @@ public class StringEntry extends BaseEntry<String> implements ITextFieldConfig {
 
     @Override
     public ConfigType<String> getType() {
-        return ConfigType.STRING;
+        return ConfigTypes.STRING;
     }
 
     @Override

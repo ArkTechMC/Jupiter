@@ -1,6 +1,7 @@
 package com.iafenvoy.jupiter.config.entry;
 
-import com.iafenvoy.jupiter.config.ConfigType;
+import com.iafenvoy.jupiter.config.type.ConfigType;
+import com.iafenvoy.jupiter.config.type.ConfigTypes;
 import com.iafenvoy.jupiter.interfaces.IConfigEntry;
 import com.mojang.serialization.Codec;
 
@@ -11,7 +12,7 @@ public class BooleanEntry extends BaseEntry<Boolean> {
 
     @Override
     public ConfigType<Boolean> getType() {
-        return ConfigType.BOOLEAN;
+        return ConfigTypes.BOOLEAN;
     }
 
     @Override

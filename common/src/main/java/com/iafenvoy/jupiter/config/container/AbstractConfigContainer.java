@@ -1,8 +1,6 @@
 package com.iafenvoy.jupiter.config.container;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.config.ConfigGroup;
 import com.iafenvoy.jupiter.interfaces.IConfig;
@@ -16,6 +14,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public abstract class AbstractConfigContainer implements IConfigHandler, IConfig {
+    protected static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     protected final List<ConfigGroup> configTabs = new ArrayList<>();
     protected final Identifier id;
     protected final String titleNameKey;
@@ -49,7 +48,7 @@ public abstract class AbstractConfigContainer implements IConfigHandler, IConfig
 
     public String serialize() {
         if (this.cache == null) this.cache = this.buildCodec();
-        return this.cache.encodeStart(JsonOps.INSTANCE, this.configTabs).getOrThrow(false, Jupiter.LOGGER::error).toString();
+        return GSON.toJson(this.cache.encodeStart(JsonOps.INSTANCE, this.configTabs).getOrThrow(false, Jupiter.LOGGER::error));
     }
 
     public void deserialize(String data) {

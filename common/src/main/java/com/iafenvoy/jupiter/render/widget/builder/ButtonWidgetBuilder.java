@@ -1,6 +1,7 @@
-package com.iafenvoy.jupiter.render.widget;
+package com.iafenvoy.jupiter.render.widget.builder;
 
 import com.iafenvoy.jupiter.interfaces.IConfigEntry;
+import com.iafenvoy.jupiter.render.widget.WidgetBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -12,7 +13,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 @Environment(EnvType.CLIENT)
-public class ButtonWidgetBuilder<T> extends WidgetBuilder<T, ButtonWidget> {
+public class ButtonWidgetBuilder<T> extends WidgetBuilder<T> {
     private final ButtonWidget.PressAction action;
     private final Supplier<Text> nameSupplier;
     @Nullable

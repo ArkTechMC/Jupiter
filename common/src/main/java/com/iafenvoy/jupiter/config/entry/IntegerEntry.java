@@ -1,6 +1,7 @@
 package com.iafenvoy.jupiter.config.entry;
 
-import com.iafenvoy.jupiter.config.ConfigType;
+import com.iafenvoy.jupiter.config.type.ConfigType;
+import com.iafenvoy.jupiter.config.type.ConfigTypes;
 import com.iafenvoy.jupiter.interfaces.IConfigEntry;
 import com.iafenvoy.jupiter.interfaces.IRangeConfigEntry;
 import com.mojang.serialization.Codec;
@@ -27,7 +28,7 @@ public class IntegerEntry extends BaseEntry<Integer> implements IRangeConfigEntr
 
     @Override
     public ConfigType<Integer> getType() {
-        return ConfigType.INTEGER;
+        return ConfigTypes.INTEGER;
     }
 
     @Override

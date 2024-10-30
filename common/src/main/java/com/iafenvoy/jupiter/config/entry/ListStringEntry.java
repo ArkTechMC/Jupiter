@@ -1,6 +1,7 @@
 package com.iafenvoy.jupiter.config.entry;
 
-import com.iafenvoy.jupiter.config.ConfigType;
+import com.iafenvoy.jupiter.config.type.ConfigType;
+import com.iafenvoy.jupiter.config.type.ConfigTypes;
 import com.iafenvoy.jupiter.interfaces.IConfigEntry;
 import com.mojang.serialization.Codec;
 
@@ -17,8 +18,30 @@ public class ListStringEntry extends ListBaseEntry<String> {
     }
 
     @Override
+    public IConfigEntry<String> newSingleInstance(String value, int index, Runnable reload) {
+        return new StringEntry(this.nameKey, value) {
+            @Override
+            public void reset() {
+                ListStringEntry.this.getValue().remove(index);
+                reload.run();
+            }
+
+            @Override
+            public void setValue(String value) {
+                super.setValue(value);
+                ListStringEntry.this.getValue().set(index, value);
+            }
+        };
+    }
+
+    @Override
+    public String newValue() {
+        return "";
+    }
+
+    @Override
     public ConfigType<List<String>> getType() {
-        return ConfigType.LIST_STRING;
+        return ConfigTypes.LIST_STRING;
     }
 
     @Override

@@ -1,18 +1,19 @@
 package com.iafenvoy.jupiter.config.entry;
 
-import com.iafenvoy.jupiter.config.ConfigType;
+import com.iafenvoy.jupiter.config.type.ConfigType;
+import com.iafenvoy.jupiter.config.type.ConfigTypes;
 import com.iafenvoy.jupiter.interfaces.IConfigEntry;
 import com.iafenvoy.jupiter.interfaces.IConfigEnumEntry;
 import com.mojang.serialization.Codec;
 
 public class EnumEntry extends BaseEntry<IConfigEnumEntry> {
     public EnumEntry(String nameKey, IConfigEnumEntry defaultValue) {
-        super(nameKey,defaultValue);
+        super(nameKey, defaultValue);
     }
 
     @Override
     public ConfigType<IConfigEnumEntry> getType() {
-        return ConfigType.ENUM;
+        return ConfigTypes.ENUM;
     }
 
     @Override

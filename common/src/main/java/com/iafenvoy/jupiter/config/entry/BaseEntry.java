@@ -19,7 +19,7 @@ public abstract class BaseEntry<T> implements IConfigEntry<T> {
     public BaseEntry(String nameKey, T defaultValue) {
         this.nameKey = this.jsonKey = nameKey;
         this.defaultValue = defaultValue;
-        this.reset();
+        this.value = this.copyDefaultData();
     }
 
     public BaseEntry<T> comment(@Nullable String commentKey) {
@@ -75,6 +75,10 @@ public abstract class BaseEntry<T> implements IConfigEntry<T> {
 
     @Override
     public void reset() {
-        this.value = this.defaultValue;
+        this.setValue(this.copyDefaultData());
+    }
+
+    protected T copyDefaultData() {
+        return this.defaultValue;
     }
 }

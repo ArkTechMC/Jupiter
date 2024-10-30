@@ -1,7 +1,7 @@
 package com.iafenvoy.jupiter.interfaces;
 
 import com.iafenvoy.jupiter.Jupiter;
-import com.iafenvoy.jupiter.config.ConfigType;
+import com.iafenvoy.jupiter.config.type.ConfigType;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;

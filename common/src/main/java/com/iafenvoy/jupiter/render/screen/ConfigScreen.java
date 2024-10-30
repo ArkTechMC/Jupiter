@@ -13,7 +13,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -25,14 +24,11 @@ import java.util.List;
 import java.util.function.Consumer;
 
 @Environment(EnvType.CLIENT)
-public abstract class ConfigScreen extends Screen implements IConfig {
-    private static final int ITEM_PER_SCROLL = 2;
-    private static final int ITEM_HEIGHT = 20;
-    private static final int ITEM_SEP = 5;
+public abstract class ConfigScreen extends Screen implements IConfig, IJupiterScreen {
     private final Screen parent;
     protected final AbstractConfigContainer configContainer;
     protected final List<TabButton> groupButtons = new ArrayList<>();
-    protected final List<WidgetBuilder<?, ? extends ClickableWidget>> configWidgets = new ArrayList<>();
+    protected final List<WidgetBuilder<?>> configWidgets = new ArrayList<>();
     protected final HorizontalScrollBar groupScrollBar = new HorizontalScrollBar();
     protected final VerticalScrollBar itemScrollBar = new VerticalScrollBar();
     private int currentTab = 0;
@@ -50,6 +46,7 @@ public abstract class ConfigScreen extends Screen implements IConfig {
     @Override
     protected void init() {
         super.init();
+        this.addDrawableChild(ButtonWidget.builder(Text.of("<"), button -> this.close()).dimensions(10, 5, 20, 15).build());
         int x = 10, y = 22;
         this.groupButtons.clear();
         List<ConfigGroup> configTabs = this.configContainer.getConfigTabs();
@@ -147,7 +144,7 @@ public abstract class ConfigScreen extends Screen implements IConfig {
     public void render(DrawContext context, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(context);
         super.render(context, mouseX, mouseY, partialTicks);
-        context.drawText(this.textRenderer, this.title, 20, 10, -1, true);
+        context.drawText(this.textRenderer, this.title, 35, 10, -1, true);
         String currentText = this.getCurrentEditText();
         int textWidth = this.textRenderer.getWidth(currentText);
         context.drawTextWithShadow(this.textRenderer, currentText, this.width - textWidth - 10, 10, -1);

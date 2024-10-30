@@ -16,6 +16,7 @@
     "malilib.gui.button.cancel": "Cancel",
     "malilib.gui.button.ok": "OK",
     "malilib.gui.button.reset": "Reset",
+    "malilib.gui.button.remove": "Remove",
     "malilib.gui.button.reset.caps": "RESET",
 
     "malilib.gui.button.render_layers_gui.axis": "Axis: %s",

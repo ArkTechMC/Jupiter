@@ -1,21 +1,18 @@
-package com.iafenvoy.jupiter.render.widget;
+package com.iafenvoy.jupiter.render.widget.builder;
 
 import com.iafenvoy.jupiter.interfaces.IConfigEntry;
 import com.iafenvoy.jupiter.interfaces.ITextFieldConfig;
+import com.iafenvoy.jupiter.render.widget.TextFieldWithErrorWidget;
+import com.iafenvoy.jupiter.render.widget.WidgetBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.ClickableWidget;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.gui.widget.TextWidget;
-import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
 @Environment(EnvType.CLIENT)
-public class TextFieldWidgetBuilder<T> extends WidgetBuilder<T, TextWidget> {
+public class TextFieldWidgetBuilder<T> extends WidgetBuilder<T> {
     private final ITextFieldConfig textFieldConfig;
     @Nullable
     private TextFieldWithErrorWidget widget;
@@ -55,27 +52,5 @@ public class TextFieldWidgetBuilder<T> extends WidgetBuilder<T, TextWidget> {
     public void refresh() {
         if (this.widget == null) return;
         this.widget.setText(this.textFieldConfig.valueAsString());
-    }
-
-    private static class TextFieldWithErrorWidget extends TextFieldWidget {
-        private boolean hasError = false;
-
-        public TextFieldWithErrorWidget(TextRenderer textRenderer, int x, int y, int width, int height) {
-            super(textRenderer, x, y, width, height, Text.empty());
-        }
-
-        @Override
-        public void renderButton(DrawContext context, int mouseX, int mouseY, float delta) {
-            if (this.hasError) {
-                this.setUneditableColor(0xFFFF0000);
-                this.setEditable(false);
-            }
-            super.renderButton(context, mouseX, mouseY, delta);
-            this.setEditable(true);
-        }
-
-        public void setHasError(boolean hasError) {
-            this.hasError = hasError;
-        }
     }
 }

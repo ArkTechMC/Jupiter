@@ -7,4 +7,6 @@ public interface IConfigEnumEntry {
 
     @NotNull
     IConfigEnumEntry getByName(String name);
+
+    IConfigEnumEntry cycle(boolean clockWise);
 }

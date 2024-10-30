@@ -2,10 +2,12 @@ package com.iafenvoy.jupiter.test;
 
 import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.config.container.FileConfigContainer;
-import com.iafenvoy.jupiter.config.entry.BooleanEntry;
-import com.iafenvoy.jupiter.config.entry.IntegerEntry;
+import com.iafenvoy.jupiter.config.entry.*;
 import com.iafenvoy.jupiter.malilib.config.IConfigOptionListEntry;
 import net.minecraft.util.Identifier;
+
+import java.util.List;
+import java.util.Map;
 
 public class TestConfig extends FileConfigContainer {
     public static final TestConfig INSTANCE = new TestConfig();
@@ -20,9 +22,9 @@ public class TestConfig extends FileConfigContainer {
                 .add(new BooleanEntry("this is boolean", false))
                 .add(new IntegerEntry("this is int", 0))
                 .add(new IntegerEntry("this is int with range", 0, -10, 10))
-                .add(new IntegerEntry("this is int", 0))
-                .add(new IntegerEntry("this is int", 0))
-                .add(new IntegerEntry("this is int", 0))
+                .add(new StringEntry("this is string", ""))
+                .add(new ListStringEntry("this is string list", List.of("1", "2", "3", "4", "5")))
+                .add(new MapStringEntry("this is string map", Map.of("1", "1", "2", "2")))
                 .add(new IntegerEntry("this is int", 0))
                 .add(new IntegerEntry("this is int", 0))
                 .add(new IntegerEntry("this is int", 0))

@@ -1,5 +1,6 @@
 package com.iafenvoy.jupiter.network;
 
+import com.google.gson.JsonParser;
 import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.ServerConfigManager;
 import com.iafenvoy.jupiter.config.container.AbstractConfigContainer;
@@ -28,8 +29,8 @@ public class ServerConfigNetwork {
                 if (ServerConfigManager.checkPermission(id, server, player)) {
                     AbstractConfigContainer container = ServerConfigManager.getConfig(id);
                     if (container != null) {
-                        Jupiter.LOGGER.info(data);
-                        container.deserializeWithoutCheck(data);
+                        Jupiter.LOGGER.debug(data);
+                        container.deserializeJson(JsonParser.parseString(data));
                         container.onConfigsChanged();
                         Jupiter.LOGGER.info("Player {} changed config {}", player.getName().getString(), id);
                     }

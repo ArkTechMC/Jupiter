@@ -33,7 +33,7 @@ public class IntegerEntry extends BaseEntry<Integer> implements IRangeConfigEntr
 
     @Override
     public IConfigEntry<Integer> newInstance() {
-        return new IntegerEntry(this.nameKey, this.defaultValue, this.minValue, this.maxValue).comment(this.commentKey).json(this.jsonKey);
+        return new IntegerEntry(this.nameKey, this.defaultValue, this.minValue, this.maxValue).visible(this.visible).json(this.jsonKey);
     }
 
     @Override

@@ -5,7 +5,6 @@ import com.iafenvoy.jupiter.config.type.ConfigType;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
@@ -17,9 +16,6 @@ public interface IConfigEntry<T> {
     }
 
     String getNameKey();
-
-    @Nullable
-    String getComment();
 
     IConfigEntry<T> newInstance();
 

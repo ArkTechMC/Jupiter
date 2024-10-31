@@ -33,7 +33,7 @@ public class DoubleEntry extends BaseEntry<Double> implements IRangeConfigEntry<
 
     @Override
     public IConfigEntry<Double> newInstance() {
-        return new DoubleEntry(this.nameKey, this.defaultValue, this.minValue, this.maxValue).comment(this.commentKey).json(this.jsonKey);
+        return new DoubleEntry(this.nameKey, this.defaultValue, this.minValue, this.maxValue).visible(this.visible).json(this.jsonKey);
     }
 
     @Override

@@ -52,6 +52,6 @@ public class MapStringEntry extends MapBaseEntry<String> {
 
     @Override
     public IConfigEntry<Map<String, String>> newInstance() {
-        return new MapStringEntry(this.nameKey, this.defaultValue).comment(this.commentKey).json(this.jsonKey);
+        return new MapStringEntry(this.nameKey, this.defaultValue).visible(this.visible).json(this.jsonKey);
     }
 }

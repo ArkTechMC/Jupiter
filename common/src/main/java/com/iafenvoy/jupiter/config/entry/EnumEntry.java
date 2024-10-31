@@ -18,7 +18,7 @@ public class EnumEntry extends BaseEntry<IConfigEnumEntry> {
 
     @Override
     public IConfigEntry<IConfigEnumEntry> newInstance() {
-        return new EnumEntry(this.nameKey, this.defaultValue).comment(this.commentKey).json(this.jsonKey);
+        return new EnumEntry(this.nameKey, this.defaultValue).visible(this.visible).json(this.jsonKey);
     }
 
     @Override

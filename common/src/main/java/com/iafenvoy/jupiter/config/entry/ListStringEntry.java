@@ -46,6 +46,6 @@ public class ListStringEntry extends ListBaseEntry<String> {
 
     @Override
     public IConfigEntry<List<String>> newInstance() {
-        return new ListStringEntry(this.nameKey, this.defaultValue).comment(this.commentKey).json(this.jsonKey);
+        return new ListStringEntry(this.nameKey, this.defaultValue).visible(this.visible).json(this.jsonKey);
     }
 }

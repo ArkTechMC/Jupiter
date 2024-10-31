@@ -1,7 +1,6 @@
 package com.iafenvoy.jupiter.config.entry;
 
 import com.iafenvoy.jupiter.interfaces.IConfigEntry;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +9,7 @@ import java.util.function.Consumer;
 public abstract class BaseEntry<T> implements IConfigEntry<T> {
     protected final String nameKey;
     protected String jsonKey;
-    @Nullable
-    protected String commentKey;
+    protected boolean visible;
     protected final T defaultValue;
     protected T value;
     private final List<Consumer<T>> callbacks = new ArrayList<>();
@@ -22,8 +20,8 @@ public abstract class BaseEntry<T> implements IConfigEntry<T> {
         this.value = this.copyDefaultData();
     }
 
-    public BaseEntry<T> comment(@Nullable String commentKey) {
-        this.commentKey = commentKey;
+    public BaseEntry<T> visible(boolean visible) {
+        this.visible = visible;
         return this;
     }
 
@@ -51,11 +49,6 @@ public abstract class BaseEntry<T> implements IConfigEntry<T> {
     @Override
     public String getNameKey() {
         return this.nameKey;
-    }
-
-    @Override
-    public @Nullable String getComment() {
-        return this.commentKey;
     }
 
     @Override

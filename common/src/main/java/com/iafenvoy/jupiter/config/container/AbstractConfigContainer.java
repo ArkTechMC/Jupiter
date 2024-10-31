@@ -1,8 +1,12 @@
 package com.iafenvoy.jupiter.config.container;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.config.ConfigGroup;
+import com.iafenvoy.jupiter.config.entry.IntegerEntry;
 import com.iafenvoy.jupiter.interfaces.IConfigHandler;
 import com.mojang.serialization.*;
 import net.minecraft.util.Identifier;
@@ -17,11 +21,17 @@ public abstract class AbstractConfigContainer implements IConfigHandler {
     protected final List<ConfigGroup> configTabs = new ArrayList<>();
     protected final Identifier id;
     protected final String titleNameKey;
+    protected final IntegerEntry version;
     private Codec<List<ConfigGroup>> cache;
 
     public AbstractConfigContainer(Identifier id, String titleNameKey) {
+        this(id, titleNameKey, 0);
+    }
+
+    public AbstractConfigContainer(Identifier id, String titleNameKey, int version) {
         this.id = id;
         this.titleNameKey = titleNameKey;
+        this.version = new IntegerEntry("version", version);
     }
 
     @Override
@@ -51,17 +61,15 @@ public abstract class AbstractConfigContainer implements IConfigHandler {
     }
 
     public void deserialize(String data) {
-        JsonElement jsonElement = JsonParser.parseString(data);
-        if (jsonElement instanceof JsonObject obj) {
-            if (!this.shouldLoad(obj)) return;
-            this.deserializeWithoutCheck(data);
-        }
+        JsonElement element = JsonParser.parseString(data);
+        if (!this.shouldLoad(element)) return;
+        this.deserializeJson(element);
     }
 
     @ApiStatus.Internal
-    public final void deserializeWithoutCheck(String data) {
+    public final void deserializeJson(JsonElement element) {
         if (this.cache == null) this.cache = this.buildCodec();
-        this.cache.parse(JsonOps.INSTANCE, JsonParser.parseString(data));
+        this.cache.parse(JsonOps.INSTANCE, element);
     }
 
     protected Codec<List<ConfigGroup>> buildCodec() {
@@ -93,14 +101,14 @@ public abstract class AbstractConfigContainer implements IConfigHandler {
     }
 
     //Can be used to check version, etc
-    protected boolean shouldLoad(JsonObject obj) {
+    protected boolean shouldLoad(JsonElement element) {
         return true;
     }
 
-    protected void readCustomData(JsonObject obj) {
+    protected void readCustomData(JsonElement element) {
     }
 
-    protected void writeCustomData(JsonObject obj) {
+    protected void writeCustomData(JsonElement element) {
     }
 
     protected boolean shouldCompressKey() {

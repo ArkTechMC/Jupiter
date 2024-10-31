@@ -18,7 +18,7 @@ public class StringEntry extends BaseEntry<String> implements ITextFieldConfig {
 
     @Override
     public IConfigEntry<String> newInstance() {
-        return new StringEntry(this.nameKey, this.defaultValue).comment(this.commentKey).json(this.jsonKey);
+        return new StringEntry(this.nameKey, this.defaultValue).visible(this.visible).json(this.jsonKey);
     }
 
     @Override

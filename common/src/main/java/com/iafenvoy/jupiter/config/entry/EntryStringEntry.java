@@ -28,7 +28,7 @@ public class EntryStringEntry extends EntryBaseEntry<String> {
 
     @Override
     public IConfigEntry<Map.Entry<String, String>> newInstance() {
-        return new EntryStringEntry(this.nameKey, this.defaultValue).comment(this.commentKey).json(this.jsonKey);
+        return new EntryStringEntry(this.nameKey, this.defaultValue).visible(this.visible).json(this.jsonKey);
     }
 
     @Override

@@ -17,7 +17,7 @@ public class BooleanEntry extends BaseEntry<Boolean> {
 
     @Override
     public IConfigEntry<Boolean> newInstance() {
-        return new BooleanEntry(this.nameKey, this.defaultValue).comment(this.commentKey).json(this.jsonKey);
+        return new BooleanEntry(this.nameKey, this.defaultValue).visible(this.visible).json(this.jsonKey);
     }
 
     @Override

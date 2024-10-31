@@ -3,19 +3,17 @@ package com.iafenvoy.jupiter.render.screen.scrollbar;
 import com.iafenvoy.jupiter.util.RenderUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.math.MathHelper;
 
 @Environment(EnvType.CLIENT)
 public class VerticalScrollBar {
-    protected final MinecraftClient mc = MinecraftClient.getInstance();
     protected boolean mouseOver = false;
     protected boolean dragging = false;
     protected boolean renderScrollbarBackground = true;
     protected int currentValue = 0;
     protected int maxValue = 100;
-    protected int backgroundColor = 0x44FFFFFF;
-    protected int foregroundColor = 0xFFFFFFFF;
+    protected final int backgroundColor = 0x44FFFFFF;
+    protected final int foregroundColor = 0xFFFFFFFF;
     protected int dragStartValue = 0;
     protected int dragStartY = 0;
 
@@ -54,10 +52,8 @@ public class VerticalScrollBar {
     }
 
     public void render(int mouseX, int mouseY, float partialTicks, int xPosition, int yPosition, int width, int height, int totalHeight) {
-        if (this.renderScrollbarBackground) {
+        if (this.renderScrollbarBackground)
             RenderUtils.drawRect(xPosition, yPosition, width, height, this.backgroundColor);
-        }
-
         if (totalHeight > 0) {
             int slideHeight = height - 2;
             float relative = Math.min(1.0F, (float) slideHeight / (float) totalHeight);

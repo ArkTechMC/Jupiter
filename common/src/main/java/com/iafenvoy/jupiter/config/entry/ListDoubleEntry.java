@@ -14,7 +14,7 @@ public class ListDoubleEntry extends ListBaseEntry<Double> {
 
     @Override
     public Codec<Double> getValueCodec() {
-        return Codec.INT;
+        return Codec.DOUBLE;
     }
 
     @Override

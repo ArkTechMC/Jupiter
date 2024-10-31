@@ -1,6 +1,5 @@
 package com.iafenvoy.jupiter.fabric.compat;
 
-import com.iafenvoy.jupiter.render.screen.AbstractConfigScreen;
 import com.iafenvoy.jupiter.render.screen.ConfigSelectScreen;
 import com.iafenvoy.jupiter.test.TestConfig;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;

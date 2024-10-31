@@ -9,9 +9,6 @@ public final class Jupiter {
     public static final String MOD_ID = "jupiter";
     public static final Logger LOGGER = LogUtils.getLogger();
 
-    public static void init() {
-    }
-
     public static void process() {
         ServerConfigNetwork.init();
     }

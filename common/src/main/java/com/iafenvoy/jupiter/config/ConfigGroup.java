@@ -5,7 +5,6 @@ import com.iafenvoy.jupiter.interfaces.IConfigEntry;
 import com.mojang.serialization.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
 public class ConfigGroup {
@@ -42,12 +41,9 @@ public class ConfigGroup {
         return this.configs;
     }
 
-    private ConfigGroup newWithMap(Map<String, ? extends IConfigEntry<?>> map) {
-        return new ConfigGroup(this.id, this.translateKey, (List<IConfigEntry<?>>) map.values().stream().toList());
-    }
-
+    @SuppressWarnings("unchecked")
     public ConfigGroup copy() {
-        return new ConfigGroup(this.id, this.translateKey, (List<IConfigEntry<?>>) (Object) this.configs.stream().map(x -> x.newInstance()).toList());
+        return new ConfigGroup(this.id, this.translateKey, (List<IConfigEntry<?>>) (Object) this.configs.stream().map(IConfigEntry::newInstance).toList());
     }
 
     public Codec<ConfigGroup> getCodec() {

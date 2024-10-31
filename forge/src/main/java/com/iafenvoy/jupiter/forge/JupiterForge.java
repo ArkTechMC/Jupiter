@@ -27,7 +27,6 @@ public final class JupiterForge {
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(new Identifier(Jupiter.MOD_ID, "buf"), () -> "1", s -> true, s -> true);
 
     public JupiterForge() {
-        Jupiter.init();
     }
 
     @SubscribeEvent

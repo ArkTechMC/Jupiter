@@ -6,7 +6,7 @@ public class ListConfigType<T> extends ConfigType<List<T>> {
     private final ConfigType<T> singleType;
 
     public ListConfigType(ConfigType<T> singleType) {
-        super(EntryType.LIST);
+        super(Type.LIST);
         this.singleType = singleType;
     }
 

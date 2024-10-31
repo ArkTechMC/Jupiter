@@ -6,7 +6,7 @@ public class MapConfigType<T> extends ConfigType<Map<String, T>> {
     private final ConfigType<T> singleType;
 
     public MapConfigType(ConfigType<T> singleType) {
-        super(EntryType.MAP);
+        super(Type.MAP);
         this.singleType = singleType;
     }
 

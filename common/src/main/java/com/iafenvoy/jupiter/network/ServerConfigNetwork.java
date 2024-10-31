@@ -1,9 +1,9 @@
 package com.iafenvoy.jupiter.network;
 
-import com.google.gson.JsonParser;
 import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.ServerConfigManager;
 import com.iafenvoy.jupiter.config.container.AbstractConfigContainer;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 
@@ -17,20 +17,20 @@ public class ServerConfigNetwork {
                 b.writeBoolean(true);
                 AbstractConfigContainer data = ServerConfigManager.getConfig(id);
                 assert data != null;
-                b.writeString(data.serialize());
+                b.writeNbt((NbtCompound) data.serializeNbt());
             } else b.writeBoolean(false);
             return () -> ServerNetworkHelper.sendToPlayer(player, NetworkConstants.CONFIG_SYNC_S2C, b);
         });
         ServerNetworkHelper.registerReceiver(NetworkConstants.CONFIG_SYNC_C2S, (server, player, buf) -> {
             Identifier id = buf.readIdentifier();
             Jupiter.LOGGER.info("Player {} request to change config {}", player.getName().getString(), id);
-            String data = buf.readString();
+            NbtCompound data = buf.readNbt();
             return () -> {
                 if (ServerConfigManager.checkPermission(id, server, player)) {
                     AbstractConfigContainer container = ServerConfigManager.getConfig(id);
                     if (container != null) {
-                        Jupiter.LOGGER.debug(data);
-                        container.deserializeJson(JsonParser.parseString(data));
+                        Jupiter.LOGGER.info(data.toString());
+                        container.deserializeNbt(data);
                         container.onConfigsChanged();
                         Jupiter.LOGGER.info("Player {} changed config {}", player.getName().getString(), id);
                     }

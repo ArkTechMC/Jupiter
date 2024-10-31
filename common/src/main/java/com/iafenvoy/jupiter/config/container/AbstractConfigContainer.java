@@ -1,14 +1,14 @@
 package com.iafenvoy.jupiter.config.container;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.config.ConfigGroup;
 import com.iafenvoy.jupiter.config.entry.IntegerEntry;
 import com.iafenvoy.jupiter.interfaces.IConfigHandler;
+import com.iafenvoy.jupiter.util.Comment;
 import com.mojang.serialization.*;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -57,19 +57,39 @@ public abstract class AbstractConfigContainer implements IConfigHandler {
 
     public String serialize() {
         if (this.cache == null) this.cache = this.buildCodec();
-        return GSON.toJson(this.cache.encodeStart(JsonOps.INSTANCE, this.configTabs).getOrThrow(false, Jupiter.LOGGER::error));
+        JsonElement element = this.cache.encodeStart(JsonOps.INSTANCE, this.configTabs).getOrThrow(false, Jupiter.LOGGER::error);
+        if (element instanceof JsonObject obj)
+            this.writeCustomData(obj);
+        return GSON.toJson(element);
+    }
+
+    @ApiStatus.Internal
+    @Comment("For Network Usage Only")
+    public NbtElement serializeNbt() {
+        if (this.cache == null) this.cache = this.buildCodec();
+        return this.cache.encodeStart(NbtOps.INSTANCE, this.configTabs).getOrThrow(false, Jupiter.LOGGER::error);
     }
 
     public void deserialize(String data) {
         JsonElement element = JsonParser.parseString(data);
-        if (!this.shouldLoad(element)) return;
-        this.deserializeJson(element);
+        if (element instanceof JsonObject obj) {
+            if (!this.shouldLoad(obj)) return;
+            this.deserializeJson(obj);
+            this.readCustomData(obj);
+        }
     }
 
     @ApiStatus.Internal
     public final void deserializeJson(JsonElement element) {
         if (this.cache == null) this.cache = this.buildCodec();
         this.cache.parse(JsonOps.INSTANCE, element);
+    }
+
+    @ApiStatus.Internal
+    @Comment("For Network Usage Only")
+    public final void deserializeNbt(NbtElement element) {
+        if (this.cache == null) this.cache = this.buildCodec();
+        this.cache.parse(NbtOps.INSTANCE, element);
     }
 
     protected Codec<List<ConfigGroup>> buildCodec() {
@@ -101,20 +121,25 @@ public abstract class AbstractConfigContainer implements IConfigHandler {
     }
 
     //Can be used to check version, etc
-    protected boolean shouldLoad(JsonElement element) {
+    @Comment("Only call on saving to disk, not on network")
+    protected boolean shouldLoad(JsonObject obj) {
         return true;
     }
 
-    protected void readCustomData(JsonElement element) {
+    @Comment("Only call on saving to disk, not on network")
+    protected void readCustomData(JsonObject obj) {
     }
 
-    protected void writeCustomData(JsonElement element) {
+    @Comment("Only call on saving to disk, not on network")
+    protected void writeCustomData(JsonObject obj) {
     }
 
+    @Deprecated
     protected boolean shouldCompressKey() {
         return true;
     }
 
+    @Deprecated
     protected SaveFullOption saveFullOption() {
         return SaveFullOption.LOCAL;
     }

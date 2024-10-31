@@ -37,7 +37,14 @@ public class WidgetBuilderManager {
         register(ConfigTypes.STRING, TextFieldWidgetBuilder::new);
         register(ConfigTypes.ENUM, config -> new ButtonWidgetBuilder<>(config, button -> config.setValue(config.getValue().cycle(true)), () -> Text.translatable(config.getValue().getName())));
         register(ConfigTypes.LIST_STRING, config -> new ListWidgetBuilder<>((ListBaseEntry<String>) config));
+        register(ConfigTypes.LIST_INTEGER, config -> new ListWidgetBuilder<>((ListBaseEntry<Integer>) config));
+        register(ConfigTypes.LIST_DOUBLE, config -> new ListWidgetBuilder<>((ListBaseEntry<Double>) config));
         register(ConfigTypes.MAP_STRING, config -> new MapWidgetBuilder<>((MapBaseEntry<String>) config));
+        register(ConfigTypes.MAP_INTEGER, config -> new MapWidgetBuilder<>((MapBaseEntry<Integer>) config));
+        register(ConfigTypes.MAP_DOUBLE, config -> new MapWidgetBuilder<>((MapBaseEntry<Double>) config));
         register(ConfigTypes.ENTRY_STRING, config -> new EntryWidgetBuilder<>((EntryBaseEntry<String>) config));
+        register(ConfigTypes.ENTRY_INTEGER, config -> new EntryWidgetBuilder<>((EntryBaseEntry<Integer>) config));
+        register(ConfigTypes.ENTRY_DOUBLE, config -> new EntryWidgetBuilder<>((EntryBaseEntry<Double>) config));
+        register(ConfigTypes.IDENTIFIER, TextFieldWidgetBuilder::new);
     }
 }

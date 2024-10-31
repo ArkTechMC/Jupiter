@@ -1,17 +1,17 @@
 package com.iafenvoy.jupiter.config.type;
 
 public class ConfigType<T> {
-    private final EntryType type;
+    private final Type type;
 
-    public ConfigType(EntryType type) {
+    public ConfigType(Type type) {
         this.type = type;
     }
 
-    public EntryType getType() {
+    public Type getType() {
         return type;
     }
 
-    public enum EntryType {
+    public enum Type {
         SINGLE, LIST, MAP, DUMMY
     }
 }

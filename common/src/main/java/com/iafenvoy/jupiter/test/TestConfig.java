@@ -26,6 +26,7 @@ public class TestConfig extends FileConfigContainer {
                 .add(new StringEntry("this is string", ""))
                 .add(new ListStringEntry("this is string list", List.of("1", "2", "3", "4", "5")))
                 .add(new MapStringEntry("this is string map", Map.of("1", "1", "2", "2")))
+                .add(new SeparatorEntry())
                 .add(new IntegerEntry("this is int", 0))
                 .add(new IntegerEntry("this is int", 0))
                 .add(new IntegerEntry("this is int", 0))

@@ -31,6 +31,7 @@ public class WidgetBuilderManager {
     }
 
     static {
+        register(ConfigTypes.SEPARATOR,SeparatorWidgetBuilder::new);
         register(ConfigTypes.BOOLEAN, config -> new ButtonWidgetBuilder<>(config, button -> config.setValue(!config.getValue()), () -> Text.of(config.getValue() ? "§atrue" : "§cfalse")));
         register(ConfigTypes.INTEGER, TextFieldWidgetBuilder::new);
         register(ConfigTypes.DOUBLE, TextFieldWidgetBuilder::new);

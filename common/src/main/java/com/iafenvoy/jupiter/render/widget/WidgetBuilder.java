@@ -18,8 +18,8 @@ import java.util.function.Supplier;
 public abstract class WidgetBuilder<T> {
     protected static final Supplier<MinecraftClient> CLIENT = MinecraftClient::getInstance;
     protected final IConfigEntry<T> config;
-    private TextWidget textWidget;
-    private ButtonWidget resetButton;
+    protected TextWidget textWidget;
+    protected ButtonWidget resetButton;
     protected boolean canSave = true;
 
     protected WidgetBuilder(IConfigEntry<T> config) {

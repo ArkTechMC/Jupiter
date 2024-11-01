@@ -50,7 +50,7 @@ public abstract class AbstractConfigScreen extends Screen implements IJupiterScr
         List<ConfigGroup> configTabs = this.configContainer.getConfigTabs();
         for (int i = 0; i < configTabs.size(); i++) {
             ConfigGroup category = configTabs.get(i);
-            TabButton tabButton = this.addDrawableChild(new TabButton(category, x, y, this.textRenderer.getWidth(I18n.translate(category.getTranslateKey())) + 5, 20, button -> {
+            TabButton tabButton = this.addDrawableChild(new TabButton(category, x, y, this.textRenderer.getWidth(I18n.translate(category.getTranslateKey())) + 10, 20, button -> {
                 currentTab = this.configContainer.getConfigTabs().indexOf(button.group);
                 this.currentGroup = button.group;
                 this.clearAndInit();

@@ -40,7 +40,7 @@ public abstract class WidgetBuilder<T> {
     }
 
     public void addElements(Consumer<ClickableWidget> appender, int x, int y, int width, int height) {
-        String name = I18n.translate(this.config.getNameKey());
+        String name =this.config.getPrettyName();
         TextRenderer textRenderer = CLIENT.get().textRenderer;
         this.textWidget = new TextWidget(20, y, textRenderer.getWidth(name), height, Text.of(name), textRenderer);
         appender.accept(this.textWidget);

@@ -12,6 +12,7 @@
   "jupiter.screen.error_server": "从服务端收到错误的配置数据",
   "jupiter.screen.open_client": "打开客户端配置",
   "jupiter.screen.open_server": "打开服务端配置",
+  "jupiter.screen.restart_required": "（重启后生效）",
   "jupiter.screen.server_config": "服务端配置",
   "jupiter.test_config": "测试用配置文件",
   "jupiter.toast.upload_config_error_content": "无权限修改",

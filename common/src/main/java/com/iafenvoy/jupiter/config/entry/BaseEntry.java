@@ -1,6 +1,7 @@
 package com.iafenvoy.jupiter.config.entry;
 
 import com.iafenvoy.jupiter.interfaces.IConfigEntry;
+import net.minecraft.client.resource.language.I18n;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ public abstract class BaseEntry<T> implements IConfigEntry<T> {
     protected boolean visible;
     protected final T defaultValue;
     protected T value;
+    protected boolean restartRequired;
     private final List<Consumer<T>> callbacks = new ArrayList<>();
 
     public BaseEntry(String nameKey, T defaultValue) {
@@ -32,6 +34,11 @@ public abstract class BaseEntry<T> implements IConfigEntry<T> {
 
     public BaseEntry<T> callback(Consumer<T> callback) {
         this.callbacks.add(callback);
+        return this;
+    }
+
+    public BaseEntry<T> restartRequired() {
+        this.restartRequired = true;
         return this;
     }
 
@@ -73,5 +80,14 @@ public abstract class BaseEntry<T> implements IConfigEntry<T> {
 
     protected T copyDefaultData() {
         return this.defaultValue;
+    }
+
+    @Override
+    public String getPrettyName() {
+        StringBuilder sb = new StringBuilder(IConfigEntry.super.getPrettyName());
+        sb.append(" ");
+        if (this.restartRequired)
+            sb.append(I18n.translate("jupiter.screen.restart_required"));
+        return sb.toString();
     }
 }

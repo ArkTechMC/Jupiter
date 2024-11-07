@@ -5,6 +5,7 @@ import com.iafenvoy.jupiter.config.type.ConfigType;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;
+import net.minecraft.client.resource.language.I18n;
 
 import java.util.function.Consumer;
 
@@ -19,8 +20,8 @@ public interface IConfigEntry<T> {
 
     IConfigEntry<T> newInstance();
 
-    default void copyFrom(IConfigEntry<T> another) {
-        this.setValue(another.getValue());
+    default String getPrettyName() {
+        return I18n.translate(this.getNameKey());
     }
 
     void registerCallback(Consumer<T> callback);

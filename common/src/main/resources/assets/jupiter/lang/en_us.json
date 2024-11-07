@@ -12,6 +12,7 @@
   "jupiter.screen.error_server": "Receive invalid server config data",
   "jupiter.screen.open_client": "Open client config",
   "jupiter.screen.open_server": "Open server config",
+  "jupiter.screen.restart_required": "(Require Restart)",
   "jupiter.screen.server_config": "Server Config",
   "jupiter.test_config": "Test Config",
   "jupiter.toast.upload_config_error_content": "Permission denied",

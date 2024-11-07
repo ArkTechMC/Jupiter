@@ -27,15 +27,13 @@ public class TestConfig extends FileConfigContainer {
                 .add(new ListStringEntry("this is string list", List.of("1", "2", "3", "4", "5")))
                 .add(new MapStringEntry("this is string map", Map.of("1", "1", "2", "2")))
                 .add(new SeparatorEntry())
-                .add(new IntegerEntry("this is int", 0))
+                .add(new IntegerEntry("this is int", 0).restartRequired())
                 .add(new IntegerEntry("this is int", 0))
                 .add(new IntegerEntry("this is int", 0))
                 .add(new IntegerEntry("this is int", 0))
                 .add(new IntegerEntry("this is int", 0))
                 .add(new IntegerEntry("this is int", 0));
-//                .add(new ListStringEntry("this is string list", ImmutableList.of()));
         this.createTab("tab2", "jupiter.tab2");
-//                .add(new ConfigOptionList("this is an option list", OptionsExample.FIRST));
         this.createTab("tab3", "jupiter.tab3");
         this.createTab("tab4", "jupiter.tab4");
         this.createTab("tab5", "jupiter.tab5");

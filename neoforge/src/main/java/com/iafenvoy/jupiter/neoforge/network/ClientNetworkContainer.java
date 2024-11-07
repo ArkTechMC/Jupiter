@@ -1,11 +1,11 @@
-package com.iafenvoy.jupiter.forge.network;
+package com.iafenvoy.jupiter.neoforge.network;
 
-import com.iafenvoy.jupiter.forge.JupiterForge;
 import com.iafenvoy.jupiter.network.ClientNetworkHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
-import net.minecraftforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,15 +17,15 @@ public class ClientNetworkContainer {
         HANDLERS.put(id, handler);
     }
 
-    public static boolean onReceive(Identifier id, PacketByteBuf buf, NetworkEvent.Context context) {
+    public static boolean onReceive(Identifier id, PacketByteBuf buf, PlayPayloadContext context) {
         ClientNetworkHelper.Handler handler = HANDLERS.get(id);
         if (handler == null) return false;
         Runnable runnable = handler.handle(MinecraftClient.getInstance(), buf);
-        if (runnable != null) context.enqueueWork(runnable);
+        if (runnable != null) MinecraftClient.getInstance().execute(runnable);
         return true;
     }
 
     public static void sendToServer(Identifier id, PacketByteBuf buf) {
-        JupiterForge.CHANNEL.sendToServer(new PacketByteBufC2S(id, buf));
+        PacketDistributor.SERVER.noArg().send(new PacketByteBufC2S(id, buf));
     }
 }

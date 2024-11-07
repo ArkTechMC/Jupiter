@@ -13,12 +13,12 @@ public class TextFieldWithErrorWidget extends TextFieldWidget {
     }
 
     @Override
-    public void renderButton(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
         if (this.hasError) {
             this.setUneditableColor(0xFFFF0000);
             this.setEditable(false);
         }
-        super.renderButton(context, mouseX, mouseY, delta);
+        super.renderWidget(context, mouseX, mouseY, delta);
         this.setEditable(true);
     }
 

@@ -107,14 +107,14 @@ public abstract class AbstractConfigScreen extends Screen implements IJupiterScr
     }
 
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
-        if (super.mouseScrolled(mouseX, mouseY, amount)) return true;
+    public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
+        if (super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount)) return true;
         if (mouseX >= 10 && mouseX <= this.width - 20 && mouseY >= 22 && mouseY <= 42) {
-            this.groupScrollBar.setValue(this.groupScrollBar.getValue() + (amount > 0 ? -20 : 20));
+            this.groupScrollBar.setValue(this.groupScrollBar.getValue() + (horizontalAmount > 0 ? -20 : 20));
             this.updateTabPos();
             return true;
         } else if (mouseY > 42) {
-            this.itemScrollBar.setValue(this.itemScrollBar.getValue() + (amount > 0 ? -1 : 1) * ITEM_PER_SCROLL);
+            this.itemScrollBar.setValue(this.itemScrollBar.getValue() + (verticalAmount > 0 ? -1 : 1) * ITEM_PER_SCROLL);
             this.updateItemPos();
             return true;
         }
@@ -130,7 +130,7 @@ public abstract class AbstractConfigScreen extends Screen implements IJupiterScr
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(context);
+        this.renderBackground(context, mouseX, mouseY, partialTicks);
         super.render(context, mouseX, mouseY, partialTicks);
         context.drawText(this.textRenderer, this.title, 35, 10, -1, true);
         String currentText = this.getCurrentEditText();

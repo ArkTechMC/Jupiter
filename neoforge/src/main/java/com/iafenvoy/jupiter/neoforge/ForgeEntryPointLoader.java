@@ -1,11 +1,11 @@
-package com.iafenvoy.jupiter.forge;
+package com.iafenvoy.jupiter.neoforge;
 
 import com.iafenvoy.jupiter.EntryPointLoader;
 import com.iafenvoy.jupiter.api.JupiterConfig;
 import com.iafenvoy.jupiter.api.JupiterConfigEntry;
 import com.iafenvoy.jupiter.util.ReflectUtil;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.forgespi.language.ModFileScanData;
+import net.neoforged.fml.ModList;
+import net.neoforged.neoforgespi.language.ModFileScanData;
 import org.objectweb.asm.Type;
 
 import java.util.ArrayList;

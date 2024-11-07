@@ -8,11 +8,11 @@
     "IAFEnvoy"
   ],
   "contact": {
-    "sources": "https://github.com/ArkTechMC/Jupiter",
-    "issues": "https://github.com/ArkTechMC/Jupiter/issues"
+    "sources": "https://github.com/IAFEnvoy/Jupiter",
+    "issues": "https://github.com/IAFEnvoy/Jupiter/issues"
   },
   "license": "LGPL-3.0",
-  "icon": "logo.jpg",
+  "icon": "logo.png",
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -29,8 +29,8 @@
     ]
   },
   "depends": {
-    "fabricloader": ">=0.15.11",
-    "minecraft": "~1.20.1",
+    "fabricloader": "*",
+    "minecraft": "~1.20.4",
     "java": ">=17",
     "fabric-api": "*"
   }

@@ -1,40 +1,42 @@
-package com.iafenvoy.jupiter.forge;
+package com.iafenvoy.jupiter.neoforge;
 
+import com.iafenvoy.jupiter.ConfigManager;
 import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.ServerConfigManager;
-import com.iafenvoy.jupiter.forge.network.PacketByteBufC2S;
-import com.iafenvoy.jupiter.forge.network.PacketByteBufS2C;
-import com.iafenvoy.jupiter.ConfigManager;
+import com.iafenvoy.jupiter.neoforge.network.PacketByteBufC2S;
+import com.iafenvoy.jupiter.neoforge.network.PacketByteBufS2C;
 import com.iafenvoy.jupiter.render.screen.ConfigSelectScreen;
 import com.iafenvoy.jupiter.test.TestConfig;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.ConfigScreenHandler;
-import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
-import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.ConfigScreenHandler;
+import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
+import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
 
 @Mod(Jupiter.MOD_ID)
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-public final class JupiterForge {
-    public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(new Identifier(Jupiter.MOD_ID, "buf"), () -> "1", s -> true, s -> true);
-
-    public JupiterForge() {
+public final class JupiterNeoForge {
+    public JupiterNeoForge() {
     }
 
     @SubscribeEvent
     public static void process(FMLCommonSetupEvent event) {
         Jupiter.process();
-        CHANNEL.registerMessage(0, PacketByteBufC2S.class, PacketByteBufC2S::encode, PacketByteBufC2S::decode, PacketByteBufC2S::handle);
-        CHANNEL.registerMessage(1, PacketByteBufS2C.class, PacketByteBufS2C::encode, PacketByteBufS2C::decode, PacketByteBufS2C::handle);
         ForgeEntryPointLoader.INSTANCE.getEntries().forEach(x -> x.initializeCommonConfig(ConfigManager.getInstance()));
+    }
+
+    @SubscribeEvent
+    public static void register(RegisterPayloadHandlerEvent event) {
+        final IPayloadRegistrar registrar = event.registrar(Jupiter.MOD_ID).versioned("1");
+        registrar.play(PacketByteBufC2S.ID, PacketByteBufC2S::decode, handler -> handler.server(PacketByteBufC2S::handle));
+        registrar.play(PacketByteBufS2C.ID, PacketByteBufS2C::decode, handler -> handler.server(PacketByteBufS2C::handle));
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

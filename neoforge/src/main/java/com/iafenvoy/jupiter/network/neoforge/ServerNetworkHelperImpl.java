@@ -1,6 +1,6 @@
-package com.iafenvoy.jupiter.network.forge;
+package com.iafenvoy.jupiter.network.neoforge;
 
-import com.iafenvoy.jupiter.forge.network.ServerNetworkContainer;
+import com.iafenvoy.jupiter.neoforge.network.ServerNetworkContainer;
 import com.iafenvoy.jupiter.network.ServerNetworkHelper;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;

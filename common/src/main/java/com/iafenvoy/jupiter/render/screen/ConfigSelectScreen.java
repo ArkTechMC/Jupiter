@@ -85,7 +85,7 @@ public class ConfigSelectScreen<S extends FileConfigContainer, C extends FileCon
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        this.renderBackground(context);
+        this.renderBackground(context, mouseX, mouseY, delta);
         assert this.client != null;
         context.drawCenteredTextWithShadow(this.client.textRenderer, this.title, this.width / 2, this.height / 2 - 50, -1);
         super.render(context, mouseX, mouseY, delta);

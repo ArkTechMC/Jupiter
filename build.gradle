@@ -31,6 +31,7 @@ subprojects {
         // for more information about repositories.
         maven { url "https://maven.shedaniel.me/" }
         maven { url "https://maven.terraformersmc.com/releases/" }
+        maven { url "https://maven.neoforged.net/releases/" }
     }
 
     dependencies {
@@ -61,10 +62,10 @@ tasks.register('copyJars', Copy) {
             "${rootProject.archives_name}-${rootProject.mod_version}-fabric.jar"
         }
     }
-    from('forge/build/libs') {
-        include "${rootProject.archives_name}-forge-${rootProject.mod_version}.jar"
+    from('neoforge/build/libs') {
+        include "${rootProject.archives_name}-neoforge-${rootProject.mod_version}.jar"
         rename { String fileName ->
-            "${rootProject.archives_name}-${rootProject.mod_version}-forge.jar"
+            "${rootProject.archives_name}-${rootProject.mod_version}-neoforge.jar"
         }
     }
     into 'build/libs'

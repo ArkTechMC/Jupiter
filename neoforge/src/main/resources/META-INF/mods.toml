@@ -1,6 +1,6 @@
 modLoader = "javafml"
-loaderVersion = "[47,)"
-issueTrackerURL = "https://github.com/ArkTechMC/Jupiter/issues"
+loaderVersion = "[2,)"
+issueTrackerURL = "https://github.com/IAFEnvoy/Jupiter/issues"
 license = "GNU LGPL 3.0"
 
 [[mods]]
@@ -11,18 +11,18 @@ authors = "IAFEnvoy"
 description = '''
 A powerful, auto sync config library.
 '''
-logoFile = "logo.jpg"
+logoFile = "logo.png"
 
 [[dependencies.jupiter]]
-modId = "forge"
-mandatory = true
-versionRange = "[47,)"
+modId = "neoforge"
+type = "required"
+versionRange = "[0,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.jupiter]]
 modId = "minecraft"
-mandatory = true
-versionRange = "[1.20.1,)"
+type = "required"
+versionRange = "[1.20.4,)"
 ordering = "NONE"
 side = "BOTH"

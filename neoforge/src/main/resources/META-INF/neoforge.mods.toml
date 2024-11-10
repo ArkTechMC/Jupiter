@@ -16,13 +16,13 @@ logoFile = "logo.png"
 [[dependencies.jupiter]]
 modId = "neoforge"
 type = "required"
-versionRange = "[20.6,)"
+versionRange = "[21.0,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.jupiter]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.20.6,)"
+versionRange = "[1.21,)"
 ordering = "NONE"
 side = "BOTH"

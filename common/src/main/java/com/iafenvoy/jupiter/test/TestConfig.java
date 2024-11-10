@@ -14,7 +14,7 @@ public class TestConfig extends FileConfigContainer {
     public static final TestConfig INSTANCE = new TestConfig();
 
     public TestConfig() {
-        super(new Identifier(Jupiter.MOD_ID, "test"), "jupiter.test", "./config/jupiter.json");
+        super(Identifier.of(Jupiter.MOD_ID, "test"), "jupiter.test", "./config/jupiter.json");
     }
 
     @Override

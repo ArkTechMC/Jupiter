@@ -8,7 +8,7 @@ import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.Identifier;
 
 public record ConfigSyncPayload(Identifier id, boolean allow, NbtCompound compound) implements CustomPayload {
-    public static final Id<ConfigSyncPayload> ID = new Id<>(new Identifier(Jupiter.MOD_ID, "config_sync"));
+    public static final Id<ConfigSyncPayload> ID = new Id<>(Identifier.of(Jupiter.MOD_ID, "config_sync"));
     public static final PacketCodec<PacketByteBuf, ConfigSyncPayload> CODEC = PacketCodec.of((value, buf) -> {
         buf.writeIdentifier(value.id);
         buf.writeBoolean(value.allow);

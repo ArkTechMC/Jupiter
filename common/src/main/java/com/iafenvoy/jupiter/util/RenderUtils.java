@@ -23,18 +23,16 @@ public class RenderUtils {
         RenderSystem.setShader(GameRenderer::getPositionColorProgram);
         RenderSystem.applyModelViewMatrix();
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder buffer = tessellator.getBuffer();
 
         setupBlend();
 
-        buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
+        BufferBuilder buffer =  tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
 
-        buffer.vertex(x, y, zLevel).color(r, g, b, a).next();
-        buffer.vertex(x, y + height, zLevel).color(r, g, b, a).next();
-        buffer.vertex(x + width, y + height, zLevel).color(r, g, b, a).next();
-        buffer.vertex(x + width, y, zLevel).color(r, g, b, a).next();
-
-        tessellator.draw();
+        buffer.vertex(x, y, zLevel).color(r, g, b, a);
+        buffer.vertex(x, y + height, zLevel).color(r, g, b, a);
+        buffer.vertex(x + width, y + height, zLevel).color(r, g, b, a);
+        buffer.vertex(x + width, y, zLevel).color(r, g, b, a);
+        BufferRenderer.drawWithGlobalProgram(buffer.end());
 
         RenderSystem.disableBlend();
     }

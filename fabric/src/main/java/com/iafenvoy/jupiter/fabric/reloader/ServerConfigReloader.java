@@ -8,6 +8,6 @@ import net.minecraft.util.Identifier;
 public class ServerConfigReloader extends ServerConfigManager implements IdentifiableResourceReloadListener {
     @Override
     public Identifier getFabricId() {
-        return new Identifier(Jupiter.MOD_ID, "server_config_reload");
+        return Identifier.of(Jupiter.MOD_ID, "server_config_reload");
     }
 }

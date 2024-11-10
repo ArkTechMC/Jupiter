@@ -7,7 +7,7 @@ import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.Identifier;
 
 public record ConfigErrorPayload() implements CustomPayload {
-    public static final Id<ConfigErrorPayload> ID = new Id<>(new Identifier(Jupiter.MOD_ID, "config_error"));
+    public static final Id<ConfigErrorPayload> ID = new Id<>(Identifier.of(Jupiter.MOD_ID, "config_error"));
     public static final PacketCodec<PacketByteBuf, ConfigErrorPayload> CODEC = PacketCodec.unit(new ConfigErrorPayload());
 
     @Override

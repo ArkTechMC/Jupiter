@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier;
 public class TestConfigEntry implements JupiterConfigEntry {
     @Override
     public Identifier getId() {
-        return new Identifier(Jupiter.MOD_ID, "jupiter");
+        return Identifier.of(Jupiter.MOD_ID, "jupiter");
     }
 
     @Override

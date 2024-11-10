@@ -1,6 +1,6 @@
 package com.iafenvoy.jupiter.config;
 
-import com.iafenvoy.jupiter.Jupiter;
+import com.google.gson.JsonParseException;
 import com.iafenvoy.jupiter.interfaces.IConfigEntry;
 import com.mojang.serialization.*;
 
@@ -66,7 +66,7 @@ public class ConfigGroup {
             @Override
             public <T> DataResult<ConfigGroup> decode(DynamicOps<T> ops, MapLike<T> input) {
                 input.entries().forEach(x -> {
-                    String s = ops.getStringValue(x.getFirst()).getOrThrow(false, Jupiter.LOGGER::error);
+                    String s = ops.getStringValue(x.getFirst()).getOrThrow(JsonParseException::new);
                     ConfigGroup.this.configs.stream().filter(y -> y.getJsonKey().equals(s)).findFirst().ifPresent(y -> y.decode(ops, x.getSecond()));
                 });
                 return DataResult.success(ConfigGroup.this);
@@ -81,6 +81,6 @@ public class ConfigGroup {
 
     public <R> void decode(DynamicOps<R> ops, R input) {
         if (this.cache == null) this.cache = this.getCodec();
-        this.cache.parse(ops, input).getOrThrow(true, Jupiter.LOGGER::error);
+        this.cache.parse(ops, input).getPartialOrThrow(JsonParseException::new);
     }
 }

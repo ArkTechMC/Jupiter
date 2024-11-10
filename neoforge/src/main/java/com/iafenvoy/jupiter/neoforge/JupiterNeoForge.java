@@ -3,25 +3,32 @@ package com.iafenvoy.jupiter.neoforge;
 import com.iafenvoy.jupiter.ConfigManager;
 import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.ServerConfigManager;
-import com.iafenvoy.jupiter.neoforge.network.PacketByteBufC2S;
-import com.iafenvoy.jupiter.neoforge.network.PacketByteBufS2C;
+import com.iafenvoy.jupiter.network.neoforge.ClientNetworkHelperImpl;
+import com.iafenvoy.jupiter.network.neoforge.ServerNetworkHelperImpl;
 import com.iafenvoy.jupiter.render.screen.ConfigSelectScreen;
 import com.iafenvoy.jupiter.test.TestConfig;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.text.Text;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.client.ConfigScreenHandler;
 import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
-import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.handling.DirectionalPayloadHandler;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
+
+import java.util.Map;
 
 @Mod(Jupiter.MOD_ID)
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
 public final class JupiterNeoForge {
     public JupiterNeoForge() {
     }
@@ -29,23 +36,31 @@ public final class JupiterNeoForge {
     @SubscribeEvent
     public static void process(FMLCommonSetupEvent event) {
         Jupiter.process();
-        ForgeEntryPointLoader.INSTANCE.getEntries().forEach(x -> x.initializeCommonConfig(ConfigManager.getInstance()));
+        NeoForgeEntryPointLoader.INSTANCE.getEntries().forEach(x -> x.initializeCommonConfig(ConfigManager.getInstance()));
     }
 
     @SubscribeEvent
-    public static void register(RegisterPayloadHandlerEvent event) {
-        final IPayloadRegistrar registrar = event.registrar(Jupiter.MOD_ID).versioned("1");
-        registrar.play(PacketByteBufC2S.ID, PacketByteBufC2S::decode, handler -> handler.server(PacketByteBufC2S::handle));
-        registrar.play(PacketByteBufS2C.ID, PacketByteBufS2C::decode, handler -> handler.server(PacketByteBufS2C::handle));
+    public static void register(RegisterPayloadHandlersEvent event) {
+        Jupiter.init();
+        final PayloadRegistrar registrar = event.registrar("1");
+        for (Map.Entry<CustomPayload.Id<CustomPayload>, PacketCodec<PacketByteBuf, CustomPayload>> entry : ServerNetworkHelperImpl.TYPES.entrySet())
+            registrar.playBidirectional(
+                    entry.getKey(),
+                    entry.getValue(),
+                    new DirectionalPayloadHandler<>(
+                            ClientNetworkHelperImpl::handleData,
+                            ServerNetworkHelperImpl::handleData
+                    )
+            );
     }
 
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class JupiterForgeClient {
+    @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    public static class JupiterNeoForgeClient {
         @SubscribeEvent
         public static void processClient(FMLClientSetupEvent event) {
             Jupiter.processClient();
-            ForgeEntryPointLoader.INSTANCE.getEntries().forEach(x -> x.initializeClientConfig(ConfigManager.getInstance()));
-            ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> new ConfigScreenHandler.ConfigScreenFactory((client, screen) -> new ConfigSelectScreen<>(Text.translatable("jupiter.test_config"), screen, TestConfig.INSTANCE, null)));
+            NeoForgeEntryPointLoader.INSTANCE.getEntries().forEach(x -> x.initializeClientConfig(ConfigManager.getInstance()));
+            ModLoadingContext.get().registerExtensionPoint(IConfigScreenFactory.class, () -> (client, screen) -> new ConfigSelectScreen<>(Text.translatable("jupiter.test_config"), screen, TestConfig.INSTANCE, null));
         }
 
         @SubscribeEvent
@@ -54,8 +69,8 @@ public final class JupiterNeoForge {
         }
     }
 
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
-    public static class ForgeEvents {
+    @EventBusSubscriber(bus = EventBusSubscriber.Bus.GAME)
+    public static class NeoForgeEvents {
         @SubscribeEvent
         public static void registerServerListener(AddReloadListenerEvent event) {
             event.addListener(new ServerConfigManager());

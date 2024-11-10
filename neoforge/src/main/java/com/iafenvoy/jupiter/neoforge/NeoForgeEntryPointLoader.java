@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ForgeEntryPointLoader extends EntryPointLoader {
-    public static final ForgeEntryPointLoader INSTANCE = new ForgeEntryPointLoader();
+public class NeoForgeEntryPointLoader extends EntryPointLoader {
+    public static final NeoForgeEntryPointLoader INSTANCE = new NeoForgeEntryPointLoader();
 
     private static <T> List<T> combine(List<T> l1, List<T> l2) {
         l1.addAll(l2);
@@ -36,6 +36,6 @@ public class ForgeEntryPointLoader extends EntryPointLoader {
                         .filter(x -> x instanceof JupiterConfigEntry)
                         .map(x -> (JupiterConfigEntry) x)
                         .toList())
-                .reduce(new ArrayList<>(), ForgeEntryPointLoader::combine);
+                .reduce(new ArrayList<>(), NeoForgeEntryPointLoader::combine);
     }
 }

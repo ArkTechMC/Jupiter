@@ -1,7 +1,6 @@
 package com.iafenvoy.jupiter.config.container;
 
 import com.google.gson.*;
-import com.iafenvoy.jupiter.Jupiter;
 import com.iafenvoy.jupiter.config.ConfigGroup;
 import com.iafenvoy.jupiter.config.entry.IntegerEntry;
 import com.iafenvoy.jupiter.interfaces.IConfigHandler;
@@ -57,7 +56,7 @@ public abstract class AbstractConfigContainer implements IConfigHandler {
 
     public String serialize() {
         if (this.cache == null) this.cache = this.buildCodec();
-        JsonElement element = this.cache.encodeStart(JsonOps.INSTANCE, this.configTabs).getOrThrow(false, Jupiter.LOGGER::error);
+        JsonElement element = this.cache.encodeStart(JsonOps.INSTANCE, this.configTabs).getOrThrow(JsonParseException::new);
         if (element instanceof JsonObject obj)
             this.writeCustomData(obj);
         return GSON.toJson(element);
@@ -67,7 +66,7 @@ public abstract class AbstractConfigContainer implements IConfigHandler {
     @Comment("For Network Usage Only")
     public NbtElement serializeNbt() {
         if (this.cache == null) this.cache = this.buildCodec();
-        return this.cache.encodeStart(NbtOps.INSTANCE, this.configTabs).getOrThrow(false, Jupiter.LOGGER::error);
+        return this.cache.encodeStart(NbtOps.INSTANCE, this.configTabs).getOrThrow(JsonParseException::new);
     }
 
     public void deserialize(String data) {
@@ -112,7 +111,7 @@ public abstract class AbstractConfigContainer implements IConfigHandler {
             @Override
             public <T> DataResult<List<ConfigGroup>> decode(DynamicOps<T> ops, MapLike<T> input) {
                 input.entries().forEach(x -> {
-                    String s = ops.getStringValue(x.getFirst()).getOrThrow(false, Jupiter.LOGGER::error);
+                    String s = ops.getStringValue(x.getFirst()).getOrThrow(JsonParseException::new);
                     AbstractConfigContainer.this.configTabs.stream().filter(y -> y.getId().equals(s)).findFirst().ifPresent(y -> y.decode(ops, x.getSecond()));
                 });
                 return DataResult.success(AbstractConfigContainer.this.configTabs);

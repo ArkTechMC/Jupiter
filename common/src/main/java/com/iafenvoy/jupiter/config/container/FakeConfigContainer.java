@@ -1,11 +1,9 @@
 package com.iafenvoy.jupiter.config.container;
 
 import com.iafenvoy.jupiter.config.ConfigGroup;
-import com.iafenvoy.jupiter.network.ByteBufUtil;
 import com.iafenvoy.jupiter.network.ClientNetworkHelper;
-import com.iafenvoy.jupiter.network.NetworkConstants;
+import com.iafenvoy.jupiter.network.payload.ConfigSyncPayload;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.PacketByteBuf;
 
 public class FakeConfigContainer extends AbstractConfigContainer {
     public FakeConfigContainer(AbstractConfigContainer parent) {
@@ -23,8 +21,6 @@ public class FakeConfigContainer extends AbstractConfigContainer {
 
     @Override
     public void save() {
-        PacketByteBuf buf = ByteBufUtil.create().writeIdentifier(this.getConfigId());
-        buf.writeNbt((NbtCompound) this.serializeNbt());
-        ClientNetworkHelper.sendToServer(NetworkConstants.CONFIG_SYNC_C2S, buf);
+        ClientNetworkHelper.sendToServer(new ConfigSyncPayload(this.getConfigId(), (NbtCompound) this.serializeNbt()));
     }
 }

@@ -32,7 +32,7 @@ dependencies {
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
 
-    modApi "com.terraformersmc:modmenu:9.2.0-beta.2"
+    modApi "com.terraformersmc:modmenu:10.0.0-beta.1"
 }
 
 processResources {

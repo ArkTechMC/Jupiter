@@ -1,6 +1,6 @@
 package com.iafenvoy.jupiter.interfaces;
 
-import com.iafenvoy.jupiter.Jupiter;
+import com.google.gson.JsonParseException;
 import com.iafenvoy.jupiter.config.type.ConfigType;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
@@ -39,7 +39,7 @@ public interface IConfigEntry<T> {
     }
 
     default <R> void decode(DynamicOps<R> ops, R input) {
-        this.setValue(this.getCodec().parse(ops, input).getOrThrow(true, Jupiter.LOGGER::error));
+        this.setValue(this.getCodec().parse(ops, input).getPartialOrThrow(JsonParseException::new));
     }
 
     void reset();

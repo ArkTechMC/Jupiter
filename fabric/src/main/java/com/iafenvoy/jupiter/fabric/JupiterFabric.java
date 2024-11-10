@@ -11,6 +11,7 @@ import net.minecraft.resource.ResourceType;
 public final class JupiterFabric implements ModInitializer {
     @Override
     public void onInitialize() {
+        Jupiter.init();
         Jupiter.process();
         for (JupiterConfigEntry entry : FabricEntryPointLoader.INSTANCE.getEntries()) {
             try {

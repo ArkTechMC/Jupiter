@@ -4,22 +4,21 @@ import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.packet.CustomPayload;
 
 @Environment(EnvType.CLIENT)
 public class ClientNetworkHelper {
     @ExpectPlatform
-    public static void sendToServer(Identifier id, PacketByteBuf buf) {
+    public static void sendToServer(CustomPayload payload) {
         throw new AssertionError("This method should be replaced by Architectury.");
     }
 
     @ExpectPlatform
-    public static void registerReceiver(Identifier id, Handler handler) {
+    public static <T extends CustomPayload> void registerReceiver(CustomPayload.Id<T> id, ClientNetworkHelper.Handler<T> handler) {
         throw new AssertionError("This method should be replaced by Architectury.");
     }
 
-    public interface Handler {
-        Runnable handle(MinecraftClient client, PacketByteBuf buf);
+    public interface Handler<T extends CustomPayload> {
+        Runnable handle(MinecraftClient client, T payload);
     }
 }
